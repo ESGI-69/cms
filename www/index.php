@@ -1,52 +1,67 @@
 <?php
 
-// Split parameters and put them in an array
-$params = explode('/', $_GET['p']);
+namespace App;
 
-// if 1 parameters exist 
-if ($params[0] != "") {
-  // Save first parameter in $routeName
-  $routeName = '/'.$params[0];
-// else return '/' in $routeName
-} else {
-  $routeName = '/';
+require "conf.inc.php";
+
+function myAutoloader($class)
+{
+    // $class => CleanWords
+    $class = str_replace("App\\","",$class);
+    $class = str_replace("\\", "/",$class);
+    if(file_exists($class.".class.php")){
+        include $class.".class.php";
+    }
 }
 
-// Array of supported routes
-$routes = yaml_parse_file('routes.yml', -1)[0];
+spl_autoload_register("App\myAutoloader");
 
-// Name of the controler;
-$controlerFilename;
 
-/**
- * Check if the route is defined in routes.yml
- * If it is, execute the action method
- * If is not, send a 404 page
+
+//Réussir à récupérer l'URI
+$uri = $_SERVER["REQUEST_URI"];
+
+$routeFile = "routes.yml";
+if(!file_exists($routeFile)){
+    die("Le fichier ".$routeFile." n'existe pas");
+}
+
+$routes = yaml_parse_file($routeFile);
+
+if( empty($routes[$uri]) ||  empty($routes[$uri]["controller"])  ||  empty($routes[$uri]["action"])){
+    die("Erreur 404");
+}
+
+$controller = ucfirst(strtolower($routes[$uri]["controller"]));
+$action = strtolower($routes[$uri]["action"]);
+
+
+/*
+ *
+ *  Vérfification de la sécurité, est-ce que la route possède le paramètr security
+ *  Si oui est-ce que l'utilisation a les droits et surtout est-ce qu'il est connecté ?
+ *  Sinon rediriger vers la home ou la page de login
+ *
  */
-if (isset($routes[$routeName])) {
-  // Contain all the possible route
-  $routeArray = $routes[$routeName];
 
-  // Controller file name to execute the method
-  $controlerFilename = ucfirst($routeArray['controller'].'.class.php');
 
-  // Contain the route controller
-  $controllerName = ucfirst($routeArray['controller']);
-
-  // Contain the route action
-  $action = $routeArray['action'];
-
-  // import the concerned controller
-  require_once("controllers/$controlerFilename");
-
-  // Instantiate the controller 
-  $controller = new $controllerName();
-
-  // Execute the controller method
-  $controller->$action();
-} else {
-  // Send a http 404 reponse code
-  http_response_code(404);
-  echo '404';
-  die();
+$controllerFile = "Controller/".$controller.".class.php";
+if(!file_exists($controllerFile)){
+    die("Le controller ".$controllerFile." n'existe pas");
 }
+//Dans l'idée on doit faire un require parce vital au fonctionnement
+//Mais comme on fait vérification avant du fichier le include est plus rapide a executer
+include $controllerFile;
+
+$controller = "App\\Controller\\".$controller;
+if( !class_exists($controller)){
+    die("La classe ".$controller." n'existe pas");
+}
+// $controller = User ou $controller = Global
+$objectController = new $controller();
+
+if( !method_exists($objectController, $action)){
+    die("L'action ".$action." n'existe pas");
+}
+// $action = login ou logout ou register ou home
+$objectController->$action();
