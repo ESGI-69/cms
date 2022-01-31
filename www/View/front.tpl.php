@@ -5,9 +5,9 @@
     <title>Template FRONT</title>
     <meta name="description" content="Description de ma page">
 </head>
-<body>
+    <body>
 
     <?php include "View/".$this->view.".view.php"; ?>
 
-</body>
+    </body>
 </html>

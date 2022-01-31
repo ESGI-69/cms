@@ -5,9 +5,7 @@
     <title>Template BACK</title>
     <meta name="description" content="Description de ma page">
 </head>
-<body>
-
-    <?php include "View/".$this->view.".view.php"; ?>
-
-</body>
+    <body>
+        <?php include "View/".$this->view.".view.php"; ?>
+    </body>
 </html>

@@ -7,4 +7,3 @@ define("DBNAME", "mvcdocker2");
 define("DBPORT", "3306");
 define("DBDRIVER", "mysql");
 define("DBPREFIXE", "esgi_");
-
