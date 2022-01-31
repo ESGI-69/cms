@@ -19,7 +19,7 @@ services:
     ports :
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: mvcdocker2
+      MYSQL_DATABASE: wikiki
       MYSQL_ROOT_PASSWORD: password
       MYSQL_PASSWORD: password
     volumes:
