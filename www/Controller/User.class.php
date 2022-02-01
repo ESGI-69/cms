@@ -22,16 +22,20 @@ class User {
 
   public function register()
   {
-
     $user = new UserModel();
-
-    if( !empty($_POST)){
+    // Si il n'y a pas d'erreur dans le from
+    if(!empty($_POST)){
 
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
-      print_r($result);
 
+      if (count($result) === 0) {
+        $user->setRegisterInfo();
+        $user->save();
+        // TODO Send le mail de verif à l'utilisateur
+      } else {
+        print_r($result);
+      }
     }
-
     $view = new View("register");
     $view->assign("user", $user);
   }
