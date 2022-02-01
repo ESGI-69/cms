@@ -10,8 +10,16 @@ class User extends Sql
   protected $lastname = null;
   protected $email;
   protected $password;
+  /**
+   * @var int État de l'utilisateur :
+   *
+   * - `0` = pas vérifié : connection impossible
+   * - `1` = email vérifié : compte activé
+   * - `2` = bloqué/désactivé : connection impossible
+   */
   protected $status = 0;
   protected $token = null;
+  protected $emailVerifyToken = null;
 
   public function __construct()
   {
@@ -122,6 +130,10 @@ class User extends Sql
     $this->token = substr(bin2hex(random_bytes(128)), 0, 255);
   }
 
+  public  function generateEmailToken(): void
+  {
+    $this->emailVerifyToken = substr(bin2hex(random_bytes(128)), 0, 64);
+  }
 
   public function getRegisterForm(): array
   {
@@ -179,6 +191,26 @@ class User extends Sql
         ],
       ]
     ];
+  }
+
+  /**
+   * Assign les données du $_POST dans les properties de la class
+   * pour quelles puissent etre enregistrées en base.
+   * @return void
+   */
+  public function setRegisterInfo(): void
+  {
+    try {
+      $this->generateToken();
+      $this->generateEmailToken();
+      $this->setEmail($_POST['email']);
+      $this->setPassword($_POST['password']);
+      $this->setFirstname($_POST['firstname']);
+      $this->setLastname($_POST['lastname']);
+    } catch (Exception $e) {
+      echo "Impossible d'assigner les propetries du Model User";
+      print_r($e);
+    }
   }
 
   public function getLoginForm(): array
