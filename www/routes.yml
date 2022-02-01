@@ -22,7 +22,6 @@
   controller: user
   action: pwdforget
 
-
 /dashboard:
   controller: admin
   action: dashboard
