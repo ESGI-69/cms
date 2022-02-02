@@ -5,6 +5,7 @@ use App\Core\CleanWords;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
+use App\Core\Mailer;
 use App\Model\User as UserModel;
 
 class User {
@@ -23,15 +24,17 @@ class User {
   public function register()
   {
     $user = new UserModel();
-    // Si il n'y a pas d'erreur dans le form
-    if(!empty($_POST)){
 
+    if(!empty($_POST)){
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
 
+      // Si il n'y a pas d'erreur dans le form
       if (count($result) === 0) {
+        $mailer = new Mailer();
         $user->setRegisterInfo();
         $user->save();
         // TODO Send le mail de verif à l'utilisateur
+        $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
       } else {
         print_r($result);
       }
