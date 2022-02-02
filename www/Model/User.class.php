@@ -130,6 +130,11 @@ class User extends Sql
     $this->token = substr(bin2hex(random_bytes(128)), 0, 255);
   }
 
+  public function getEmailToken(): ?string
+  {
+    return $this->emailVerifyToken;
+  }
+
   public  function generateEmailToken(): void
   {
     $this->emailVerifyToken = substr(bin2hex(random_bytes(128)), 0, 64);
