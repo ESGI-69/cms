@@ -23,7 +23,7 @@ class User {
   public function register()
   {
     $user = new UserModel();
-    // Si il n'y a pas d'erreur dans le from
+    // Si il n'y a pas d'erreur dans le form
     if(!empty($_POST)){
 
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
