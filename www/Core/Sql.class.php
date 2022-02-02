@@ -24,6 +24,23 @@ abstract class Sql
 
   }
 
+  public function verifyEmail(string $emailToken): bool
+  {
+    $sqlCheck = "SELECT * FROM wk_user WHERE emailVerifyToken = '".$emailToken."'";
+    $sqlCheckStatement = $this->pdo->query($sqlCheck);
+    $checkResults = $sqlCheckStatement->fetchAll($this->pdo::FETCH_ASSOC);
+    if (empty($checkResults)){
+      return false;
+    };
+
+    // Met la ligne du user a jour en updatant le emailVerifyToken a NULL
+    $sql = "UPDATE wk_user SET emailVerifyToken=null WHERE emailVerifyToken = :emailToken";
+
+    $sqlStatement = $this->pdo->prepare($sql);
+    $sqlStatement->bindParam('emailToken', $emailToken);
+    return $sqlStatement->execute();
+  }
+
   /**
    * @param int $id
    */

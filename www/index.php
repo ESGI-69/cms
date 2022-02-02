@@ -16,8 +16,17 @@ function myAutoloader($class)
 
 spl_autoload_register("App\myAutoloader");
 
-//Réussir à récupérer l'URI
-$uri = $_SERVER["REQUEST_URI"];
+/**
+ * @var string Contient la route avec les argurments enlevés
+ *
+ * e.g. `/verify?t=ABC` => `verify`
+ */
+$uri = null;
+if(strpos($_SERVER["REQUEST_URI"], "?")){
+  $uri = substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?"));
+}else{
+  $uri = $_SERVER["REQUEST_URI"];
+}
 
 $routeFile = "routes.yml";
 if(!file_exists($routeFile)){
@@ -27,6 +36,7 @@ if(!file_exists($routeFile)){
 $routes = yaml_parse_file($routeFile);
 
 if( empty($routes[$uri]) ||  empty($routes[$uri]["controller"])  ||  empty($routes[$uri]["action"])){
+  echo "<pre>".print_r($_SERVER, true )."</pre>";
   die("Erreur 404");
 }
 

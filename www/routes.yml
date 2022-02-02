@@ -18,6 +18,10 @@
   controller: user
   action: register
 
+/verify:
+  controller: verify
+  action: verify
+
 /forget:
   controller: user
   action: pwdforget
