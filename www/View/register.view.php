@@ -5,7 +5,11 @@
 <?php elseif($user->getStatus() == 0) : ?>
   Vous etes bien inscrit.
   <br>
-  Veuillez vérifier votre email pour pouvoir utiliser votre compte.
+    <?php if($isMailSent) : ?>
+        Veuillez vérifier votre email pour pouvoir utiliser votre compte.
+    <?php else : ?>
+        Serveur smtp down contact un admin bg
+    <?php endif; ?>
 <?php else : ?>
   Vous etes actuellement connecté au compte <?= $user->getUsername() ?>.
   <br>
