@@ -25,6 +25,7 @@ class User {
     $user = new UserModel();
     $isMailSent = null;
 
+    //TODO ne pas send le mail si ce n'est pas enregistrer en BDD
     if(!empty($_POST)){
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
       // Si il n'y a pas d'erreur dans le form
