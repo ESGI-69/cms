@@ -20,27 +20,26 @@ class User {
 
   }
 
-
   public function register()
   {
     $user = new UserModel();
+    $isMailSent = null;
 
     if(!empty($_POST)){
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
-
       // Si il n'y a pas d'erreur dans le form
       if (count($result) === 0) {
-        $mailer = new Mailer();
         $user->setRegisterInfo();
         $user->save();
-        // TODO Send le mail de verif à l'utilisateur
-        $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+        $mailer = new Mailer();
+        $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
       } else {
         print_r($result);
       }
     }
     $view = new View("register");
     $view->assign("user", $user);
+    $view->assign("isMailSent", $isMailSent);
   }
 
   public function logout()

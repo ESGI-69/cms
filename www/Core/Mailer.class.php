@@ -38,15 +38,12 @@ class Mailer
     $this->phpMailer->WordWrap = 50; // Nombre de caracteres pour le retour a la ligne automatique
 
     // TODO Un partial de body pour les mails ?
-    $this->phpMailer->Body = "Cliquez <a href='http://localhost/verify?t=".$emailVerifyToken."'>ici</a>"; // Body HTML
-    $this->phpMailer->AltBody = "Cliquez ici : http://localhost/verify?t=".$emailVerifyToken; // Body brut
-    $this->phpMailer->IsHTML(false); // Préciser qu'il faut utiliser le texte brut
+    $this->phpMailer->IsHTML(true); // Préciser qu'il faut utiliser le texte brut
+    $this->phpMailer->Body = "Cliquez <a href='http://localhost/verify?t=".$emailVerifyToken."'>ici</a> ou sur ce lien : http://localhost/verify?t=".$emailVerifyToken; // Body HTML
 
     if (!$this->phpMailer->send()) {
-      echo $this->phpMailer->ErrorInfo;
       return false;
     } else{
-      echo 'Message bien envoyé';
       return true;
     }
   }
