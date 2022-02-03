@@ -43,8 +43,7 @@ class Mailer
 
     if (!$this->phpMailer->send()) {
       return false;
-    } else{
-      return true;
     }
+    return true;
   }
 }
