@@ -6,10 +6,13 @@ use App\Core\View;
 
 class Admin
 {
-
   public function dashboard()
   {
     $view = new View("dashboard", "back");
   }
 
+  public function pages()
+  {
+    echo "Liste des pages";
+  }
 }
