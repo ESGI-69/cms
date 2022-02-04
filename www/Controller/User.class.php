@@ -12,12 +12,50 @@ class User {
 
   public function login()
   {
-    $view = new View("Login", "back");
+    $user = new UserModel();
 
-    $view->assign("pseudo", "Prof");
-    $view->assign("firstname", "Yves");
-    $view->assign("lastname", "Skrzypczyk");
+    if(!empty($_POST)){
+      $result = Verificator::checkForm($user->getLoginForm(), $_POST);
+      if (count($result) === 0) {
+        $user->setLoginInfo();
+        $queryResult = $user->login($user->getEmail());
+        if (empty($queryResult)) {
+          echo "Mail incorrect";
+        }
+        else {
+          if ($queryResult['status'] === "0") {
+            echo "confirmez votre mail";
+          }
+          else if ($queryResult['status'] === "1") {
+            if(password_verify($_POST['password'], $queryResult['password'])){
+              echo " mdp valide";
+            }
+            else {
+              echo "mdp invalide";
+            }
+          }
+          else if ($queryResult['status'] === "2"){
+            echo "vous etes banni";
+          }
+        }
+        //TODO Message d'erreur dans la view
+        /*
+        echo"<pre>";
+        print_r($user);
+        echo"</pre></br>";
 
+        echo"<pre>";
+        print_r($queryResult);
+        echo"</pre>";
+        */
+      }
+      else {
+        print_r($result);
+      }
+    }
+
+    $view = new View("Login");
+    $view->assign("user", $user);
   }
 
   public function register()

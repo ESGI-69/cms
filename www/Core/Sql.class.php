@@ -6,11 +6,12 @@ abstract class Sql
 {
   private $pdo;
   private $table;
+  private static $instance;
 
   public function __construct()
   {
     //Se connecter à la bdd
-    //il faudra mettre en place le singleton
+    //TODO il faudra mettre en place le singleton
     try{
       $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME
         ,DBUSER, DBPWD , [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]);
@@ -21,7 +22,22 @@ abstract class Sql
     //Si l'id n'est pas null alors on fait un update sinon on fait un insert
     $calledClassExploded = explode("\\",get_called_class());
     $this->table = strtolower(DBPREFIXE.end($calledClassExploded));
+  }
 
+  //code de thomas le bg pro coder (meme sur php)
+  /**
+   * Récupérer l'instance de la classe, si elle n'existe pas elle sera créée
+   * automatiquement puis retournée.
+   *
+   * @return Sql Instance de la classe SQL.
+   * @link https://refactoring.guru/design-patterns/singleton
+   */
+  public function getInstance(): Sql {
+    if (!isset(self::$instance)) {
+      self::$instance = new static();
+    }
+
+    return self::$instance;
   }
 
   public function verifyEmail(string $emailToken): bool
@@ -57,7 +73,7 @@ abstract class Sql
     if($this->getId() == null){
       $sql = "INSERT INTO ".$this->table." (".implode(",",array_keys($columns)).") 
             VALUES ( :".implode(",:",array_keys($columns)).")";
-    }else{
+    } else{
       $update = [];
       foreach ($columns as $column=>$value)
       {
@@ -72,4 +88,17 @@ abstract class Sql
 
   }
 
+  public function login(string $email): array
+  {
+    $sql = "SELECT password, status, token FROM ".$this->table." WHERE email= :email";
+    $queryStatement = $this->pdo->prepare($sql);
+    $queryStatement->bindParam('email', $email );
+    $queryStatement->execute();
+    $query = $queryStatement->fetch();
+    if ($query === false){
+      return [];
+    } else {
+      return $query;
+    }
+  }
 }
