@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use App\Core\Sql;
+use PHPMailer\PHPMailer\Exception;
 
 class User extends Sql
 {
@@ -240,9 +241,20 @@ class User extends Sql
           "placeholder"=>"Votre mot de passe ...",
           "required"=>true,
           "class"=>"inputForm",
-          "id"=>"pwdForm"
+          "id"=>"pwdForm",
+          "error"=>"Mot de passe incorrect"
         ]
       ]
     ];
+  }
+
+  public function setLoginInfo(): void
+  {
+    try {
+      $this->setEmail($_POST['email']);
+    } catch (Exception $e) {
+      echo "Impossible d'assigner les propetries du Model User";
+      print_r($e);
+    }
   }
 }
