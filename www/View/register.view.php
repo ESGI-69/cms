@@ -1,5 +1,7 @@
 <h1>S'inscrire</h1>
-
+<pre>
+  <?php print_r($user) ?>
+</pre>
 <?php if(empty($user->getToken())) : ?>
   <?php $this->includePartial("form", $user->getRegisterForm()) ?>
 <?php elseif($user->getStatus() == 0) : ?>

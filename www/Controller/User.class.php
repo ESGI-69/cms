@@ -13,6 +13,8 @@ class User {
   public function login()
   {
     $user = new UserModel();
+    $login = false;
+    $loginError = null;
 
     if(!empty($_POST)){
       $result = Verificator::checkForm($user->getLoginForm(), $_POST);
@@ -20,34 +22,28 @@ class User {
         $user->setLoginInfo();
         $queryResult = $user->login($user->getEmail());
         if (empty($queryResult)) {
-          echo "Mail incorrect";
+          $loginError = "Email incorrect";
         }
         else {
           if ($queryResult['status'] === "0") {
-            echo "confirmez votre mail";
+            $loginError = "Confirmez votre mail";
           }
           else if ($queryResult['status'] === "1") {
             if(password_verify($_POST['password'], $queryResult['password'])){
-              echo " mdp valide";
+              $login = true;
+              // TODO login persistant
             }
             else {
-              echo "mdp invalide";
+              $loginError = "Mot de passe invalide";
             }
           }
           else if ($queryResult['status'] === "2"){
-            echo "vous etes banni";
+            $loginError = "Vous etes banni";
           }
         }
-        //TODO Message d'erreur dans la view
-        /*
-        echo"<pre>";
-        print_r($user);
-        echo"</pre></br>";
-
         echo"<pre>";
         print_r($queryResult);
         echo"</pre>";
-        */
       }
       else {
         print_r($result);
@@ -56,6 +52,8 @@ class User {
 
     $view = new View("Login");
     $view->assign("user", $user);
+    $view->assign("login", $login);
+    $view->assign("loginError", $loginError);
   }
 
   public function register()

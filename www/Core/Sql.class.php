@@ -40,6 +40,8 @@ abstract class Sql
     return self::$instance;
   }
 
+  //Fin du code de Thomas le bg
+
   public function verifyEmail(string $emailToken): bool
   {
     // Met la ligne du user a jour en updatant le emailVerifyToken a NULL et le status à 1
@@ -90,7 +92,7 @@ abstract class Sql
 
   public function login(string $email): array
   {
-    $sql = "SELECT password, status, token FROM ".$this->table." WHERE email= :email";
+    $sql = "SELECT password, status, token, firstname FROM ".$this->table." WHERE email= :email";
     $queryStatement = $this->pdo->prepare($sql);
     $queryStatement->bindParam('email', $email );
     $queryStatement->execute();
