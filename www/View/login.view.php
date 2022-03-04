@@ -4,8 +4,5 @@
   <?php $this->includePartial("form", $user->getLoginForm()) ?>
   <?=$loginError ?>
 <?php else : ?>
-  BIENVENUE <?= "lmao" ?>
+  BIENVENUE <?= $userInfos["firstname"] ?>
 <?php endif; ?>
-<pre>
-  <?php print_r($user)?>
-</pre>

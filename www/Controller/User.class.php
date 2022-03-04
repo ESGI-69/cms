@@ -15,6 +15,7 @@ class User {
     $user = new UserModel();
     $login = false;
     $loginError = null;
+    $userInfos = null;
 
     if(!empty($_POST)){
       $result = Verificator::checkForm($user->getLoginForm(), $_POST);
@@ -22,7 +23,7 @@ class User {
         $user->setLoginInfo();
         $queryResult = $user->login($user->getEmail());
         if (empty($queryResult)) {
-          $loginError = "Email incorrect";
+          $loginError = "Email ou mot de passe invalide";
         }
         else {
           if ($queryResult['status'] === "0") {
@@ -31,19 +32,20 @@ class User {
           else if ($queryResult['status'] === "1") {
             if(password_verify($_POST['password'], $queryResult['password'])){
               $login = true;
+              $userInfos = array(
+                "firstname" => $queryResult["firstname"],
+              );
+
               // TODO login persistant
             }
             else {
-              $loginError = "Mot de passe invalide";
+              $loginError = "Email ou mot de passe invalide";
             }
           }
           else if ($queryResult['status'] === "2"){
             $loginError = "Vous etes banni";
           }
         }
-        echo"<pre>";
-        print_r($queryResult);
-        echo"</pre>";
       }
       else {
         print_r($result);
@@ -54,6 +56,7 @@ class User {
     $view->assign("user", $user);
     $view->assign("login", $login);
     $view->assign("loginError", $loginError);
+    $view->assign("userInfos",$userInfos);
   }
 
   public function register()
