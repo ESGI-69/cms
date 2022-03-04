@@ -24,7 +24,7 @@ abstract class Sql
     $this->table = strtolower(DBPREFIXE.end($calledClassExploded));
   }
 
-  //code de thomas le bg pro coder (meme sur php)
+  //test singleton
   /**
    * Récupérer l'instance de la classe, si elle n'existe pas elle sera créée
    * automatiquement puis retournée.
@@ -32,15 +32,15 @@ abstract class Sql
    * @return Sql Instance de la classe SQL.
    * @link https://refactoring.guru/design-patterns/singleton
    */
+
   public function getInstance(): Sql {
     if (!isset(self::$instance)) {
       self::$instance = new static();
     }
-
     return self::$instance;
   }
 
-  //Fin du code de Thomas le bg
+  //Fin test
 
   public function verifyEmail(string $emailToken): bool
   {
