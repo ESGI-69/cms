@@ -1,0 +1,18 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: em(10);
+  padding: 1em;
+  background: $color-white;
+  border-radius: $border-radius-card;
+  box-shadow: $shadow-card;
+  height: fit-content;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

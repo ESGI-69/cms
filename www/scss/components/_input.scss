@@ -1,0 +1,10 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+.input {
+  padding: em(8);
+  border-radius: em(4);
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  font-size: em(14);
+}

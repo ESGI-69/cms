@@ -1,0 +1,39 @@
+@use 'fonts' as *;
+@use 'variables' as *;
+
+body {
+  font-family: $font-primary;
+  background-color: $color-background;
+  margin: 0;
+  display: flex;
+
+  main {
+    box-sizing: border-box;
+    padding: 2rem;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    width: calc(100vw - $sidebar-width);
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+      color: $color-secondary;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $color-secondary;
+    }
+
+    p.subtitle {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 400;
+      color: $color-tertiary;
+    }
+  }
+}

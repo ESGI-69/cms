@@ -1,0 +1,89 @@
+@use "../functions" as *;
+@use "../variables" as *;
+
+.container-table {
+  border: em(1) solid $color-border;
+  border-radius: em(5);
+  overflow: hidden;
+  box-shadow: $shadow;
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  
+    &__header {
+      background-color: $color-table-header;
+
+      &__tr {
+        border-width: em(1) 0;
+
+        &__th {
+          text-align: left;
+          font-size: em(12);
+          font-weight: 300;
+          padding: em(8) em(12);
+
+          &__icon {
+            vertical-align: middle;
+            margin-left: em(8);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  
+    &__body {
+      border-collapse: collapse;
+      border-spacing: 0 em(1);
+
+      &__tr {
+        border: solid $color-border;
+        border-width: em(1) 0;
+
+        &__td {
+          text-align: left;
+          font-size: em(16);
+          font-weight: 400;
+          padding: em(8) em(12);
+
+          &__dropdown {
+            width: em(16);
+            height: em(16);
+            display: block;
+            margin-left: auto;
+            cursor: pointer;
+          }
+        }
+      }
+
+      &__tr:last-child {
+        border: none;
+      }
+    }
+  }
+}
+
+.page-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__item {
+    margin-right: em(12);
+    cursor: pointer;
+  }
+
+  &__icon {
+    width: em(16);
+    height: em(16);
+  }
+  &__number {
+    font-size: em(14);
+  }
+  &__input {
+    padding: 0;
+    width: em(32);
+    height: em(32);
+    text-align: center;
+  }
+}
