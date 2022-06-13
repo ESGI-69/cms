@@ -92,6 +92,21 @@ abstract class Sql
     $queryPrepared->execute($columns);
   }
 
+  public function checkExistingMail() 
+  {
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+    $emailExist = false;
+    $sql = "SELECT * FROM ".$this->table." WHERE email=:email";
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute(array(':email' => $columns['email']));
+    $rows = $queryPrepared->fetchAll();
+    if(!empty($rows)){
+      $emailExist = true;
+    }
+    return $emailExist;
+  }
+
   public function login(string $email): array
   {
     $sql = "SELECT password, status, token, firstname FROM " . $this->table . " WHERE email= :email";
