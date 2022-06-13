@@ -97,11 +97,11 @@ abstract class Sql
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
     $emailExist = false;
-    $sql = "SELECT * FROM ".$this->table." WHERE email=:email";
-    $queryPrepared = $this->pdo->prepare($sql);
-    $queryPrepared->execute(array(':email' => $columns['email']));
-    $rows = $queryPrepared->fetchAll();
-    if(!empty($rows)){
+    $sql = "SELECT * FROM wk_user WHERE email = :email";
+    $result = $this->executeQuery($sql, [
+      'email' => $columns['email']
+    ]);
+    if(!empty($result)){
       $emailExist = true;
     }
     return $emailExist;

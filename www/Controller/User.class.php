@@ -69,7 +69,7 @@ class User
         $user->setRegisterInfo();
         $registerError = $user->checkExistingMail();
         // check si l'email n'est pas déjà utilisé
-        if ($registerError === false) {
+        if (!$registerError) {
           $user->save();
           $mailer = new Mailer();
           $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
