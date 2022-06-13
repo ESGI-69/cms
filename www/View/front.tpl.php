@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <title>Template FRONT</title>
-    <meta name="description" content="Description de ma page">
+    <title><?= $pageTitle ?></title>
+    <?php if (isset($pageDescription)) : ?>
+        <meta name="description" content="<?= $pageDescription ?>">
+    <?php endif; ?>
+    <link rel="stylesheet" href="css/index.css">
 </head>
-    <body>
 
-    <?php include "View/".$this->view.".view.php"; ?>
+<body>
 
-    </body>
+    <?php include "View/" . $this->view . ".view.php"; ?>
+
+</body>
+
 </html>
