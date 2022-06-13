@@ -1,0 +1,19 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  gap: em(4);
+
+  &--small {
+    max-width: em(220);
+  }
+
+  &__title {
+    font-size: em(12);
+  }
+  &__content {
+    
+  }
+}

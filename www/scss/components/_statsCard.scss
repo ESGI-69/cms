@@ -1,0 +1,53 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-bottom: em(16);
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: .3em;
+
+    &__title {
+      font-size: 1rem;
+      color: $color-tertiary;
+    }
+
+    &__number {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $color-secondary;
+    }
+  }
+
+  &__top {
+    display: flex;
+    gap: .5em;
+
+    &__icon-container {
+      display: flex;
+      background: none;
+      height: fit-content;
+      padding: 8px;
+      border-radius: 4px;
+
+      &__icon {
+        width: 32px;
+        height: 32px;
+
+        & > path {
+          fill: $color-secondary;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    gap: .5em;
+  }
+}

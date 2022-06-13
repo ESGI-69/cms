@@ -1,0 +1,12 @@
+@use "../../functions" as *;
+
+.pages-list {
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,23 @@
+@use "../variables" as *;
+
+a.link {
+  font-size: 15px;
+  text-decoration: unset;
+  color: $color-primary;
+
+  &--icon {
+    display: flex;
+    gap: .5em;
+    text-transform: uppercase;
+    align-items: center;
+    width: fit-content;
+  }
+  
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: $color-primary;
+  }
+}

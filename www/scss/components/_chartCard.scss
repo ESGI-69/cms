@@ -1,0 +1,78 @@
+@use "../variables" as *;
+@use "../functions" as *;
+
+.chart-card {
+  display: flex;
+  flex-direction: row;
+  gap: 0.625em;
+  padding: 1em;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px rgb(0 0 0 / 25%);
+  margin-bottom: em(16);
+
+  &__desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: em(16);
+
+    &__name {
+      font-weight: 300;
+      font-size: em(16);
+      color: $color-text-secondary;
+      margin-bottom: em(8);
+    }
+
+    &__data {
+      display: flex;
+      flex-direction: row;
+
+      &__number {
+        font-weight: 700;
+        font-size: em(20);
+        margin-right: em(16);
+      }
+
+      &__trend {
+        font-size: em(12);
+        font-weight: 700;
+        padding: em(4) em(8);
+        border-radius: em(32);
+        max-width: em(56);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+  
+        &__success {
+          color: $color-success;
+          background-color: $color-success-100;
+        }
+  
+        &__danger {
+          color: $color-danger;
+          background-color: $color-danger-100;
+        }
+  
+        &__icon {
+          margin-left: em(4);
+          width: em(14);
+          height: em(14);
+  
+          &__trend-up {
+            fill: $color-success;
+          }
+  
+          &__trend-down {
+            fill: $color-danger;
+          }
+        }
+      }
+    }
+  }
+
+  &__chart {
+    width: em(195);
+    height: em(108);
+  }
+}

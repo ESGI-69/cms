@@ -1,0 +1,9 @@
+@use '../variables' as *;
+
+.section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: $color-text-secondary;
+  padding-bottom: .5em;
+  border-bottom: 1px solid $color-text-secondary;
+}

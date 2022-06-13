@@ -1,0 +1,16 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+.status {
+  display: flex;
+  justify-content: space-between;
+
+  &__title {
+    font-weight: 500;
+    font-size: em(14);
+  }
+
+  &__value {
+    font-size: em(14);
+  }
+}

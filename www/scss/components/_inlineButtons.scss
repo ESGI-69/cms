@@ -1,0 +1,23 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+.inline-button {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  font-size: em(12);
+  font-weight: bold;
+  color: $color-primary;
+
+  &__icon {
+    background: $color-primary-lighter;
+    box-sizing: border-box;
+    border-radius: 50%;
+    margin-right: em(8);
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

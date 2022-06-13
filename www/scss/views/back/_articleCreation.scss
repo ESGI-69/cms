@@ -1,0 +1,41 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+
+.article-creation {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  &__cards {
+    gap: 2rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    
+    .card {
+      &.left {
+
+      }
+      &.right {
+        width: 300px;
+      }
+
+      .dual-group {
+        display: flex;
+        gap: 1em;
+        max-width: 100%;
+        
+        & > * {
+          width: calc(50% - 8px);
+        }
+      }
+    }
+  }
+
+  &__section {
+    padding-left: em(32);
+    display: flex;
+    flex-direction: column;
+    gap: em(10);
+  }
+}
