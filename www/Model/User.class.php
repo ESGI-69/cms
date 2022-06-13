@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 use App\Core\Sql;
@@ -124,6 +125,38 @@ class User extends Sql
   }
 
   /**
+   * @param null|string $token
+   */
+  public function setToken(?string $token): void
+  {
+    $this->token = $token;
+  }
+
+  /**
+   * @return Object|null
+   */
+  public function getUserInfos(): array
+  {
+    $sql = "SELECT * FROM wk_user WHERE token = :token";
+    $result = $this->executeQuery($sql, [
+      'token' => $this->getToken()
+    ]);
+    $this->setEmail($result[0]['email']);
+    $this->setFirstname($result[0]['firstname']);
+    $this->setLastname($result[0]['lastname']);
+    $this->setId($result[0]['id']);
+    $this->setStatus($result[0]['status']);
+
+    return [
+      'id' => $this->getId(),
+      'firstname' => $this->getFirstname(),
+      'lastname' => $this->getLastname(),
+      'email' => $this->getEmail(),
+      'status' => $this->getStatus(),
+    ];
+  }
+
+  /**
    * length : 255
    */
   public function generateToken(): void
@@ -144,56 +177,56 @@ class User extends Sql
   public function getRegisterForm(): array
   {
     return [
-      "config"=>[
-        "method"=>"POST",
-        "action"=>"",
-        "submit"=>"S'inscrire"
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "S'inscrire"
       ],
-      'inputs'=>[
-        "email"=>[
-          "type"=>"email",
-          "placeholder"=>"Votre email ...",
-          "required"=>true,
-          "class"=>"inputForm",
-          "id"=>"emailForm",
-          "error"=>"Email incorrect",
-          "unicity"=>"true",
-          "errorUnicity"=>"Email déjà en bdd",
+      'inputs' => [
+        "email" => [
+          "type" => "email",
+          "placeholder" => "Votre email ...",
+          "required" => true,
+          "class" => "inputForm",
+          "id" => "emailForm",
+          "error" => "Email incorrect",
+          "unicity" => "true",
+          "errorUnicity" => "Email déjà en bdd",
         ],
-        "password"=>[
-          "type"=>"password",
-          "placeholder"=>"Votre mot de passe ...",
-          "required"=>true,
-          "class"=>"inputForm",
-          "id"=>"pwdForm",
-          "error"=>"Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
+        "password" => [
+          "type" => "password",
+          "placeholder" => "Votre mot de passe ...",
+          "required" => true,
+          "class" => "inputForm",
+          "id" => "pwdForm",
+          "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
         ],
-        "passwordConfirm"=>[
-          "type"=>"password",
-          "placeholder"=>"Confirmation ...",
-          "required"=>true,
-          "class"=>"inputForm",
-          "id"=>"pwdConfirmForm",
-          "confirm"=>"password",
-          "error"=>"Votre mot de passe de confirmation ne correspond pas",
+        "passwordConfirm" => [
+          "type" => "password",
+          "placeholder" => "Confirmation ...",
+          "required" => true,
+          "class" => "inputForm",
+          "id" => "pwdConfirmForm",
+          "confirm" => "password",
+          "error" => "Votre mot de passe de confirmation ne correspond pas",
         ],
-        "firstname"=>[
-          "type"=>"text",
-          "placeholder"=>"Votre prénom ...",
-          "class"=>"inputForm",
-          "id"=>"firstnameForm",
-          "min"=>2,
-          "max"=>50,
-          "error"=>"Prénom incorrect"
+        "firstname" => [
+          "type" => "text",
+          "placeholder" => "Votre prénom ...",
+          "class" => "inputForm",
+          "id" => "firstnameForm",
+          "min" => 2,
+          "max" => 50,
+          "error" => "Prénom incorrect"
         ],
-        "lastname"=>[
-          "type"=>"text",
-          "placeholder"=>"Votre nom ...",
-          "class"=>"inputForm",
-          "id"=>"lastnameForm",
-          "min"=>2,
-          "max"=>100,
-          "error"=>"Nom incorrect"
+        "lastname" => [
+          "type" => "text",
+          "placeholder" => "Votre nom ...",
+          "class" => "inputForm",
+          "id" => "lastnameForm",
+          "min" => 2,
+          "max" => 100,
+          "error" => "Nom incorrect"
         ],
       ]
     ];
@@ -222,27 +255,27 @@ class User extends Sql
   public function getLoginForm(): array
   {
     return [
-      "config"=>[
-        "method"=>"POST",
-        "action"=>"",
-        "submit"=>"Se connecter"
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "Se connecter"
       ],
-      'inputs'=>[
-        "email"=>[
-          "type"=>"email",
-          "placeholder"=>"Votre email ...",
-          "required"=>true,
-          "class"=>"inputForm",
-          "id"=>"emailForm",
-          "error"=>"Email incorrect"
+      'inputs' => [
+        "email" => [
+          "type" => "email",
+          "placeholder" => "Votre email ...",
+          "required" => true,
+          "class" => "inputForm",
+          "id" => "emailForm",
+          "error" => "Email incorrect"
         ],
-        "password"=>[
-          "type"=>"password",
-          "placeholder"=>"Votre mot de passe ...",
-          "required"=>true,
-          "class"=>"inputForm",
-          "id"=>"pwdForm",
-          "error"=>"Mot de passe incorrect"
+        "password" => [
+          "type" => "password",
+          "placeholder" => "Votre mot de passe ...",
+          "required" => true,
+          "class" => "inputForm",
+          "id" => "pwdForm",
+          "error" => "Mot de passe incorrect"
         ]
       ]
     ];
