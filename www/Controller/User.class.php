@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Core\CleanWords;
@@ -8,7 +9,8 @@ use App\Core\View;
 use App\Core\Mailer;
 use App\Model\User as UserModel;
 
-class User {
+class User
+{
 
   public function login()
   {
@@ -17,37 +19,32 @@ class User {
     $loginError = null;
     $userInfos = null;
 
-    if(!empty($_POST)){
+    if (!empty($_POST)) {
       $result = Verificator::checkForm($user->getLoginForm(), $_POST);
       if (count($result) === 0) {
         $user->setLoginInfo();
         $queryResult = $user->login($user->getEmail());
         if (empty($queryResult)) {
           $loginError = "Email ou mot de passe invalide";
-        }
-        else {
+        } else {
           if ($queryResult['status'] === "0") {
             $loginError = "Confirmez votre mail";
-          }
-          else if ($queryResult['status'] === "1") {
-            if(password_verify($_POST['password'], $queryResult['password'])){
+          } else if ($queryResult['status'] === "1") {
+            if (password_verify($_POST['password'], $queryResult['password'])) {
               $login = true;
               $userInfos = array(
                 "firstname" => $queryResult["firstname"],
               );
 
-              // TODO login persistant
-            }
-            else {
+              setcookie('wikikiToken', $queryResult['token'], time() + 60 * 60 * 24 * 30);
+            } else {
               $loginError = "Email ou mot de passe invalide";
             }
-          }
-          else if ($queryResult['status'] === "2"){
+          } else if ($queryResult['status'] === "2") {
             $loginError = "Vous etes banni";
           }
         }
-      }
-      else {
+      } else {
         print_r($result);
       }
     }
@@ -56,7 +53,7 @@ class User {
     $view->assign("user", $user);
     $view->assign("login", $login);
     $view->assign("loginError", $loginError);
-    $view->assign("userInfos",$userInfos);
+    $view->assign("userInfos", $userInfos);
   }
 
   public function register()
@@ -64,8 +61,8 @@ class User {
     $user = new UserModel();
     $isMailSent = null;
 
-    //TODO ne pas send le mail si ce n'est pas enregistrer en BDD
-    if(!empty($_POST)){
+    // TODO ne pas send le mail si ce n'est pas enregistrer en BDD
+    if (!empty($_POST)) {
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
       // Si il n'y a pas d'erreur dans le form
       if (count($result) === 0) {
@@ -82,14 +79,20 @@ class User {
     $view->assign("isMailSent", $isMailSent);
   }
 
+  // Remove the wikikiToken cookie and redirect to the home page
   public function logout()
   {
-    echo "Se déco";
+    $success = false;
+    if (isset($_COOKIE['wikikiToken'])) {
+      setcookie('wikikiToken', null, -1);
+      $success = true;
+    }
+    $view = new View("logout");
+    $view->assign("success", $success);
   }
 
   public function pwdforget()
   {
     echo "Mot de passe oublié";
   }
-
 }
