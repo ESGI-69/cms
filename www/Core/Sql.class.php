@@ -34,7 +34,6 @@ abstract class Sql
     $this->mysqlBuilder = new MySqlBuilder($this->table);
   }
 
-  //test singleton
   /**
    * Récupérer l'instance de la classe, si elle n'existe pas elle sera créée
    * automatiquement puis retournée.
@@ -50,8 +49,6 @@ abstract class Sql
     }
     return self::$instance;
   }
-
-  //Fin test
 
   public function verifyEmail(string $emailToken): bool
   {
