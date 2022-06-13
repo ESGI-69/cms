@@ -10,9 +10,15 @@ class View
   private $template;
   private $data = [];
 
-  public function __construct($view, $template = "front")
-  {
+  public function __construct(
+    string $view,
+    $template = "front",
+    string $pageTitle = 'Wikiki',
+    string $pageDescription = null
+  ) {
     $this->setView($view);
+    $this->assign("pageTitle", $pageTitle);
+    $this->assign("pageDescription", $pageDescription);
     $this->setTemplate($template);
   }
 
