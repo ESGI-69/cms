@@ -1,6 +1,8 @@
 <h1>S'inscrire</h1>
 <?php if(empty($user->getToken())) : ?>
   <?php $this->includePartial("form", $user->getRegisterForm()) ?>
+<?php elseif($registerError) : ?>
+  <p>Email déjà utilisé</p>
 <?php elseif($user->getStatus() == 0) : ?>
   Vous etes bien inscrit.
   <br>

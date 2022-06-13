@@ -60,22 +60,27 @@ class User
   {
     $user = new UserModel();
     $isMailSent = null;
+    $registerError = false;
 
-    // TODO ne pas send le mail si ce n'est pas enregistrer en BDD
     if (!empty($_POST)) {
       $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
       // Si il n'y a pas d'erreur dans le form
       if (count($result) === 0) {
         $user->setRegisterInfo();
-        $user->save();
-        $mailer = new Mailer();
-        $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+        $registerError = $user->checkExistingMail();
+        // check si l'email n'est pas déjà utilisé
+        if ($registerError === false) {
+          $user->save();
+          $mailer = new Mailer();
+          $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+        }
       } else {
         print_r($result);
       }
     }
     $view = new View("register");
     $view->assign("user", $user);
+    $view->assign("registerError", $registerError);
     $view->assign("isMailSent", $isMailSent);
   }
 
