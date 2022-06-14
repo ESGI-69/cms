@@ -22,6 +22,14 @@ class User extends Sql
   protected $status = 0;
   protected $token = null;
   protected $emailVerifyToken = null;
+  /**
+   * @var int Role de l'utilisateur :
+   * 
+   * - `1` = administrateur
+   * - `2` = modérateur
+   * - `3` = utilisateur
+   */
+  protected $role = 3;
 
   public function __construct()
   {
@@ -116,6 +124,23 @@ class User extends Sql
     $this->status = $status;
   }
 
+
+  /**
+   * @return int
+   */
+  public function getRole(): int
+  {
+    return $this->role;
+  }
+
+  /**
+   * @param int $role
+   */
+  public function setRole(int $role): void
+  {
+    $this->role = $role;
+  }
+
   /**
    * @return null|string
    */
@@ -146,6 +171,7 @@ class User extends Sql
     $this->setLastname($result[0]['lastname']);
     $this->setId($result[0]['id']);
     $this->setStatus($result[0]['status']);
+    $this->setRole($result[0]['role']);
 
     return [
       'id' => $this->getId(),
@@ -153,6 +179,7 @@ class User extends Sql
       'lastname' => $this->getLastname(),
       'email' => $this->getEmail(),
       'status' => $this->getStatus(),
+      'role' => $this->getRole(),
     ];
   }
 

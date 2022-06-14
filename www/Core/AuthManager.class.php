@@ -21,4 +21,9 @@ class AuthManager
     }
     return $userInfos;
   }
+
+  public static function checkPermission(string $requiredRole): bool
+  {
+    return self::isAuth() && self::userInfos()['role'] <= $requiredRole;
+  }
 }
