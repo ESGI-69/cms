@@ -29,10 +29,8 @@
 /dashboard:
   controller: admin
   action: dashboard
+  security: 2
   childrens:
     /pages:
       controller: admin
       action: pages
-  security:
-    - admin
-    - user
