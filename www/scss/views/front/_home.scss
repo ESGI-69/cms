@@ -1,0 +1,28 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+
+.front {
+  &.home {
+    .username {
+      font-size: em(32);
+      font-weight: bold;
+    }
+
+    .question {
+      font-size: em(24);
+      font-weight: 500;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: em(8);
+
+      input {
+        width: 300px;
+        font-size: 1em;
+
+      }
+    }
+  }
+}

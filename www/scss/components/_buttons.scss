@@ -1,98 +1,128 @@
 @use "./../variables" as *;
 @use "./../functions" as *;
 
-.button {
-  all: unset;
-  display: flex;
-  font-size: em(12);
-  font-weight: 500;
-  padding: em(8) em(12);
-  border-radius: em(4);
-  color: $color-white;
-  height: fit-content;
-  transition: all .2s ease-in-out;
-
-  &:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+.back {
+  .button {
+    all: unset;
+    display: flex;
+    font-size: em(12);
+    font-weight: 500;
+    padding: em(8) em(12);
+    border-radius: em(4);
+    color: $color-white;
+    height: fit-content;
+    transition: all .2s ease-in-out;
+  
+    &:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  
+    &:hover {
+      cursor: pointer;
+    }
+  
+    &--big {
+      padding: em(14) em(18);
+    }
+  
+    &--primary {
+      border: 1px solid $color-primary-lighter;
+      background-color: $color-primary;
+      outline-color: $color-primary;
+  
+  
+      &:hover {
+        background-color: lighten($color-primary, 10%);
+      }
+  
+      &:active {
+        background-color: $color-primary-400;
+      }
+    }
+  
+    &--secondary {
+      background-color: $color-secondary-800;
+      outline-color: $color-secondary-800;
+  
+      &:hover {
+        background-color: $color-secondary;
+      }
+  
+      &:active {
+        background-color: $color-secondary-700;
+      }
+    }
+  
+    &--warning {
+      background-color: $color-warning;
+      outline-color: $color-warning;
+  
+      &:hover {
+        background-color: $color-warning-600;
+      }
+  
+      &:active {
+        background-color: $color-warning-400;
+      }
+    }
+  
+    &--danger {
+      background-color: $color-danger;
+      outline-color: $color-danger;
+  
+      &:hover {
+        background-color: $color-danger-600;
+      }
+  
+      &:active {
+        background-color: $color-danger-400;
+      }
+    }
+  
+    &--success {
+      background-color: $color-success;
+      outline-color: $color-success;
+  
+      &:hover {
+        background-color: $color-success-600;
+      }
+  
+      &:active {
+        background-color: $color-success-400;
+      }
+    }
   }
+}
 
-  &:hover {
-    cursor: pointer;
-  }
-
-  &--big {
-    padding: em(14) em(18);
-  }
-
-  &--primary {
-    border: 1px solid $color-primary-lighter;
-    background-color: $color-primary;
-    outline-color: $color-primary;
-
+.front {
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: em(6) em(12);
+    font-size: .8em;
 
     &:hover {
-      background-color: lighten($color-primary, 10%);
+      border: 2px solid $color-white;
+    }
+    
+    &--big {
+      padding: em(10) em(22);
+      font-size: 1em;
+    }
+    
+    &--primary {
+      background-color: $color-front-primary;
+      color: $color-white;
+      border: 2px solid $color-front-primary;
     }
 
-    &:active {
-      background-color: $color-primary-400;
+    &--secondary {
+      background-color: $color-front-secondary;
+      color: $color-white;
+      border: 2px solid $color-front-secondary;
     }
-  }
-
-  &--secondary {
-    background-color: $color-secondary-800;
-    outline-color: $color-secondary-800;
-
-    &:hover {
-      background-color: $color-secondary;
-    }
-
-    &:active {
-      background-color: $color-secondary-700;
-    }
-  }
-
-  &--warning {
-    background-color: $color-warning;
-    outline-color: $color-warning;
-
-    &:hover {
-      background-color: $color-warning-600;
-    }
-
-    &:active {
-      background-color: $color-warning-400;
-    }
-  }
-
-  &--danger {
-    background-color: $color-danger;
-    outline-color: $color-danger;
-
-    &:hover {
-      background-color: $color-danger-600;
-    }
-
-    &:active {
-      background-color: $color-danger-400;
-    }
-  }
-
-  &--success {
-    background-color: $color-success;
-    outline-color: $color-success;
-
-    &:hover {
-      background-color: $color-success-600;
-    }
-
-    &:active {
-      background-color: $color-success-400;
-    }
-  }
-
-  &--big {
-
   }
 }

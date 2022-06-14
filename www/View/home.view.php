@@ -1,10 +1,6 @@
-<h1>Page d'accueil</h1>
-
-<?php if ($isAuth) : ?>
-  <p>Bienvenue <?= $userInfos["firstname"] ?></p>
-  <a href="./logout">Se déconnecter</a>
-<?php else : ?>
-  <a href="./login">Se connecter</a>
-  <a href="./register">S'inscrire</a>
-<?php endif; ?>
-<br>
+<span class="username">Bonjour <?= $userInfos["firstname"] ?? 'étranger' ?> 👋 </span>
+<span class="question">Que veux tu apprendre aujourd'hui ?</span>
+<form class="search" action="search.php" method="get">
+  <input class="input" type="text" name="search" placeholder="Rechercher un article" />
+  <button class="button button--primary button--big" type="submit">Search</button>
+</form>
