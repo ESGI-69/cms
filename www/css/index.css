@@ -7,8 +7,10 @@ body {
   background-color: #F8FAFC;
   margin: 0;
   display: flex;
+  height: 100vh;
 }
-body main {
+
+body.back main {
   box-sizing: border-box;
   padding: 2rem;
   height: 100vh;
@@ -16,26 +18,60 @@ body main {
   overflow-y: auto;
   width: calc(100vw - 250px);
 }
-body main h1 {
+body.back main h1 {
   margin: 0;
   font-size: 2rem;
   font-weight: 600;
   color: #0F172A;
 }
-body main h2 {
+body.back main h2 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
   color: #0F172A;
 }
-body main p.subtitle {
+body.back main p.subtitle {
   margin: 0;
   font-size: 1rem;
   font-weight: 400;
   color: #666687;
 }
+body.front {
+  background-image: url("/assets/home-background.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #EDF6F9;
+}
+body.front .logo {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 2em 4em;
+  background-color: #2C2C2C;
+  margin-bottom: 4em;
+}
+body.front .user-actions {
+  display: flex;
+  gap: 16px;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+body.front main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  background-color: #2C2C2C;
+  padding: 2em 4em;
+  width: 60vw;
+  box-sizing: border-box;
+}
 
-.button {
+.back .button {
   all: unset;
   display: flex;
   font-size: 0.75em;
@@ -46,67 +82,94 @@ body main p.subtitle {
   height: fit-content;
   transition: all 0.2s ease-in-out;
 }
-.button:focus {
+.back .button:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-.button:hover {
+.back .button:hover {
   cursor: pointer;
 }
-.button--big {
+.back .button--big {
   padding: 0.875em 1.125em;
 }
-.button--primary {
+.back .button--primary {
   border: 1px solid #EDF6FF;
   background-color: #006ACB;
   outline-color: #006ACB;
 }
-.button--primary:hover {
+.back .button--primary:hover {
   background-color: #0085fe;
 }
-.button--primary:active {
+.back .button--primary:active {
   background-color: #818cf8;
 }
-.button--secondary {
+.back .button--secondary {
   background-color: #1e293b;
   outline-color: #1e293b;
 }
-.button--secondary:hover {
+.back .button--secondary:hover {
   background-color: #0F172A;
 }
-.button--secondary:active {
+.back .button--secondary:active {
   background-color: #334155;
 }
-.button--warning {
+.back .button--warning {
   background-color: #f97316;
   outline-color: #f97316;
 }
-.button--warning:hover {
+.back .button--warning:hover {
   background-color: #ea580c;
 }
-.button--warning:active {
+.back .button--warning:active {
   background-color: #fb923c;
 }
-.button--danger {
+.back .button--danger {
   background-color: #f43f5e;
   outline-color: #f43f5e;
 }
-.button--danger:hover {
+.back .button--danger:hover {
   background-color: #e11d48;
 }
-.button--danger:active {
+.back .button--danger:active {
   background-color: #fb7185;
 }
-.button--success {
+.back .button--success {
   background-color: #10b981;
   outline-color: #10b981;
 }
-.button--success:hover {
+.back .button--success:hover {
   background-color: #059669;
 }
-.button--success:active {
+.back .button--success:active {
   background-color: #34d399;
 }
+
+.front .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.375em 0.75em;
+  font-size: 0.8em;
+}
+.front .button:hover {
+  border: 2px solid #ffffff;
+}
+.front .button--big {
+  padding: 0.625em 1.375em;
+  font-size: 1em;
+}
+.front .button--primary {
+  background-color: #2C2C2C;
+  color: #ffffff;
+  border: 2px solid #2C2C2C;
+}
+.front .button--secondary {
+  background-color: #EDF6F9;
+  color: #ffffff;
+  border: 2px solid #EDF6F9;
+}
+
 .inline-button {
   all: unset;
   cursor: pointer;
@@ -560,6 +623,24 @@ a.link:visited {
   display: flex;
   flex-direction: column;
   gap: 0.625em;
+}
+
+.front.home .username {
+  font-size: 2em;
+  font-weight: bold;
+}
+.front.home .question {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+.front.home .search {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.front.home .search input {
+  width: 300px;
+  font-size: 1em;
 }
 
 /*# sourceMappingURL=index.css.map */

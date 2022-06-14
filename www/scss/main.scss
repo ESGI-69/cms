@@ -1,4 +1,5 @@
 @use "globals";
+@use "layout";
 
 @use "./components/buttons";
 @use "./components/inlineButtons";
@@ -19,3 +20,5 @@
 @use "./views/back/pageCreation";
 @use "./views/back/pageList";
 @use "./views/back/articleCreation";
+
+@use "./views/front/home";

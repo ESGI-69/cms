@@ -1,2 +1,74 @@
-@use 'variables.scss' as *;
+@use 'variables' as *;
+@use 'functions' as *;
 
+body {
+  &.back {
+    main {
+      box-sizing: border-box;
+      padding: 2rem;
+      height: 100vh;
+      max-height: 100vh;
+      overflow-y: auto;
+      width: calc(100vw - $sidebar-width);
+
+      h1 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 600;
+        color: $color-secondary;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $color-secondary;
+      }
+
+      p.subtitle {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        color: $color-tertiary;
+      }
+    }
+  }
+
+  &.front {
+    background-image: url('/assets/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-front-secondary;
+
+    .logo {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      padding: em(32) em(64);
+      background-color: $color-front-primary;
+      margin-bottom: em(64);
+    }
+
+    .user-actions {
+      display: flex;
+      gap: 16px;
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: em(16);
+      align-items: center;
+      background-color: $color-front-primary;
+      padding: em(32) em(64);
+      width: 60vw;
+      box-sizing: border-box;
+    }
+  }
+}

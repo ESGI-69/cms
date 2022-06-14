@@ -57,6 +57,9 @@ class View
     // Include the isAuth function
     $this->data['isAuth'] = AuthManager::isAuth();
     $this->data['userInfos'] = AuthManager::userInfos();
+    $this->data['isAdmin'] = AuthManager::isAdmin();
+    $this->data['isMod'] = AuthManager::isMod();
+    $this->data['isUser'] = AuthManager::isUser();
     extract($this->data);
     include "View/" . $this->template . ".tpl.php";
   }
