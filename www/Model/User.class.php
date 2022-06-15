@@ -164,9 +164,12 @@ class User extends Sql
   {
     $sql = $this->mysqlBuilder
       ->select('wk_user', ['*'])
-      ->where('token', $this->token)
+      ->where('token')
       ->getQuery();
-    $result = $this->executeQuery($sql, 2);
+    $option = [
+      'token' => $this->token
+    ];
+    $result = $this->executeQuery($sql, 2, $option);
     $this->setEmail($result[0]['email']);
     $this->setFirstname($result[0]['firstname']);
     $this->setLastname($result[0]['lastname']);

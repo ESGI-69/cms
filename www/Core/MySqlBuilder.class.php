@@ -10,9 +10,9 @@ interface QueryBuilder
 
   public function update(string $table): QueryBuilder;
 
-  public function set(string $column, string $value, string $operator = '='): QueryBuilder;
+  public function set($column, string $operator = '='): QueryBuilder;
 
-  public function where(string $column, string $value, string $operator = '='): QueryBuilder;
+  public function where(string $column, string $operator = '='): QueryBuilder;
 
   public function limit(int $from, int $offset): QueryBuilder;
 
@@ -32,7 +32,7 @@ class MySqlBuilder implements QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "INSERT INTO " . $table . " (" . implode(",", array_keys($values)) . ") VALUES ('" . implode("', '", $values) . "')";
+    $this->query->base = "INSERT INTO " . $table . " (" . implode(",", array_keys($values)) . ") VALUES (:" . implode(", :", array_keys($values)) . ")";
 
     return $this;
   }
@@ -53,16 +53,24 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
-  public function set(string $column, string $value, string $operator = '='): QueryBuilder
+  public function set($columns, string $operator = '='): QueryBuilder
   {
-    $this->query->set[] = ' ' . $column . $operator . "'" . $value . "'";
+    if (gettype($columns) === 'string') {
+      $this->query->set[] = ' ' . $columns . $operator . ":" . $columns;
+
+    }
+    else if (gettype($columns) === 'array') {
+      foreach ($columns as $column => $value) {
+        $this->query->set[] = $column . $operator . ":" . $column;
+      }
+    }
     return $this;
   }
 
-  public function where(string $column, string $value, string $operator = '='): QueryBuilder
+  public function where(string $column, string $operator = '='): QueryBuilder
   {
 
-    $this->query->where[] = ' ' . $column . $operator . "'" . $value . "'";
+    $this->query->where[] = $column . $operator . ":" . $column;
     return $this;
   }
 
