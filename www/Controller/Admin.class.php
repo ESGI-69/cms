@@ -13,6 +13,10 @@ class Admin
 
   public function pages()
   {
-    echo "Liste des pages";
+
+    
+
+    $view = new View("pageList", "back");
+
   }
 }
