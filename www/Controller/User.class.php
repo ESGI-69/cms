@@ -9,10 +9,10 @@ use App\Core\View;
 use App\Core\Mailer;
 use App\Model\User as UserModel;
 
-class User
+class User extends Sql
 {
 
-  public function login()
+  public function loginUser()
   {
     $user = new UserModel();
     $login = false;
@@ -99,5 +99,13 @@ class User
   public function pwdforget()
   {
     echo "Mot de passe oublié";
+  }
+
+  public function verify()
+  {
+
+    $this->isEmailVerified = $this->verifyEmail($_GET['t']);
+    $view = new View('verify');
+    $view->assign('isEmailVerified', $this->isEmailVerified);
   }
 }
