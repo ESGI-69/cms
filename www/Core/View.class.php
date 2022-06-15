@@ -43,6 +43,10 @@ class View
     if (!file_exists("View/Partial/" . $partial . ".partial.php")) {
       die("Le partial " . $partial . " n'existe pas");
     }
+
+    // Genrate the csrf token
+    $_SESSION['csrf_token'] = md5(uniqid(mt_rand(), true));
+
     include "View/Partial/" . $partial . ".partial.php";
   }
 
