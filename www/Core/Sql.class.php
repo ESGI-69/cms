@@ -56,15 +56,20 @@ abstract class Sql extends MySqlBuilder
   public function verifyEmail(string $emailToken): bool
   {
     // Met la ligne du user a jour en updatant le emailVerifyToken a NULL et le status à 1
-    $sqlOld = "UPDATE wk_user SET emailVerifyToken=null, status=1 WHERE emailVerifyToken='" . $emailToken . "'";
     $sql = $this->mysqlBuilder
       ->update($this->table)
-      ->set('emailVerifyToken', 'null')
-      ->set('status', '1')
-      ->where('emailVerifyToken', $emailToken)
+      ->set('emailVerifyToken')
+      ->set('status')
+      ->where('emailVerifyToken')
       ->getQuery();
 
-    $result = $this->executeQuery($sql, 0);
+    $options = [
+      'emailVerifyToken' => null,
+      'status' => 1,
+      'emailVerifyToken' => $emailToken
+    ];
+
+    $result = $this->executeQuery($sql, 0, $options);
 
     if ($result->rowCount() === 1) {
       return true;
@@ -79,10 +84,14 @@ abstract class Sql extends MySqlBuilder
   {
     $sql = $this->mysqlBuilder
       ->select($this->table, ['*'])
-      ->where('id', $id)
+      ->where('id')
       ->getQuery();
 
-    $result = $this->executeQuery($sql, 0);
+    $option = [
+      'id' => $id
+    ];
+
+    $result = $this->executeQuery($sql, 0, $option);
 
     $result = $result->fetchObject(get_called_class());
 
@@ -95,24 +104,38 @@ abstract class Sql extends MySqlBuilder
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
 
-    if ($this->getId() == null) {
+    /**
+     * TODO : create getId() method
+     */
+    
+    if ($this->getId() !== null) {
       $columnsFiltred = $columns;
       unset($columnsFiltred['id']);
 
       $sql = $this->mysqlBuilder
         ->insert($this->table, $columnsFiltred)
         ->getQuery();
-    } 
-    // non géré encore
+      $this->executeQuery($sql, 0, $columnsFiltred);
+    }
+
+    /**
+     * TODO : update a user with save() method
+     */
     else {
       $update = [];
       foreach ($columns as $column => $value) {
         $update[] = $column . "=:" . $column;
       }
-      $sql = "UPDATE " . $this->table . " SET " . implode(",", $update) . " WHERE id=" . $this->getId();
+
+      $sqlNew = $this->mysqlBuilder
+        ->update($this->table)
+        ->set($columns)
+        ->where('id')
+        ->getQuery();
+        
+      $this->executeQuery($sqlNew, 0, $columns);
     }
 
-    $this->executeQuery($sql, 0);
   }
 
   public function checkExistingMail()
@@ -123,14 +146,20 @@ abstract class Sql extends MySqlBuilder
 
     $sql = $this->mysqlBuilder
       ->select($this->table, ['*'])
-      ->where('email', $columns['email'])
+      ->where('email')
+      ->limit(0, 1)
       ->getQuery();
 
-    $result = $this->executeQuery($sql, 2);
+    $option = [
+      'email' => $columns['email']
+    ];
+
+    $result = $this->executeQuery($sql, 1, $option);
 
     if (!empty($result)) {
       $emailExist = true;
     }
+    
     return $emailExist;
   }
 
@@ -138,10 +167,15 @@ abstract class Sql extends MySqlBuilder
   {
     $sql = $this->mysqlBuilder
       ->select($this->table, ['password', 'status', 'token', 'firstname'])
-      ->where('email', $email)
+      ->where('email')
       ->limit(0, 1)
       ->getQuery();
-    $query = $this->executeQuery($sql, 1);
+
+    $options = [
+      'email' => $email
+    ];
+
+    $query = $this->executeQuery($sql, 1, $options);
 
     if (empty($query)) {
       return [];
@@ -150,7 +184,7 @@ abstract class Sql extends MySqlBuilder
     }
   }
 
-  public function executeQuery(string $query, int $fetchType = 0)
+  public function executeQuery(string $query, int $fetchType, array $option = null)
   {
     /**
      * $fetchType asked:
@@ -160,20 +194,18 @@ abstract class Sql extends MySqlBuilder
      * - `2` = fetchAll
      */
     if ($fetchType === 0) {
-      // query prepare and execute
       $result = $this->pdo->prepare($query);
-      $result->execute();
+      $result->execute($option);
       return $result;
     }
 
     $query = $this->pdo->prepare($query);
 
     if ($fetchType === 1) {
-      $query->execute();
-      return $query
-        ->fetch();
+      $query->execute($option);
+      return $query->fetch();
     } elseif ($fetchType === 2) {
-      $query->execute();
+      $query->execute($option);
       return $query->fetchAll();
     }
   }
