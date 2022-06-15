@@ -74,8 +74,6 @@ class MySqlBuilder implements QueryBuilder
 
   public function getQuery()
   {
-    // HANDLE INSERT QUERY
-
     $sql = $this->query->base;
 
     if (isset($this->query->set)) {

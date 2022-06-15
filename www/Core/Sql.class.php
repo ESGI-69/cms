@@ -153,14 +153,14 @@ abstract class Sql extends MySqlBuilder
   public function executeQuery(string $query, int $fetchType = 0)
   {
     /**
-     * $fetchType demandé:
+     * $fetchType asked:
      *
      * - `0` = no fetch
      * - `1` = fetch
      * - `2` = fetchAll
      */
     if ($fetchType === 0) {
-      // query prepare et execute
+      // query prepare and execute
       $result = $this->pdo->prepare($query);
       $result->execute();
       return $result;
