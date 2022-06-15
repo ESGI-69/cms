@@ -2,10 +2,14 @@
 
 namespace App\Core;
 
-abstract class Sql
+use App\Core\MySqlBuilder;
+
+
+abstract class Sql extends MySqlBuilder
 {
   private $pdo;
   private $table;
+  protected $mysqlBuilder;
   private static $instance;
 
   public function __construct()
@@ -26,6 +30,8 @@ abstract class Sql
     //Si l'id n'est pas null alors on fait un update sinon on fait un insert
     $calledClassExploded = explode("\\", get_called_class());
     $this->table = strtolower(DBPREFIXE . end($calledClassExploded));
+
+    $this->mysqlBuilder = new MySqlBuilder();
   }
 
   //test singleton
@@ -50,12 +56,17 @@ abstract class Sql
   public function verifyEmail(string $emailToken): bool
   {
     // Met la ligne du user a jour en updatant le emailVerifyToken a NULL et le status à 1
-    $sql = "UPDATE wk_user SET emailVerifyToken=null, status=1 WHERE emailVerifyToken = :emailToken";
+    $sqlOld = "UPDATE wk_user SET emailVerifyToken=null, status=1 WHERE emailVerifyToken='" . $emailToken . "'";
+    $sql = $this->mysqlBuilder
+      ->update($this->table)
+      ->set('emailVerifyToken', 'null')
+      ->set('status', '1')
+      ->where('emailVerifyToken', $emailToken)
+      ->getQuery();
 
-    $sqlStatement = $this->pdo->prepare($sql);
-    $sqlStatement->bindParam('emailToken', $emailToken);
-    $sqlStatement->execute();
-    if ($sqlStatement->rowCount() === 1) {
+    $result = $this->executeQuery($sql, 0);
+
+    if ($result->rowCount() === 1) {
       return true;
     }
     return false;
@@ -66,9 +77,16 @@ abstract class Sql
    */
   public function setId(?int $id): object
   {
-    $sql = "SELECT * FROM " . $this->table . " WHERE id=" . $id;
-    $query = $this->pdo->query($sql);
-    return $query->fetchObject(get_called_class());
+    $sql = $this->mysqlBuilder
+      ->select($this->table, ['*'])
+      ->where('id', $id)
+      ->getQuery();
+
+    $result = $this->executeQuery($sql, 0);
+
+    $result = $result->fetchObject(get_called_class());
+
+    return $result;
   }
 
   public function save()
@@ -78,9 +96,15 @@ abstract class Sql
     $columns = array_diff_key($columns, get_class_vars(get_class()));
 
     if ($this->getId() == null) {
-      $sql = "INSERT INTO " . $this->table . " (" . implode(",", array_keys($columns)) . ") 
-            VALUES ( :" . implode(",:", array_keys($columns)) . ")";
-    } else {
+      $columnsFiltred = $columns;
+      unset($columnsFiltred['id']);
+
+      $sql = $this->mysqlBuilder
+        ->insert($this->table, $columnsFiltred)
+        ->getQuery();
+    } 
+    // non géré encore
+    else {
       $update = [];
       foreach ($columns as $column => $value) {
         $update[] = $column . "=:" . $column;
@@ -88,20 +112,23 @@ abstract class Sql
       $sql = "UPDATE " . $this->table . " SET " . implode(",", $update) . " WHERE id=" . $this->getId();
     }
 
-    $queryPrepared = $this->pdo->prepare($sql);
-    $queryPrepared->execute($columns);
+    $this->executeQuery($sql, 0);
   }
 
-  public function checkExistingMail() 
+  public function checkExistingMail()
   {
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
     $emailExist = false;
-    $sql = "SELECT * FROM wk_user WHERE email = :email";
-    $result = $this->executeQuery($sql, [
-      'email' => $columns['email']
-    ]);
-    if(!empty($result)){
+
+    $sql = $this->mysqlBuilder
+      ->select($this->table, ['*'])
+      ->where('email', $columns['email'])
+      ->getQuery();
+
+    $result = $this->executeQuery($sql, 2);
+
+    if (!empty($result)) {
       $emailExist = true;
     }
     return $emailExist;
@@ -109,22 +136,46 @@ abstract class Sql
 
   public function login(string $email): array
   {
-    $sql = "SELECT password, status, token, firstname FROM " . $this->table . " WHERE email= :email";
-    $queryStatement = $this->pdo->prepare($sql);
-    $queryStatement->bindParam('email', $email);
-    $queryStatement->execute();
-    $query = $queryStatement->fetch();
-    if ($query === false) {
+    $sql = $this->mysqlBuilder
+      ->select($this->table, ['password', 'status', 'token', 'firstname'])
+      ->where('email', $email)
+      ->limit(0, 1)
+      ->getQuery();
+    $query = $this->executeQuery($sql, 1);
+
+    if (empty($query)) {
       return [];
     } else {
-      return $query;
+      return $query[0];
     }
   }
 
-  public function executeQuery(string $query, array $options): array
+  public function executeQuery(string $query, int $fetchType = 0)
   {
-    $query = $this->pdo->prepare($query, array($this->pdo::ATTR_CURSOR => $this->pdo::CURSOR_FWDONLY));
-    $query->execute($options);
-    return $query->fetchAll();
+    /**
+     * $fetchType demandé:
+     *
+     * - `0` = no fetch
+     * - `1` = fetch
+     * - `2` = fetchAll
+     */
+    if ($fetchType === 0) {
+      // query prepare et execute
+      $result = $this->pdo->prepare($query);
+      $result->execute();
+      // $result = $this->pdo->query($query);
+      return $result;
+    }
+
+    $query = $this->pdo->prepare($query);
+
+    if ($fetchType === 1) {
+      $query->execute();
+      return $query
+        ->fetch();
+    } elseif ($fetchType === 2) {
+      $query->execute();
+      return $query->fetchAll();
+    }
   }
 }

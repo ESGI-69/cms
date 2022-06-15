@@ -162,10 +162,11 @@ class User extends Sql
    */
   public function getUserInfos(): array
   {
-    $sql = "SELECT * FROM wk_user WHERE token = :token";
-    $result = $this->executeQuery($sql, [
-      'token' => $this->getToken()
-    ]);
+    $sql = $this->mysqlBuilder
+      ->select('wk_user', ['*'])
+      ->where('token', $this->token)
+      ->getQuery();
+    $result = $this->executeQuery($sql, 2);
     $this->setEmail($result[0]['email']);
     $this->setFirstname($result[0]['firstname']);
     $this->setLastname($result[0]['lastname']);
@@ -302,7 +303,7 @@ class User extends Sql
           "required" => true,
           "class" => "inputForm",
           "id" => "pwdForm",
-          "error" => "Mot de passe incorrect"
+          "error" => "Email ou mot de passe invalide"
         ]
       ]
     ];
