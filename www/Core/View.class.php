@@ -14,7 +14,7 @@ class View
 
   public function __construct(
     string $view,
-    string $template = null,
+    string $template = 'front',
     string $pageTitle = null,
     string $pageDescription = null
   ) {
