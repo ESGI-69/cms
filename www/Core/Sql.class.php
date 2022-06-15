@@ -108,7 +108,7 @@ abstract class Sql
      * TODO : create getId() method
      */
     
-    if ($this->getId() !== null) {
+    if ($this->getId() === null) {
       $columnsFiltred = $columns;
       unset($columnsFiltred['id']);
 
