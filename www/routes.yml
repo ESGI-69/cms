@@ -8,7 +8,7 @@
 
 /login:
   controller: user
-  action: login
+  action: loginUser
 
 /logout:
   controller: user
@@ -19,7 +19,7 @@
   action: register
 
 /verify:
-  controller: verify
+  controller: user
   action: verify
 
 /forget:
