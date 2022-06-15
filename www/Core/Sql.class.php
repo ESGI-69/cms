@@ -146,7 +146,7 @@ abstract class Sql extends MySqlBuilder
     if (empty($query)) {
       return [];
     } else {
-      return $query[0];
+      return $query;
     }
   }
 
@@ -163,7 +163,6 @@ abstract class Sql extends MySqlBuilder
       // query prepare et execute
       $result = $this->pdo->prepare($query);
       $result->execute();
-      // $result = $this->pdo->query($query);
       return $result;
     }
 
