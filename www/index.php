@@ -6,6 +6,8 @@ use App\Core\AuthManager;
 
 require "conf.inc.php";
 
+session_start();
+
 function myAutoloader($class)
 {
   // $class => CleanWords
