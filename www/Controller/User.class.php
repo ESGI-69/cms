@@ -48,7 +48,7 @@ class User extends Sql
       }
     }
 
-    $view = new View("Login");
+    $view = new View("Login", "front", "Connexion");
     $view->assign("user", $user);
     $view->assign("success", $login);
     $view->assign("errors", empty($formErrors) ? null : $formErrors);
@@ -81,7 +81,7 @@ class User extends Sql
         }
       }
     }
-    $view = new View("register");
+    $view = new View("register", 'front', 'Inscription');
     $view->assign("user", $user);
     $view->assign("success", $registered);
     $view->assign("errors", $formErrors);

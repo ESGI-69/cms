@@ -9,16 +9,22 @@ class View
   private $view;
   private $template;
   private $data = [];
+  private $pageDescription = null;
+  private $pageTitle = 'Wikiki';
 
   public function __construct(
     string $view,
-    $template = "front",
-    string $pageTitle = 'Wikiki',
+    string $template = null,
+    string $pageTitle = null,
     string $pageDescription = null
   ) {
+    if ($pageTitle !== null) {
+      $this->pageTitle = $this->pageTitle . ' - ' . $pageTitle;
+    }
+    if ($pageDescription !== null) {
+      $this->pageDescription = $this->pageDescription . ' - ' . $pageDescription;
+    }
     $this->setView($view);
-    $this->assign("pageTitle", $pageTitle);
-    $this->assign("pageDescription", $pageDescription);
     $this->setTemplate($template);
   }
 
@@ -65,6 +71,8 @@ class View
     $this->data['isAdmin'] = AuthManager::isAdmin();
     $this->data['isMod'] = AuthManager::isMod();
     $this->data['isUser'] = AuthManager::isUser();
+    $this->data['pageTitle'] = $this->pageTitle;
+    $this->data['pageDescription'] = $this->pageDescription;
     extract($this->data);
     include "View/" . $this->template . ".tpl.php";
   }
