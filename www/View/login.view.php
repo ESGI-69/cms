@@ -1,8 +1,10 @@
-<h1>Page de login</h1>
+<h1>Connexion</h1>
 
-<?php if($login === false ) : ?>
+<?php if (!$success) : ?>
   <?php $this->includePartial("form", $user->getLoginForm()) ?>
-  <?=$loginError ?>
 <?php else : ?>
-  BIENVENUE <?= $userInfos["firstname"] ?>
+  <p>
+    Bravo <?= $userInfos["firstname"] ?>, vous êtes connecté ! 👏
+  </p>
+  <a href="/">Retour à l'accueil</a>
 <?php endif; ?>

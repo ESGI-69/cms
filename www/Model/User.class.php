@@ -207,14 +207,15 @@ class User extends Sql
       "config" => [
         "method" => "POST",
         "action" => "",
-        "submit" => "S'inscrire"
+        "submit" => "S'inscrire",
+        "success" => "Votre compte a bien été créé !",
       ],
       'inputs' => [
         "email" => [
           "type" => "email",
           "placeholder" => "Votre email ...",
           "required" => true,
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "emailForm",
           "error" => "Email incorrect",
           "unicity" => "true",
@@ -224,7 +225,7 @@ class User extends Sql
           "type" => "password",
           "placeholder" => "Votre mot de passe ...",
           "required" => true,
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "pwdForm",
           "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
         ],
@@ -232,7 +233,7 @@ class User extends Sql
           "type" => "password",
           "placeholder" => "Confirmation ...",
           "required" => true,
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "pwdConfirmForm",
           "confirm" => "password",
           "error" => "Votre mot de passe de confirmation ne correspond pas",
@@ -240,7 +241,7 @@ class User extends Sql
         "firstname" => [
           "type" => "text",
           "placeholder" => "Votre prénom ...",
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "firstnameForm",
           "min" => 2,
           "max" => 50,
@@ -249,7 +250,7 @@ class User extends Sql
         "lastname" => [
           "type" => "text",
           "placeholder" => "Votre nom ...",
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "lastnameForm",
           "min" => 2,
           "max" => 100,
@@ -292,7 +293,7 @@ class User extends Sql
           "type" => "email",
           "placeholder" => "Votre email ...",
           "required" => true,
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "emailForm",
           "error" => "Email incorrect"
         ],
@@ -300,7 +301,7 @@ class User extends Sql
           "type" => "password",
           "placeholder" => "Votre mot de passe ...",
           "required" => true,
-          "class" => "inputForm",
+          "class" => "input",
           "id" => "pwdForm",
           "error" => "Mot de passe incorrect"
         ]
