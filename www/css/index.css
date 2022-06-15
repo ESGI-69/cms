@@ -144,7 +144,7 @@ body.front main {
   background-color: #34d399;
 }
 
-.front .button {
+.front .button, .front input[type=submit].button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,22 +152,25 @@ body.front main {
   padding: 0.375em 0.75em;
   font-size: 0.8em;
 }
-.front .button:hover {
-  border: 2px solid #ffffff;
-}
-.front .button--big {
+.front .button--big, .front input[type=submit].button--big {
   padding: 0.625em 1.375em;
   font-size: 1em;
 }
-.front .button--primary {
+.front .button--primary, .front input[type=submit].button--primary {
   background-color: #2C2C2C;
   color: #ffffff;
   border: 2px solid #2C2C2C;
 }
-.front .button--secondary {
-  background-color: #EDF6F9;
-  color: #ffffff;
+.front .button--primary:hover, .front input[type=submit].button--primary:hover {
   border: 2px solid #EDF6F9;
+}
+.front .button--secondary, .front input[type=submit].button--secondary {
+  background-color: #EDF6F9;
+  color: #000000;
+  border: 2px solid #EDF6F9;
+}
+.front .button--secondary:hover, .front input[type=submit].button--secondary:hover {
+  border: 2px solid #2C2C2C;
 }
 
 .inline-button {
@@ -189,12 +192,13 @@ body.front main {
   text-decoration: underline;
 }
 
-.input {
+.front .form .input {
   padding: 0.5em;
   border-radius: 0.25em;
   background: #ffffff;
   border: 1px solid #C0C8D2;
   font-size: 0.875em;
+  box-sizing: border-box;
 }
 
 a.link {
@@ -387,6 +391,31 @@ a.link:visited {
 .input-image__text {
   font-size: 0.75em;
   color: #64748B;
+}
+
+.front .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  min-width: 230px;
+}
+.front .form input {
+  width: 100%;
+}
+.front .form input[type=submit] {
+  margin-top: 0.5em;
+}
+.front .form .error {
+  padding: 0.5rem 1rem;
+  background-color: #FF1B1C;
+  border-radius: 0.25rem;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .wk_sidebar {

@@ -96,17 +96,13 @@
 }
 
 .front {
-  .button {
+  .button, input[type="submit"].button {
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
     padding: em(6) em(12);
     font-size: .8em;
-
-    &:hover {
-      border: 2px solid $color-white;
-    }
     
     &--big {
       padding: em(10) em(22);
@@ -117,12 +113,20 @@
       background-color: $color-front-primary;
       color: $color-white;
       border: 2px solid $color-front-primary;
+
+      &:hover {
+        border: 2px solid $color-front-secondary;
+      }
     }
 
     &--secondary {
       background-color: $color-front-secondary;
-      color: $color-white;
+      color: $color-black;
       border: 2px solid $color-front-secondary;
+
+      &:hover {
+        border: 2px solid $color-front-primary;
+      }
     }
   }
 }

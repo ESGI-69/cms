@@ -16,19 +16,20 @@ class User extends Sql
   {
     $user = new UserModel();
     $login = false;
-    $loginError = null;
     $userInfos = null;
 
+    $formErrors = [];
+
     if (!empty($_POST)) {
-      $result = Verificator::checkForm($user->getLoginForm(), $_POST);
-      if (count($result) === 0) {
+      $formErrors = Verificator::checkForm($user->getLoginForm(), $_POST);
+      if (count($formErrors) === 0) {
         $user->setLoginInfo();
         $queryResult = $user->login($user->getEmail());
         if (empty($queryResult)) {
-          $loginError = "Email ou mot de passe invalide";
+          $formErrors[] = "Email ou mot de passe invalide";
         } else {
           if ($queryResult['status'] === "0") {
-            $loginError = "Confirmez votre mail";
+            $formErrors[] = "Confirmez votre mail";
           } else if ($queryResult['status'] === "1") {
             if (password_verify($_POST['password'], $queryResult['password'])) {
               $login = true;
@@ -38,21 +39,19 @@ class User extends Sql
 
               setcookie('wikikiToken', $queryResult['token'], time() + 60 * 60 * 24 * 30);
             } else {
-              $loginError = "Email ou mot de passe invalide";
+              $formErrors[] = "Email ou mot de passe invalide";
             }
           } else if ($queryResult['status'] === "2") {
-            $loginError = "Vous etes banni";
+            $formErrors[] = "Vous etes banni";
           }
         }
-      } else {
-        print_r($result);
       }
     }
 
     $view = new View("Login");
     $view->assign("user", $user);
-    $view->assign("login", $login);
-    $view->assign("loginError", $loginError);
+    $view->assign("success", $login);
+    $view->assign("errors", empty($formErrors) ? null : $formErrors);
     $view->assign("userInfos", $userInfos);
   }
 
@@ -60,12 +59,15 @@ class User extends Sql
   {
     $user = new UserModel();
     $isMailSent = null;
+    $registered = false;
     $registerError = false;
 
+    $formErrors = [];
+
     if (!empty($_POST)) {
-      $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
+      $formErrors = Verificator::checkForm($user->getRegisterForm(), $_POST);
       // Si il n'y a pas d'erreur dans le form
-      if (count($result) === 0) {
+      if (count($formErrors) === 0) {
         $user->setRegisterInfo();
         $registerError = $user->checkExistingMail();
         // check si l'email n'est pas déjà utilisé
@@ -73,14 +75,16 @@ class User extends Sql
           $user->save();
           $mailer = new Mailer();
           $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+          $registered = true;
+        } else {
+          $formErrors[] = "Email déjà utilisé";
         }
-      } else {
-        print_r($result);
       }
     }
     $view = new View("register");
     $view->assign("user", $user);
-    $view->assign("registerError", $registerError);
+    $view->assign("success", $registered);
+    $view->assign("errors", $formErrors);
     $view->assign("isMailSent", $isMailSent);
   }
 
