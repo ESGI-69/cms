@@ -8,6 +8,10 @@ interface QueryBuilder
 
   public function select(string $table, array $columns): QueryBuilder;
 
+  public function update(string $table): QueryBuilder;
+
+  public function set(string $column, string $value, string $operator = '='): QueryBuilder;
+
   public function where(string $column, string $value, string $operator = '='): QueryBuilder;
 
   public function limit(int $from, int $offset): QueryBuilder;
@@ -28,9 +32,7 @@ class MySqlBuilder implements QueryBuilder
   {
     $this->init();
 
-    //$this->query->insert = "INSERT INTO " . $table . " (" . implode(",", array_keys($values)) . ") VALUES (:" . implode(",:", array_keys($values)) . ")";
-    //COPILOT TEST 
-    $this->query->insert = "INSERT INTO " . $table . " (" . implode(",", array_keys($values)) . ") VALUES (:" . implode(",:", array_keys($values)) . ")";
+    $this->query->base = "INSERT INTO " . $table . " (" . implode(",", array_keys($values)) . ") VALUES ('" . implode("', '", $values) . "')";
 
     return $this;
   }
@@ -39,7 +41,21 @@ class MySqlBuilder implements QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "SELECT " . implode(',', $columns) . " FROM " . $table;
+    $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $table;
+    return $this;
+  }
+
+  public function update(string $table): QueryBuilder
+  {
+    $this->init();
+
+    $this->query->base = "UPDATE " . $table;
+    return $this;
+  }
+
+  public function set(string $column, string $value, string $operator = '='): QueryBuilder
+  {
+    $this->query->set[] = ' ' . $column . $operator . "'" . $value . "'";
     return $this;
   }
 
@@ -59,8 +75,12 @@ class MySqlBuilder implements QueryBuilder
   public function getQuery()
   {
     // HANDLE INSERT QUERY
-    
+
     $sql = $this->query->base;
+
+    if (isset($this->query->set)) {
+      $sql .= " SET " . implode( ", ", $this->query->set);
+    }
 
     if (!empty($this->query->where)) {
       $sql .= " WHERE " . implode(" AND ", $this->query->where);
