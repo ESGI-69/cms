@@ -7,7 +7,7 @@
     <?php if (isset($pageDescription)) : ?>
         <meta name="description" content="<?= $pageDescription ?>">
     <?php endif; ?>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
