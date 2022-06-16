@@ -14,7 +14,7 @@ class Page
   {
     $page = new PageModel();
 
-    $view = new View("pageList", "back", "Liste des pages");
+    $view = new View("pagesList", "back", "Liste des pages");
     $view->assign("page", $page);
 
   }
