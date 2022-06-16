@@ -1,5 +1,5 @@
-<h1>List</h1>
+<h1>Pages</h1>
 
 <?php
-$pageTitle = "tg";
+echo "tg";
 ?>
