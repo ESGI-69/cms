@@ -1,5 +1,1 @@
-<h1>Pages</h1>
-
-<?php
-echo "tg";
-?>
+<?php $this->includePartial("form", $page->getPageForm()) ?>
