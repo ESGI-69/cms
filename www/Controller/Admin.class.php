@@ -10,13 +10,4 @@ class Admin
   {
     $view = new View("dashboard", "back");
   }
-
-  public function pages()
-  {
-
-    
-
-    $view = new View("pageList", "back");
-
-  }
 }
