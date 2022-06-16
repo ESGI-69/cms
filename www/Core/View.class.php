@@ -11,6 +11,7 @@ class View
   private $data = [];
   private $pageDescription = null;
   private $pageTitle = 'Wikiki';
+  private $shortedPageTitle;
 
   public function __construct(
     string $view,
@@ -19,6 +20,7 @@ class View
     string $pageDescription = null
   ) {
     if ($pageTitle !== null) {
+      $this->shortedPageTitle = $pageTitle;
       $this->pageTitle = $this->pageTitle . ' - ' . $pageTitle;
     }
     if ($pageDescription !== null) {
