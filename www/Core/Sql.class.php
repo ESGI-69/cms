@@ -90,7 +90,10 @@ abstract class Sql
     }
 
     /**
-     * TODO : update a user with save() method
+     * TODO : update an user with save()method : 
+     *        send his id through the form
+     *        or
+     *        update the user where token = $_COOKIE['wikikiToken']
      */
     else {
       $update = [];
