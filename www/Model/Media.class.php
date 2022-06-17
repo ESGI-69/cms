@@ -36,7 +36,12 @@ class Media extends Sql
   {
     $this->name = mb_strimwidth(
       trim(
-        preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($name)))), '-'), 0, 92) . "-" . date('y-m-d');
+        preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($name)))),
+        '-'
+      ),
+      0,
+      92
+    ) . "-" . date('y-m-d');
   }
 
   public function getMediaType(): ?string
@@ -49,14 +54,14 @@ class Media extends Sql
     $this->mediaType = str_replace('/', '', strstr($mediaType, '/'));
   }
 
-  public function getPath(): ?string 
+  public function getPath(): ?string
   {
     return $this->path;
   }
 
   public function setPath($type): void
   {
-    $this->path = $this->mediaRoute.$this->name.".".$type;
+    $this->path = $this->mediaRoute . $this->name . "." . $type;
   }
 
   public function getSize(): ?int
@@ -79,7 +84,8 @@ class Media extends Sql
     $this->user_id = AuthManager::userInfos()['id'];
   }
 
-  public function getMediaForm(): array {
+  public function getMediaForm(): array
+  {
     return [
       "config" => [
         "method" => "POST",
@@ -114,7 +120,7 @@ class Media extends Sql
 
   public function setMediaInfo(): void
   {
-    try{
+    try {
       $this->setName($_POST['name']);
       $this->setSize($_FILES["media"]['size']);
       $this->setMediaType($_FILES["media"]['type']);
@@ -126,7 +132,8 @@ class Media extends Sql
     }
   }
 
-  public function getAll() {
+  public function getAll()
+  {
     $sql = $this->mysqlBuilder
       ->select(['*'])
       ->getQuery();
@@ -136,10 +143,11 @@ class Media extends Sql
     return $result;
   }
 
-  public function delete($idMedia) {
+  public function delete($idMedia)
+  {
     $sql = $this->mysqlBuilder
       ->delete()
-      ->where ('id')
+      ->where('id')
       ->getQuery();
 
     $option = [
@@ -148,6 +156,4 @@ class Media extends Sql
 
     $this->executeQuery($sql, 0, $option);
   }
-
-
 }

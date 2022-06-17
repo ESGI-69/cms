@@ -73,9 +73,7 @@ class MySqlBuilder implements QueryBuilder
   {
     if (gettype($columns) === 'string') {
       $this->query->set[] = ' ' . $columns . $operator . ":" . $columns;
-
-    }
-    else if (gettype($columns) === 'array') {
+    } else if (gettype($columns) === 'array') {
       foreach ($columns as $column => $value) {
         $this->query->set[] = $column . $operator . ":" . $column;
       }
@@ -101,7 +99,7 @@ class MySqlBuilder implements QueryBuilder
     $sql = $this->query->base;
 
     if (isset($this->query->set)) {
-      $sql .= " SET " . implode( ", ", $this->query->set);
+      $sql .= " SET " . implode(", ", $this->query->set);
     }
 
     if (!empty($this->query->where)) {
