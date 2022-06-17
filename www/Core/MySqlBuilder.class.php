@@ -8,6 +8,8 @@ interface QueryBuilder
 
   public function select(string $table, array $columns): QueryBuilder;
 
+  public function delete(string $table): QueryBuilder;
+
   public function update(string $table): QueryBuilder;
 
   public function set($column, string $operator = '='): QueryBuilder;
@@ -42,6 +44,14 @@ class MySqlBuilder implements QueryBuilder
     $this->init();
 
     $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $table;
+    return $this;
+  }
+
+  public function delete(string $table): QueryBuilder
+  {
+    $this->init();
+
+    $this->query->base = "DELETE FROM " . $table;
     return $this;
   }
 
