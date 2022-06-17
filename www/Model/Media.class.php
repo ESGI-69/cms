@@ -106,8 +106,8 @@ class Media extends Sql
           "class" => "input",
           "id" => "mediaForm",
           "error" => "Une image stp",
-          "required" => true,
           "accept" => "image/*",
+          "required" => true,
         ],
       ]
     ];

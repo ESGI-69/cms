@@ -16,13 +16,16 @@ class Verificator
 
     foreach ($config['inputs'] as $name => $input) {
 
-      // if (!isset($data[$name])) {
-      //   $result[] = "Le champs " . $name . " n'existe pas";
-      // }
+      if (!isset($data[$name])) {
+        if ($input['type'] !== 'file') {
+          $result[] = "Le champs " . $name . " n'existe pas";
+        }
 
-      // if (empty($data[$name]) && !empty($input["required"])) {
-      //   $result[] = "Le champs " . $name . " ne peut pas être vide";
-      // }
+      }
+
+      if (empty($data[$name]) && !empty($input["required"] && $input["type"] !== "file")) {
+        $result[] = "Le champs " . $name . " ne peut pas être vide";
+      }
 
       if ($input["type"] == "email" && !self::checkEmail($data[$name])) {
         $result[] = $input["error"];
