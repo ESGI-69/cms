@@ -115,12 +115,6 @@ class Media extends Sql
 
   public function setMediaInfo(): void
   {
-    // echo "<pre>";
-    // var_dump($_POST);
-    // echo "</pre>";
-    echo "<pre>";
-    var_dump($_FILES);
-    echo "</pre>";
     try{
       $this->setName($_POST['name']);
       $this->setSize($_FILES["media"]['size']);
