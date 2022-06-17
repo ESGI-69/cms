@@ -18,6 +18,8 @@ interface QueryBuilder
 
   public function limit(int $from, int $offset): QueryBuilder;
 
+  public function order(string $column);
+
   public function getQuery();
 }
 
@@ -94,6 +96,12 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
+  public function order(string $column): QueryBuilder
+  {
+    $this->query->order = ' ORDER BY ' . $column;
+    return $this;
+  }
+
   public function getQuery()
   {
     $sql = $this->query->base;
@@ -108,6 +116,10 @@ class MySqlBuilder implements QueryBuilder
 
     if (isset($this->query->limit)) {
       $sql .= " " . $this->query->limit;
+    }
+
+    if (isset($this->query->order)) {
+      $sql .= " " . $this->query->order;
     }
 
     $sql .= ';';
