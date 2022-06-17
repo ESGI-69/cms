@@ -72,7 +72,7 @@ class User extends Sql
         $registerError = $user->checkExistingMail();
         // check si l'email n'est pas déjà utilisé
         if (!$registerError) {
-          $user->save();
+          $user->saveUser();
           $mailer = new Mailer();
           $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
           $registered = true;

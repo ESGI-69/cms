@@ -6,6 +6,7 @@ use App\Core\CleanWords;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
+use App\Core\AuthManager;
 
 use App\Model\Media as MediaModel;
 
@@ -29,17 +30,27 @@ class Media extends Sql
   public function mediaManager()
   {
     $media = new MediaModel();
+    $saved = false;
+    $formErrors = [];
     
     // à faire
     if (isset($_GET['id'])) {
       // $this->editMedia($_GET['editId']);
-      echo "editMedia";
     } else {
-      echo "addMedia";
-      
+      if (!empty($_POST)) {
+        $formErrors = Verificator::checkForm($media->getMediaForm(), $_POST);
+        if (count($formErrors) === 0) {
+          $media->setMediaInfo();
+          
+          $media->saveMedia();
+        }
+      }
     }
 
     $view = new View("mediaManager", "back", "Editer - MEDIA NAME");
     $view->assign("media", $media);
+    $view->assign("success", $saved);
+    $view->assign("errors", $formErrors);
   }
+
 }

@@ -3,13 +3,20 @@
 namespace App\Model;
 
 use App\Core\Sql;
+use App\Core\AuthManager;
+use PHPMailer\PHPMailer\Exception;
+use Stringable;
 
 class Media extends Sql
 {
   protected $id = null;
   protected $name = null;
+  protected $path = null;
   protected $size = null;
   protected $user_id = null;
+
+  protected $mediaType = null;
+  protected $mediaRoute = "user-media/";
 
   public function __construct()
   {
@@ -33,6 +40,26 @@ class Media extends Sql
         preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($name)))), '-'), 0, 92) . "-" . date('y-m-d');
   }
 
+  public function getMediaType(): ?string
+  {
+    return $this->mediaType;
+  }
+
+  public function setMediaType(?string $mediaType): void
+  {
+    $this->mediaType = str_replace('/', '', strstr($mediaType, '/'));
+  }
+
+  public function getPath(): ?string 
+  {
+    return $this->path;
+  }
+
+  public function setPath($type): void
+  {
+    $this->path = $this->mediaRoute.$this->name.".".$type;
+  }
+
   public function getSize(): ?int
   {
     return $this->size;
@@ -48,9 +75,62 @@ class Media extends Sql
     return $this->user_id;
   }
 
-  public function setUserId(?int $user_id): void
+  public function setUserId(): void
   {
-    $this->user_id = $user_id;
+    $this->user_id = AuthManager::userInfos()['id'];
+  }
+
+  public function getMediaForm(): array {
+    return [
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "Ajouter / Modifier",
+        "success" => "Le média à bien été ajouté / modifié",
+        "enctype" => "multipart/form-data"
+      ],
+      "inputs" => [
+        "name" => [
+          "type" => "text",
+          "placeholder" => "Nom du média...",
+          "required" => true,
+          "class" => "input",
+          "id" => "nameForm",
+          "error" => "Pas de caractères speciaux ni d'escapes, séparez les mots par des -",
+          "min" => 2,
+          "max" => 92,
+        ],
+        "media" => [
+          "type" => "file",
+          "placeholder" => "Téléverse une image",
+          "class" => "input",
+          "id" => "mediaForm",
+          "error" => "Une image stp",
+          "required" => true,
+          "accept" => "image/*",
+        ],
+      ]
+    ];
+  }
+
+  public function setMediaInfo(): void
+  {
+    // echo "<pre>";
+    // var_dump($_POST);
+    // echo "</pre>";
+    echo "<pre>";
+    var_dump($_FILES);
+    echo "</pre>";
+    try{
+      $this->setName($_POST['name']);
+      $this->setSize($_FILES["media"]['size']);
+      $this->setMediaType($_FILES["media"]['type']);
+      $this->setPath($this->getMediaType());
+      $this->setUserId();
+    } catch (Exception $e) {
+      echo "Impossible d'assigner les properties du Model User";
+      print_r($e);
+    }
   }
 
   public function getAll() {
