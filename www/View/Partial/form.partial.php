@@ -12,6 +12,9 @@
       placeholder="<?= $input["placeholder"]??"" ?>"
       id="<?= $input["id"]??"" ?>"
       class="<?= $input["class"]??"" ?>"
+      <?php if(!empty($input["accept"])) :?>
+        accept="<?= $input["accept"]??"" ?>"
+      <?php endif; ?>
       <?= empty($input["required"])?"":'required="required"' ?>
     >
 
