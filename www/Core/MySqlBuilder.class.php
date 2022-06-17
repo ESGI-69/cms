@@ -4,13 +4,13 @@ namespace App\Core;
 
 interface QueryBuilder
 {
-  public function insert(string $table, array $values): QueryBuilder;
+  public function insert(array $values): QueryBuilder;
 
-  public function select(string $table, array $columns): QueryBuilder;
+  public function select(array $columns): QueryBuilder;
 
-  public function delete(string $table): QueryBuilder;
+  public function delete(): QueryBuilder;
 
-  public function update(string $table): QueryBuilder;
+  public function update(): QueryBuilder;
 
   public function set($column, string $operator = '='): QueryBuilder;
 
@@ -21,45 +21,51 @@ interface QueryBuilder
   public function getQuery();
 }
 
-class MySqlBuilder implements QueryBuilder
+class MySqlBuilder implements QueryBuilder 
 {
   private $query;
+  private $table;
+
+  public function __construct(string $table)
+  {
+    $this->table = $table;
+  }
 
   public function init()
   {
     $this->query = new \StdClass;
   }
 
-  public function insert(string $table, array $values): QueryBuilder
+  public function insert(array $values): QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "INSERT INTO " . $table . " (" . implode(",", array_keys($values)) . ") VALUES (:" . implode(", :", array_keys($values)) . ")";
+    $this->query->base = "INSERT INTO " . $this->table  . " (" . implode(",", array_keys($values)) . ") VALUES (:" . implode(", :", array_keys($values)) . ")";
 
     return $this;
   }
 
-  public function select(string $table, array $columns): QueryBuilder
+  public function select(array $columns): QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $table;
+    $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $this->table;
     return $this;
   }
 
-  public function delete(string $table): QueryBuilder
+  public function delete(): QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "DELETE FROM " . $table;
+    $this->query->base = "DELETE FROM " . $this->table;
     return $this;
   }
 
-  public function update(string $table): QueryBuilder
+  public function update(): QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "UPDATE " . $table;
+    $this->query->base = "UPDATE " . $this->table;
     return $this;
   }
 
