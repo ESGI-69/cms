@@ -42,7 +42,7 @@ class User extends Sql
               $formErrors[] = "Email ou mot de passe invalide";
             }
           } else if ($queryResult['status'] === "2") {
-            $formErrors[] = "Vous etes banni";
+            $formErrors[] = "🫵 Vous etes banni 🫵";
           }
         }
       }

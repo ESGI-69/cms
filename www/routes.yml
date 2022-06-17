@@ -30,7 +30,24 @@
   controller: admin
   action: dashboard
   security: 2
-  childrens:
-    /pages:
-      controller: admin
-      action: pages
+
+/pages-list:
+  controller: page
+  action: pagesList
+  security: 1
+
+/page-manager:
+  controller: page
+  action: pageManager
+  security: 1
+
+
+/medias-list:
+  controller: media
+  action: mediasList
+  security: 1
+
+/media-manager:
+  controller: media
+  action: mediaManager
+  security: 1

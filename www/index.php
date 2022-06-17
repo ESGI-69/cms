@@ -111,3 +111,8 @@ if (!method_exists($objectController, $action)) {
 }
 // $action = login ou logout ou register ou home
 $objectController->$action();
+
+//Crée un dossier user-media si il n'existe pas
+if (!file_exists("user-media")) {
+  mkdir("user-media");
+} 

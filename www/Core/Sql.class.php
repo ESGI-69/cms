@@ -184,6 +184,29 @@ abstract class Sql
     }
   }
 
+  public function getMedias() {
+    $sql = $this->mysqlBuilder
+      ->select($this->table, ['*'])
+      ->getQuery();
+
+    $result = $this->executeQuery($sql, 2);
+
+    return $result;
+  }
+
+  public function deleteMedia($idMedia) {
+    $sql = $this->mysqlBuilder
+      ->delete($this->table)
+      ->where ('id')
+      ->getQuery();
+
+    $option = [
+      'id' => $idMedia
+    ];
+
+    $this->executeQuery($sql, 0, $option);
+  }
+
   public function executeQuery(string $query, int $fetchType, array $option = null)
   {
     /**
@@ -209,4 +232,5 @@ abstract class Sql
       return $query->fetchAll();
     }
   }
+
 }
