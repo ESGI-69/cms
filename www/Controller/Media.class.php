@@ -41,7 +41,6 @@ class Media extends Sql
         $formErrors = Verificator::checkForm($media->getMediaForm(), $_POST);
         if (count($formErrors) === 0) {
           $media->setMediaInfo();
-          
           $media->saveMedia();
         }
       }
