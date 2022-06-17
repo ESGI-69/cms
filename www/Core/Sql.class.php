@@ -31,7 +31,7 @@ abstract class Sql
     $calledClassExploded = explode("\\", get_called_class());
     $this->table = strtolower(DBPREFIXE . end($calledClassExploded));
 
-    $this->mysqlBuilder = new MySqlBuilder();
+    $this->mysqlBuilder = new MySqlBuilder($this->table);
   }
 
   //test singleton
@@ -57,7 +57,7 @@ abstract class Sql
   {
     // Met la ligne du user a jour en updatant le emailVerifyToken a NULL et le status à 1
     $sql = $this->mysqlBuilder
-      ->update($this->table)
+      ->update()
       ->set('emailVerifyToken')
       ->set('status')
       ->where('emailVerifyToken')
@@ -83,7 +83,7 @@ abstract class Sql
   public function setId(?int $id): object
   {
     $sql = $this->mysqlBuilder
-      ->select($this->table, ['*'])
+      ->select(['*'])
       ->where('id')
       ->getQuery();
 
@@ -113,7 +113,7 @@ abstract class Sql
       unset($columnsFiltred['id']);
 
       $sql = $this->mysqlBuilder
-        ->insert($this->table, $columnsFiltred)
+        ->insert($columnsFiltred)
         ->getQuery();
       $this->executeQuery($sql, 0, $columnsFiltred);
     }
@@ -128,7 +128,7 @@ abstract class Sql
       }
 
       $sqlNew = $this->mysqlBuilder
-        ->update($this->table)
+        ->update()
         ->set($columns)
         ->where('id')
         ->getQuery();
@@ -145,7 +145,7 @@ abstract class Sql
     $emailExist = false;
 
     $sql = $this->mysqlBuilder
-      ->select($this->table, ['*'])
+      ->select(['*'])
       ->where('email')
       ->limit(0, 1)
       ->getQuery();
@@ -166,7 +166,7 @@ abstract class Sql
   public function login(string $email): array
   {
     $sql = $this->mysqlBuilder
-      ->select($this->table, ['password', 'status', 'token', 'firstname'])
+      ->select(['password', 'status', 'token', 'firstname'])
       ->where('email')
       ->limit(0, 1)
       ->getQuery();
@@ -182,29 +182,6 @@ abstract class Sql
     } else {
       return $query;
     }
-  }
-
-  public function getMedias() {
-    $sql = $this->mysqlBuilder
-      ->select($this->table, ['*'])
-      ->getQuery();
-
-    $result = $this->executeQuery($sql, 2);
-
-    return $result;
-  }
-
-  public function deleteMedia($idMedia) {
-    $sql = $this->mysqlBuilder
-      ->delete($this->table)
-      ->where ('id')
-      ->getQuery();
-
-    $option = [
-      'id' => $idMedia
-    ];
-
-    $this->executeQuery($sql, 0, $option);
   }
 
   public function executeQuery(string $query, int $fetchType, array $option = null)

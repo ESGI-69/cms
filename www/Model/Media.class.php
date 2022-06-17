@@ -53,7 +53,28 @@ class Media extends Sql
     $this->user_id = $user_id;
   }
 
-  
+  public function getAll() {
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->getQuery();
+
+    $result = $this->executeQuery($sql, 2);
+
+    return $result;
+  }
+
+  public function delete($idMedia) {
+    $sql = $this->mysqlBuilder
+      ->delete()
+      ->where ('id')
+      ->getQuery();
+
+    $option = [
+      'id' => $idMedia
+    ];
+
+    $this->executeQuery($sql, 0, $option);
+  }
 
 
 }

@@ -163,7 +163,7 @@ class User extends Sql
   public function getUserInfos(): array
   {
     $sql = $this->mysqlBuilder
-      ->select('wk_user', ['*'])
+      ->select(['*'])
       ->where('token')
       ->getQuery();
     $option = [
