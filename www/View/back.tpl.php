@@ -15,12 +15,13 @@
   <script src="https://cdn.tiny.cloud/1/hwgre5j1e94ouquulufuygnjd0vqdzl0udis1n4fo7vjz7ia/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
-      selector: 'textarea',
-      plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
-      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+      menubar: false,
+      selector: 'input[type=wysiwyg]',
+      plugins: 'a11ychecker advcode casechange tinymcespellchecker',
+      toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright',
       toolbar_mode: 'floating',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
+      // tinycomments_mode: 'embedded',
+      // tinycomments_author: 'Author name',
     });
   </script>
   <?php include "Components/sidebar.component.php"; ?>
