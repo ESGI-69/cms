@@ -118,7 +118,7 @@ abstract class Sql
     if ($this->getId() === null) {
       $target_dir = $columns["mediaRoute"];
       $target_file = $target_dir . $columns["name"] . "." . $columns["mediaType"];
-      
+
       //upload the file
       move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
 
