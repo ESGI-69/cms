@@ -9,20 +9,20 @@ class Verificator
     $result = [];
     // Le nb de inputs envoyés - 1 pour le csrf_token
     if (count($data) - 1 != count($config['inputs'])) {
-      die("Tentative de hack !!!!");
+      // die("Tentative de hack !!!!");
     }
 
     SecurityManager::checkCsrfToken();
 
     foreach ($config['inputs'] as $name => $input) {
 
-      if (!isset($data[$name])) {
-        $result[] = "Le champs " . $name . " n'existe pas";
-      }
+      // if (!isset($data[$name])) {
+      //   $result[] = "Le champs " . $name . " n'existe pas";
+      // }
 
-      if (empty($data[$name]) && !empty($input["required"])) {
-        $result[] = "Le champs " . $name . " ne peut pas être vide";
-      }
+      // if (empty($data[$name]) && !empty($input["required"])) {
+      //   $result[] = "Le champs " . $name . " ne peut pas être vide";
+      // }
 
       if ($input["type"] == "email" && !self::checkEmail($data[$name])) {
         $result[] = $input["error"];

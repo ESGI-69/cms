@@ -44,6 +44,10 @@ class User extends Sql
     return $this->id;
   }
 
+  public function setId($id): void
+  {
+    $this->id = $id;
+  }
   /**
    * @return null|string
    */
@@ -279,7 +283,7 @@ class User extends Sql
       $this->setFirstname($_POST['firstname']);
       $this->setLastname($_POST['lastname']);
     } catch (Exception $e) {
-      echo "Impossible d'assigner les propetries du Model User";
+      echo "Impossible d'assigner les properties du Model User";
       print_r($e);
     }
   }
@@ -318,7 +322,7 @@ class User extends Sql
     try {
       $this->setEmail($_POST['email']);
     } catch (Exception $e) {
-      echo "Impossible d'assigner les propetries du Model User";
+      echo "Impossible d'assigner les properties du Model User";
       print_r($e);
     }
   }

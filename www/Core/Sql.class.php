@@ -80,7 +80,7 @@ abstract class Sql
   /**
    * @param int $id
    */
-  public function setId(?int $id): object
+  public function getUserById(?int $id): object
   {
     $sql = $this->mysqlBuilder
       ->select(['*'])
@@ -98,7 +98,7 @@ abstract class Sql
     return $result;
   }
 
-  public function save()
+  public function saveUser()
   {
 
     $columns = get_object_vars($this);
@@ -106,9 +106,11 @@ abstract class Sql
 
     /**
      * TODO : create getId() method
+     *        or
+     *        use Authenticator::getUser()->getId() ?s
      */
     
-    if ($this->getId() === null) {
+    if ($this->getUserId() === null) {
       $columnsFiltred = $columns;
       unset($columnsFiltred['id']);
 
@@ -135,6 +137,55 @@ abstract class Sql
         
       $this->executeQuery($sqlNew, 0, $columns);
     }
+
+  }
+  
+  public function saveMedia()
+  {
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+    echo '<pre>';
+    print_r($columns);
+    echo '</pre>';
+
+    // save the file
+    $target_dir = $columns["mediaRoute"];
+    $target_file = $target_dir . $columns["name"].".".$columns["mediaType"];
+    // $uploadCheck = 1;
+    // $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+    // a faire dans le verificator
+    // 5MB max
+    // if ($_FILES["media"]["size"] > 5000000) {
+    //   echo "Image trop lourde";
+    //   $uploadCheck = 0;
+    // }
+    // Allow certain file formats
+    // if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    // && $imageFileType != "gif" ) {
+    //   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    //   $uploadCheck = 0;
+    // }
+
+    // Check if $uploadOk is set to 0 by an error
+    // if ($uploadCheck == 0) {
+    //   echo "Sorry, your file was not uploaded.";
+    // }
+    move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
+
+    $columnsFiltred = $columns;
+    unset($columnsFiltred['id']);
+    unset($columnsFiltred['mediaType']);
+    unset($columnsFiltred['mediaRoute']);
+
+    $sql = $this->mysqlBuilder
+      ->insert($columnsFiltred)
+      ->getQuery();
+
+    $options = $columnsFiltred;
+
+    $this->executeQuery($sql, 0, $options);
 
   }
 

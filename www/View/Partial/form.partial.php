@@ -1,6 +1,7 @@
 <form
   class="form <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>"
   method="<?= $data["config"]["method"]??"POST" ?>"  action="<?= $data["config"]["action"]??"" ?>"
+  enctype="<?= $data["config"]["enctype"]??"POST" ?>"
 >
 
   <?php foreach ($data["inputs"] as $name=>$input) :?>
