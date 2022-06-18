@@ -33,7 +33,7 @@ class Media extends Sql
     $saved = false;
     $formErrors = [];
     $registerError = false;
-    
+
     // à faire
     if (isset($_GET['id'])) {
       // $this->editMedia($_GET['editId']);
@@ -46,8 +46,7 @@ class Media extends Sql
           if ($registerError === false) {
             $media->saveMedia();
             $saved = true;
-          }
-          else {
+          } else {
             $formErrors[] = "Nom de média déjà utilisé";
           }
         }
@@ -59,5 +58,4 @@ class Media extends Sql
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);
   }
-
 }
