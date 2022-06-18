@@ -32,6 +32,7 @@ class Media extends Sql
     $media = new MediaModel();
     $saved = false;
     $formErrors = [];
+    $registerError = false;
     
     // à faire
     if (isset($_GET['id'])) {
@@ -41,7 +42,14 @@ class Media extends Sql
         $formErrors = Verificator::checkForm($media->getMediaForm(), $_POST);
         if (count($formErrors) === 0) {
           $media->setMediaInfo();
-          $media->saveMedia();
+          $registerError = $media->checkExistingMedia();
+          if ($registerError === false) {
+            $media->saveMedia();
+            $saved = true;
+          }
+          else {
+            $formErrors[] = "Nom de média déjà utilisé";
+          }
         }
       }
     }
