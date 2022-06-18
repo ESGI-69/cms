@@ -166,7 +166,7 @@ abstract class Sql
     }
   }
 
-  public function checkExistingMail()
+  public function checkExisting(string $where)
   {
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
@@ -174,12 +174,12 @@ abstract class Sql
 
     $sql = $this->mysqlBuilder
       ->select(['*'])
-      ->where('email')
+      ->where($where)
       ->limit(0, 1)
       ->getQuery();
 
     $option = [
-      'email' => $columns['email']
+      $where => $columns[$where]
     ];
 
     $result = $this->executeQuery($sql, 1, $option);
@@ -189,30 +189,6 @@ abstract class Sql
     }
 
     return $emailExist;
-  }
-
-  public function checkExistingMedia() {
-    $columns = get_object_vars($this);
-    $columns = array_diff_key($columns, get_class_vars(get_class()));
-    $mediaExist = false;
-
-    $sql = $this->mysqlBuilder
-      ->select(['*'])
-      ->where('name')
-      ->limit(0, 1)
-      ->getQuery();
-
-    $option = [
-      'name' => $columns['name']
-    ];
-
-    $result = $this->executeQuery($sql, 1, $option);
-
-    if (!empty($result)) {
-      $mediaExist = true;
-    }
-
-    return $mediaExist;
   }
 
   public function login(string $email): array

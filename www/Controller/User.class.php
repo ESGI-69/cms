@@ -69,7 +69,7 @@ class User extends Sql
       // Si il n'y a pas d'erreur dans le form
       if (count($formErrors) === 0) {
         $user->setRegisterInfo();
-        $registerError = $user->checkExistingMail();
+        $registerError = $user->checkExisting('email');
         // check si l'email n'est pas déjà utilisé
         if (!$registerError) {
           $user->saveUser();
