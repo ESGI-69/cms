@@ -1,1 +1,1 @@
-<?php $this->includePartial("form", $media->getMediaForm()) ?>
+<?php $this->includePartial("form", $media->getMediaForm());
