@@ -145,29 +145,8 @@ abstract class Sql
     $columns = array_diff_key($columns, get_class_vars(get_class()));
 
     if ($this->getId() === null) {
-      // save the file
       $target_dir = $columns["mediaRoute"];
       $target_file = $target_dir . $columns["name"] . "." . $columns["mediaType"];
-      // $uploadCheck = 1;
-      // $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-      // a faire dans le verificator
-      // 5MB max
-      // if ($_FILES["media"]["size"] > 5000000) {
-      //   echo "Image trop lourde";
-      //   $uploadCheck = 0;
-      // }
-      // Allow certain file formats
-      // if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-      // && $imageFileType != "gif" ) {
-      //   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-      //   $uploadCheck = 0;
-      // }
-
-      // Check if $uploadOk is set to 0 by an error
-      // if ($uploadCheck == 0) {
-      //   echo "Sorry, your file was not uploaded.";
-      // }
       
       //upload the file
       move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
@@ -210,6 +189,30 @@ abstract class Sql
     }
 
     return $emailExist;
+  }
+
+  public function checkExistingMedia() {
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+    $mediaExist = false;
+
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->where('name')
+      ->limit(0, 1)
+      ->getQuery();
+
+    $option = [
+      'name' => $columns['name']
+    ];
+
+    $result = $this->executeQuery($sql, 1, $option);
+
+    if (!empty($result)) {
+      $mediaExist = true;
+    }
+
+    return $mediaExist;
   }
 
   public function login(string $email): array

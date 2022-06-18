@@ -19,8 +19,21 @@ class Verificator
       if (!isset($data[$name])) {
         if ($input['type'] !== 'file') {
           $result[] = "Le champs " . $name . " n'existe pas";
+        } else {
+          if ($_FILES["media"]["size"] > 5000000) {
+            $result[] = "Image trop lourde";
+          }
+          $imageFileType = strtolower(pathinfo($_FILES["media"]["name"],PATHINFO_EXTENSION));
+          if (
+            $imageFileType !== "jpg"
+            && $imageFileType !== "png"
+            && $imageFileType !== "jpeg"
+            && $imageFileType !== "gif"
+            && $imageFileType !== "webp"
+          ) {
+            $result[] = "Votre fichier n'est pas une image";
+          }
         }
-
       }
 
       if (empty($data[$name]) && !empty($input["required"] && $input["type"] !== "file")) {
