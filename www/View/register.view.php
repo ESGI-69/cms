@@ -2,7 +2,9 @@
 <?php if(empty($user->getToken())) : ?>
   <?php $this->includePartial("form", $user->getRegisterForm()) ?>
 <?php elseif($registerError) : ?>
-  <p>Email déjà utilisé</p>
+  <div class="form">
+    <div class="error">Email déjà utilisé</div>
+  </div>
 <?php elseif($user->getStatus() == 0) : ?>
   Vous etes bien inscrit.
   <br>
