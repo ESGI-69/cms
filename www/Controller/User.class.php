@@ -85,6 +85,7 @@ class User extends Sql
     $view->assign("user", $user);
     $view->assign("success", $registered);
     $view->assign("errors", $formErrors);
+    $view->assign("registerError", $registerError);
     $view->assign("isMailSent", $isMailSent);
   }
 
