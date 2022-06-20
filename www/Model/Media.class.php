@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Core\Sql;
 use App\Core\AuthManager;
-use PHPMailer\PHPMailer\Exception;
 use Stringable;
 
 class Media extends Sql
