@@ -4,6 +4,8 @@
 @use "./components/buttons";
 @use "./components/inlineButtons";
 @use "./components/input";
+@use "./components/label";
+@use "./components/select";
 @use "./components/links";
 @use "./components/statsCard";
 @use "./components/chartCard";
@@ -20,6 +22,7 @@
 @use "./views/back/dashboard";
 @use "./views/back/pageCreation";
 @use "./views/back/pageList";
-@use "./views/back/articleCreation";
+@use "./views/back/articleManager";
+@use "./views/back/articlesList";
 
 @use "./views/front/home";

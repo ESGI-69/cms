@@ -183,15 +183,15 @@ abstract class Sql
     }
   }
 
+  /**
+   * $fetchType asked:
+   *
+   * - `0` = no fetch
+   * - `1` = fetch
+   * - `2` = fetchAll
+   */
   public function executeQuery(string $query, int $fetchType, array $option = null)
   {
-    /**
-     * $fetchType asked:
-     *
-     * - `0` = no fetch
-     * - `1` = fetch
-     * - `2` = fetchAll
-     */
     if ($fetchType === 0) {
       $result = $this->pdo->prepare($query);
       $result->execute($option);
@@ -207,5 +207,15 @@ abstract class Sql
       $query->execute($option);
       return $query->fetchAll();
     }
+  }
+
+  public function getAll(): array
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->order('id')
+      ->getQuery();
+
+    return $this->executeQuery($sql, 2);
   }
 }

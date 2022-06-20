@@ -1,0 +1,16 @@
+@use '../functions' as *;
+
+.back {
+  form {
+    label {
+      font-weight: 400;
+      font-size: em(13);
+    }
+
+    .input-label-group {
+      display: flex;
+      flex-direction: column;
+      gap: em(4);
+    }
+  }
+}

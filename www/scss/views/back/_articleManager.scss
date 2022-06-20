@@ -1,21 +1,26 @@
 @use '../../variables' as *;
 @use '../../functions' as *;
 
-.article-creation {
+.articlemanager > main {
   display: flex;
   flex-direction: column;
   gap: 1em;
 
-  &__cards {
+  .cards {
+    display: flex;
+    flex-wrap: nowrap;
     gap: 2rem;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 4fr 1fr;
     
     .card {
-      &.left {
+      background: $color-white;
+      border: 1px solid $color-border;
+      box-shadow: $shadow-card;
+      border-radius: 4px;
 
+      &.left {
+        flex-grow: 1;
       }
+
       &.right {
         width: 300px;
       }

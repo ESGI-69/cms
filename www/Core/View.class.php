@@ -55,6 +55,7 @@ class View
     // Genrate the csrf token
     $_SESSION['csrf_token'] = md5(uniqid(mt_rand(), true));
 
+    $this->assign('template', $this->template);
     extract($this->data);
     include "View/Partial/" . $partial . ".partial.php";
   }

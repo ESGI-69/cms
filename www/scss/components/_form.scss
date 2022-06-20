@@ -1,4 +1,5 @@
 @use "./../variables" as *;
+@use "./../functions" as *;
 
 .front {
   .form {
@@ -26,6 +27,29 @@
       text-align: center;
       width: 100%;
       box-sizing: border-box;
+    }
+  }
+}
+
+.back {
+  form {
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .group-title {
+      text-transform: uppercase;
+      font-size: em(14);
+      color: $color-text-secondary;
+      width: 100%;
+      padding-bottom: em(8);
+      border-bottom: 1px solid $color-text-secondary;
+      margin-top: em(8);
+    }
+
+    .input-label-group.left-padding {
+      padding-left: 2em;
     }
   }
 }
