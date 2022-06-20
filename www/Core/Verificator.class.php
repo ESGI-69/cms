@@ -7,19 +7,16 @@ class Verificator
   public static function checkForm($config, $data): array
   {
     $result = [];
-    // Le nb de inputs envoyés - 1 pour le csrf_token
-    if (count($data) - 1 != count($config['inputs'])) {
-      // die("Tentative de hack !!!!");
-    }
+    $containMedia = false;
 
     SecurityManager::checkCsrfToken();
 
     foreach ($config['inputs'] as $name => $input) {
-
       if (!isset($data[$name])) {
         if ($input['type'] !== 'file') {
           $result[] = "Le champs " . $name . " n'existe pas";
         } else {
+          $containMedia = true;
           if ($_FILES["media"]["size"] > 5000000) {
             $result[] = "Image trop lourde";
           }
@@ -52,6 +49,22 @@ class Verificator
         $result[] = $input["error"];
       }
     }
+
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
+
+    if (!$containMedia) {
+      // Le nb de inputs envoyés - 1 pour le csrf_token
+      if (count($data) - 1 != count($config['inputs'])) {
+        die("Tentative de hack !!!!");
+      }
+      
+      // pas de -1 car il y a le csrf + l'input media disparrais
+    } else if (count($data) != count($config['inputs'])) {
+      die("Tentative de hack !!!!");
+    }
+   
     return $result;
   }
 
