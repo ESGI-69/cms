@@ -191,6 +191,17 @@ class User extends Sql
     ];
   }
 
+  public function getAllAdmins(): array
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->where('role', '=')
+      ->order('id')
+      ->getQuery();
+
+    return $this->executeQuery($sql, 2, ['role' => 1]);
+  }
+
   /**
    * length : 255
    */

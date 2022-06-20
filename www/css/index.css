@@ -91,6 +91,7 @@ body.front main {
 }
 .back .button--big {
   padding: 0.875em 1.125em;
+  font-size: 1rem;
 }
 .back .button--primary {
   border: 1px solid #EDF6FF;
@@ -199,6 +200,36 @@ body.front main {
   border: 1px solid #C0C8D2;
   font-size: 0.875em;
   box-sizing: border-box;
+}
+
+.back form .input {
+  box-sizing: border-box;
+  display: flex;
+  padding: 8px 12px;
+  min-width: 300px;
+  background: #ffffff;
+  border: 1px solid #C0C8D2;
+  border-radius: 4px;
+}
+
+.back form label {
+  font-weight: 400;
+  font-size: 0.8125em;
+}
+.back form .input-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.back form select {
+  box-sizing: border-box;
+  display: flex;
+  padding: 8px 12px;
+  min-width: 300px;
+  background: #ffffff;
+  border: 1px solid #C0C8D2;
+  border-radius: 4px;
 }
 
 a.link {
@@ -418,6 +449,23 @@ a.link:visited {
   box-sizing: border-box;
 }
 
+.back form .actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.back form .group-title {
+  text-transform: uppercase;
+  font-size: 0.875em;
+  color: #64748B;
+  width: 100%;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #64748B;
+  margin-top: 0.5em;
+}
+.back form .input-label-group.left-padding {
+  padding-left: 2em;
+}
+
 .wk_sidebar {
   height: 100vh;
   width: 250px;
@@ -625,33 +673,47 @@ a.link:visited {
   justify-content: space-between;
 }
 
-.article-creation {
+.articlemanager > main {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
-.article-creation__cards {
+.articlemanager > main .cards {
+  display: flex;
+  flex-wrap: nowrap;
   gap: 2rem;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 4fr 1fr;
 }
-.article-creation__cards .card.right {
+.articlemanager > main .cards .card {
+  background: #ffffff;
+  border: 1px solid #D5E0F0;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+.articlemanager > main .cards .card.left {
+  flex-grow: 1;
+}
+.articlemanager > main .cards .card.right {
   width: 300px;
 }
-.article-creation__cards .card .dual-group {
+.articlemanager > main .cards .card .dual-group {
   display: flex;
   gap: 1em;
   max-width: 100%;
 }
-.article-creation__cards .card .dual-group > * {
+.articlemanager > main .cards .card .dual-group > * {
   width: calc(50% - 8px);
 }
-.article-creation__section {
+.articlemanager > main__section {
   padding-left: 2em;
   display: flex;
   flex-direction: column;
   gap: 0.625em;
+}
+
+.articleslist .action-buttons {
+  position: absolute;
+  top: 2rem;
+  right: 2em;
 }
 
 .front.home .username {

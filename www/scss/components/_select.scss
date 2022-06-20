@@ -1,0 +1,16 @@
+@use './../variables' as *;
+@use './../functions' as *;
+
+.back {
+  form {
+    select {
+      box-sizing: border-box;
+      display: flex;
+      padding: 8px 12px;
+      min-width: 300px;
+      background: $color-white;
+      border: 1px solid $color-border-dark;
+      border-radius: 4px;
+    }
+  }
+}

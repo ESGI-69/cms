@@ -26,6 +26,10 @@
   controller: user
   action: pwdforget
 
+/article:
+  controller: article
+  action: article
+
 /dashboard:
   controller: admin
   action: dashboard
@@ -41,7 +45,6 @@
   action: pageManager
   security: 1
 
-
 /medias-list:
   controller: media
   action: mediasList
@@ -50,4 +53,13 @@
 /media-manager:
   controller: media
   action: mediaManager
+
+/articles-list:
+  controller: article
+  action: articlesList
+  security: 1
+
+/article-manager:
+  controller: article
+  action: articleManager
   security: 1
