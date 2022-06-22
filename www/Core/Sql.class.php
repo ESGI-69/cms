@@ -10,44 +10,18 @@ abstract class Sql
   private $pdo;
   private $table;
   protected $mysqlBuilder;
-  private static $instance;
 
   public function __construct()
   {
     //Se connecter à la bdd
     //TODO il faudra mettre en place le singleton
-    try {
-      $this->pdo = new \PDO(
-        DBDRIVER . ":host=" . DBHOST . ";port=" . DBPORT . ";dbname=" . DBNAME,
-        DBUSER,
-        DBPWD,
-        [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]
-      );
-    } catch (\Exception $e) {
-      die("Erreur SQL : " . $e->getMessage());
-    }
+    $this->pdo = DbConnection::getInstance()->pdo;
 
     //Si l'id n'est pas null alors on fait un update sinon on fait un insert
     $calledClassExploded = explode("\\", get_called_class());
     $this->table = strtolower(DBPREFIXE . end($calledClassExploded));
 
     $this->mysqlBuilder = new MySqlBuilder($this->table);
-  }
-
-  /**
-   * Récupérer l'instance de la classe, si elle n'existe pas elle sera créée
-   * automatiquement puis retournée.
-   *
-   * @return Sql Instance de la classe SQL.
-   * @link https://refactoring.guru/design-patterns/singleton
-   */
-
-  public function getInstance(): Sql
-  {
-    if (!isset(self::$instance)) {
-      self::$instance = new static();
-    }
-    return self::$instance;
   }
 
   public function verifyEmail(string $emailToken): bool
