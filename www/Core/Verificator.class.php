@@ -50,10 +50,6 @@ class Verificator
       }
     }
 
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
-
     if (!$containMedia) {
       // Le nb de inputs envoyés - 1 pour le csrf_token
       if (count($data) - 1 != count($config['inputs'])) {
