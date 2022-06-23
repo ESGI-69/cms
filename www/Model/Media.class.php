@@ -94,26 +94,32 @@ class Media extends Sql
         "success" => "Le média à bien été ajouté / modifié",
         "enctype" => "multipart/form-data"
       ],
-      "inputs" => [
-        "name" => [
-          "type" => "text",
-          "placeholder" => "Nom du média...",
-          "required" => true,
-          "class" => "input",
-          "id" => "nameForm",
-          "error" => "Pas de caractères speciaux ni d'escapes, séparez les mots par des -",
-          "min" => 2,
-          "max" => 92,
-        ],
-        "media" => [
-          "type" => "file",
-          "placeholder" => "Téléverse une image",
-          "class" => "input",
-          "id" => "mediaForm",
-          "error" => "Une image stp",
-          "accept" => "image/*",
-          "required" => true,
-        ],
+      'left' => [
+        'Ma section' => [
+          "inputs" => [
+            "name" => [
+              "label" => "Nom du média",
+              "type" => "text",
+              "placeholder" => "Nom du média...",
+              "required" => true,
+              "class" => "input",
+              "id" => "nameForm",
+              "error" => "Pas de caractères speciaux ni d'escapes, séparez les mots par des -",
+              "min" => 2,
+              "max" => 92,
+            ],
+            "media" => [
+              "label" => "Média",
+              "type" => "file",
+              "placeholder" => "Téléverse une image",
+              "class" => "input",
+              "id" => "mediaForm",
+              "error" => "Une image stp",
+              "accept" => "image/*",
+              "required" => true,
+            ],
+          ]
+        ]
       ]
     ];
   }
@@ -130,17 +136,6 @@ class Media extends Sql
       echo "Impossible d'assigner les properties du Model User";
       print_r($e);
     }
-  }
-
-  public function getAll()
-  {
-    $sql = $this->mysqlBuilder
-      ->select(['*'])
-      ->getQuery();
-
-    $result = $this->executeQuery($sql, 2);
-
-    return $result;
   }
 
   public function delete($idMedia)
