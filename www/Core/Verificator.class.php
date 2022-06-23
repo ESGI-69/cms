@@ -6,6 +6,19 @@ class Verificator
 {
   public static function checkForm($config, $data): array
   {
+    // If we are in a backend form
+    if ($config['left'] || $config['right']) {
+      $backConfig = [];
+      foreach ($config as $side => $section) {
+        if ($side !== 'config') {
+          foreach ($section as $sectionsContent) {
+            $backConfig[] = $sectionsContent;
+          }
+        }
+      }
+      $config = $backConfig[0];
+    }
+
     $result = [];
     $containMedia = false;
 
@@ -20,7 +33,7 @@ class Verificator
           if ($_FILES["media"]["size"] > 5000000) {
             $result[] = "Image trop lourde";
           }
-          $imageFileType = strtolower(pathinfo($_FILES["media"]["name"],PATHINFO_EXTENSION));
+          $imageFileType = strtolower(pathinfo($_FILES["media"]["name"], PATHINFO_EXTENSION));
           if (
             $imageFileType !== "jpg"
             && $imageFileType !== "png"
@@ -55,12 +68,12 @@ class Verificator
       if (count($data) - 1 != count($config['inputs'])) {
         die("Tentative de hack !!!!");
       }
-      
+
       // pas de -1 car il y a le csrf + l'input media disparrais
     } else if (count($data) != count($config['inputs'])) {
       die("Tentative de hack !!!!");
     }
-   
+
     return $result;
   }
 

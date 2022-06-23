@@ -95,7 +95,7 @@ class Media extends Sql
         "enctype" => "multipart/form-data"
       ],
       'left' => [
-        'Ma section' => [
+        'Ajout d\'un média' => [
           "inputs" => [
             "name" => [
               "label" => "Nom du média",
