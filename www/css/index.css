@@ -23,6 +23,7 @@ body.back main h1 {
   font-size: 2rem;
   font-weight: 600;
   color: #0F172A;
+  margin-bottom: 2rem;
 }
 body.back main h2 {
   margin: 0;
@@ -35,6 +36,11 @@ body.back main p.subtitle {
   font-size: 1rem;
   font-weight: 400;
   color: #666687;
+}
+body.back main .action-buttons {
+  position: absolute;
+  top: 2rem;
+  right: 2em;
 }
 body.front {
   background-image: url("/assets/home-background.jpg");
@@ -708,12 +714,6 @@ a.link:visited {
   display: flex;
   flex-direction: column;
   gap: 0.625em;
-}
-
-.articleslist .action-buttons {
-  position: absolute;
-  top: 2rem;
-  right: 2em;
 }
 
 .front.home .username {
