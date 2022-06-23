@@ -1,6 +1,6 @@
 <?php if ($template === 'front') : ?>
   <form class="form <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if ($data["config"]["enctype"]) {
-                                                                                                                                                                                echo 'enctype=' . $data["config"]["enctype"] . '"';
+                                                                                                                                                                                echo 'enctype="' . $data["config"]["enctype"] . '"';
                                                                                                                                                                               } ?>>
 
     <?php foreach ($data["inputs"] as $name => $input) : ?>
@@ -20,9 +20,9 @@
     <?php endif; ?>
   </form>
 <?php else : ?>
-  <form class="cards <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?> <?php if ($data["config"]["enctype"]) {
-                                                                                                                                                                                echo 'enctype=' . $data["config"]["enctype"] . '"';
-                                                                                                                                                                              } ?>">
+  <form class="cards <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if ($data["config"]["enctype"]) {
+                                                                                                                                                                                echo 'enctype="' . $data["config"]["enctype"] . '"';
+                                                                                                                                                                              } ?>>
     <!-- Le CSRF token -->
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
     <?php foreach ($data as $side => $sideContent) : ?>
@@ -39,7 +39,7 @@
             <?php foreach ($groupContent["inputs"] as $name => $input) : ?>
               <!-- Affichage d'un input avec son label -->
               <div class="input-label-group <?= $input['input-label-group-additional-class'] ?? "" ?>">
-                <label for="<?= $name ?>"><?= $input['label'] ?></label>
+                <label for="<?= $name ?>"><?= $input['label'] ?? $name ?></label>
                 <?php if ($input["type"] === 'select') : ?>
                   <!-- SELECT -->
                   <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
