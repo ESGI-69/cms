@@ -5,8 +5,13 @@
   <?php foreach ($medias as $media) : ?>
     <div class="media-list__item">
       <img src="<?= $media["path"] ?>" alt="<?= $media["name"] ?>">
-      <a href="/media-manager?id=<?= $media["id"] ?>" class="button">Editer</a>
-      <a href="/medias-list?deletedId=<?= $media["id"] ?>" class="button">Supprimer</a>
+      <div class="media-list__item__info">
+        <span class="media-list__item__info__name">
+          <?= $media["name"] ?>
+        </span>
+        <a href="/media-manager?id=<?= $media["id"] ?>" class="button button--primary">Editer</a>
+        <a href="/medias-list?deletedId=<?= $media["id"] ?>" class="button button--danger">Supprimer</a>
+      </div>
     </div>
   <?php endforeach; ?>
 </div>

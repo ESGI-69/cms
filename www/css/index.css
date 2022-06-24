@@ -716,6 +716,29 @@ a.link:visited {
   gap: 0.625em;
 }
 
+.back.mediaslist .media-list__item {
+  height: 400px;
+  width: fit-content;
+}
+.back.mediaslist .media-list__item img {
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  width: auto;
+  height: calc(100% - 70px);
+}
+.back.mediaslist .media-list__item__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.back.mediaslist .media-list__item__info__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
 .front.home .username {
   font-size: 2em;
   font-weight: bold;
