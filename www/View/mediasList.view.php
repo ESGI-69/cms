@@ -1,5 +1,5 @@
 <div class="action-buttons">
-  <a class="button button--primary button--big" href="/article-manager">Ajouter un Média</a>
+  <a class="button button--primary button--big" href="/media-manager">Ajouter un Média</a>
 </div>
 <div class="media-list">
   <?php foreach ($medias as $media) : ?>
