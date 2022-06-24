@@ -1,5 +1,5 @@
 <?php if ($template === 'front') : ?>
-  <form class="form <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if ($data["config"]["enctype"]) {
+  <form class="form <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if (isset($data["config"]["enctype"])) {
                                                                                                                                                                                 echo 'enctype="' . $data["config"]["enctype"] . '"';
                                                                                                                                                                               } ?>>
 
@@ -20,7 +20,7 @@
     <?php endif; ?>
   </form>
 <?php else : ?>
-  <form class="cards <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if ($data["config"]["enctype"]) {
+  <form class="cards <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if (isset($data["config"]["enctype"])) {
                                                                                                                                                                                 echo 'enctype="' . $data["config"]["enctype"] . '"';
                                                                                                                                                                               } ?>>
     <!-- Le CSRF token -->
