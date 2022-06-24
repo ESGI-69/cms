@@ -1,0 +1,32 @@
+@use './../../variables' as *;
+@use './../../functions' as *;
+
+.back.mediaslist {
+  .media-list {
+    &__item {
+      height: 400px;
+      width: fit-content;
+      
+      img {
+        box-shadow: $shadow-card;
+        border-radius: 10px;
+        width: auto;
+        height: calc(100% - 70px);
+      }
+
+      &__info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        &__buttons {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
