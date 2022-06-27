@@ -137,6 +137,26 @@ abstract class Sql
     }
   }
 
+  public function saveCategory()
+  {
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+
+    if ($this->getId() === null) {
+
+      $columnsFiltred = $columns;
+      unset($columnsFiltred['id']);
+
+      $sql = $this->mysqlBuilder
+        ->insert($columnsFiltred)
+        ->getQuery();
+
+      $options = $columnsFiltred;
+
+      $this->executeQuery($sql, 0, $options);
+    }
+  }
+
   public function checkExisting(string $where)
   {
     $columns = get_object_vars($this);
