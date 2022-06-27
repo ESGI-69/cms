@@ -174,12 +174,12 @@ class User extends Sql
       'token' => $this->token
     ];
     $result = $this->executeQuery($sql, 2, $option);
-    $this->setEmail($result[0]['email']);
-    $this->setFirstname($result[0]['firstname']);
-    $this->setLastname($result[0]['lastname']);
-    $this->setId($result[0]['id']);
-    $this->setStatus($result[0]['status']);
-    $this->setRole($result[0]['role']);
+    $this->setEmail($result[0]->email);
+    $this->setFirstname($result[0]->firstname);
+    $this->setLastname($result[0]->lastname);
+    $this->setId($result[0]->id);
+    $this->setStatus($result[0]->status);
+    $this->setRole($result[0]->role);
 
     return [
       'id' => $this->getId(),

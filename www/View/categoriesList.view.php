@@ -5,10 +5,10 @@
   <?php foreach ($categories as $category) : ?>
     <div class="category-list__item">
       <span class="category-list__item__name">
-        <?= $category["name"] ?>
+        <?= $category->name ?>
       </span>
-      <a href="/category-manager?id=<?= $category["id"] ?>" class="button button--primary">Editer</a>
-      <a href="/categories-list?deletedId=<?= $category["id"] ?>" class="button button--danger">Supprimer</a>
+      <a href="/category-manager?id=<?= $category->id ?>" class="button button--primary">Editer</a>
+      <a href="/categories-list?deletedId=<?= $category->id ?>" class="button button--danger">Supprimer</a>
     </div>
   <?php endforeach; ?>
 </div>
