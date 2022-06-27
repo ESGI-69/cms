@@ -15,6 +15,11 @@ class Category extends Sql
     parent::__construct();
   }
 
+  protected function setId($id)
+  {
+    $this->id = $id;
+  }
+
   /**
    * @return null|int
    */
@@ -23,9 +28,28 @@ class Category extends Sql
     return $this->id;
   }
 
-  public function setName(?string $name): void
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  protected function setName(?string $name): void
   {
     $this->name = $name;
+  }
+
+  public function getCategoryInfo(?string $id): array
+  {
+    $this->id = $id;
+    $result = $this->get($id);
+    if (isset($result)) {
+      $this->setId($result->id);
+      $this->setName($result->name);
+      return [
+        'id' => $this->getId(),
+        'name' => $this->getName(),
+      ];
+    }
   }
 
   public function getCategoryForm(): array
@@ -41,6 +65,7 @@ class Category extends Sql
         'Ajout d\'une categorie' => [
           "inputs" => [
             "name" => [
+              "value" => $this->getName() ? $this->getName() : "",
               "label" => "Nom de la categorie",
               "type" => "text",
               "placeholder" => "Nom de la categorie...",
@@ -60,7 +85,7 @@ class Category extends Sql
   public function setCategoryInfo(): void
   {
     $this->setName($_POST['name']);
-  } 
+  }
 
   public function delete($idCat)
   {
@@ -75,6 +100,4 @@ class Category extends Sql
 
     $this->executeQuery($sql, 0, $option);
   }
-  
-
 }

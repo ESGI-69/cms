@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Core\Sql;
@@ -33,7 +34,22 @@ class Category
     $registerError = false;
 
     if (isset($_GET['id'])) {
-      // $this->editCategory($_GET['editId']);
+      $category->getCategoryInfo($_GET['id']);
+      if (!empty($_POST)) {
+        // edit a category
+        $formErrors = Verificator::checkForm($category->getCategoryForm(), $_POST);
+        if (count($formErrors) === 0) {
+          $category->setCategoryInfo();
+          $registerError = $category->checkExisting('name');
+          if ($registerError === false) {
+            $category->edit();
+            $saved = true;
+            header("Location: /categories-list");
+          } else {
+            $formErrors[] = "Nom de catégorie déjà utilisé";
+          }
+        }
+      }
     } else {
       if (!empty($_POST)) {
         $formErrors = Verificator::checkForm($category->getCategoryForm(), $_POST);
@@ -43,6 +59,8 @@ class Category
           if ($registerError === false) {
             $category->saveCategory();
             $saved = true;
+            // redirect to categoriesList
+            header("Location: /categories-list");
           } else {
             $formErrors[] = "Nom de Categorie déjà utilisé";
           }
@@ -52,10 +70,9 @@ class Category
 
 
 
-    $view = new View("categoryManager", "back", isset($_GET['id']) ? 'CATEGORY NAME - Edit' : 'New Category');
+    $view = new View("categoryManager", "back", isset($_GET['id']) ? $category->getName() . ' - Edit' : 'New Category');
     $view->assign("category", $category);
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);
   }
-
 }

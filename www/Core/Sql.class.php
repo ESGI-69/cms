@@ -51,7 +51,7 @@ abstract class Sql
   /**
    * @param int $id
    */
-  public function getById(?int $id): object
+  public function get(?int $id): object
   {
     $sql = $this->mysqlBuilder
       ->select(['*'])
@@ -133,6 +133,29 @@ abstract class Sql
 
       $this->executeQuery($sql, 0, $options);
     }
+  }
+
+  public function edit()
+  {
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+
+    echo "<pre>";
+    print_r($columns);
+    echo "</pre>";
+
+    $update = [];
+    foreach ($columns as $column => $value) {
+      $update[] = $column . "=:" . $column;
+    }
+
+    $sqlNew = $this->mysqlBuilder
+      ->update()
+      ->set($columns)
+      ->where('id')
+      ->getQuery();
+
+    $this->executeQuery($sqlNew, 0, $columns);
   }
 
   public function saveCategory()
