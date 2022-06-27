@@ -51,7 +51,7 @@ abstract class Sql
   /**
    * @param int $id
    */
-  public function getUserById(?int $id): object
+  public function getById(?int $id): object
   {
     $sql = $this->mysqlBuilder
       ->select(['*'])
@@ -62,9 +62,7 @@ abstract class Sql
       'id' => $id
     ];
 
-    $result = $this->executeQuery($sql, 0, $option);
-
-    $result = $result->fetchObject(get_called_class());
+    $result = $this->executeQuery($sql, 1, $option);
 
     return $result;
   }
@@ -219,6 +217,7 @@ abstract class Sql
     }
 
     $query = $this->pdo->prepare($query);
+    $query->setFetchMode($this->pdo::FETCH_OBJ);
 
     if ($fetchType === 1) {
       $query->execute($option);
