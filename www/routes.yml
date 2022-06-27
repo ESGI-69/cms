@@ -63,3 +63,14 @@
   controller: article
   action: articleManager
   security: 1
+
+/categories-list:
+  controller: category
+  action: categoriesList
+  security: 1
+
+/category-manager:
+  controller: category
+  action: categoryManager
+  security: 1
+  
