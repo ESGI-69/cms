@@ -17,6 +17,7 @@ class Media extends Sql
     $media = new MediaModel();
 
     if (isset($_GET['deletedId'])) {
+      unlink($media->get($_GET['deletedId'])->path);
       $media->delete($_GET['deletedId']);
     }
 
