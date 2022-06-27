@@ -71,6 +71,14 @@
               <input class="button button--primary button--big" type="submit" value="<?= $data["config"]["submit"] ?? "Valider" ?>">
             </div>
           <?php endif ?>
+
+          <?php if ($errors) : ?>
+            <?php foreach ($errors as $error) : ?>
+              <div class="error">
+                <?= $error ?>
+              </div>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
     <?php endforeach; ?>
