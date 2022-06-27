@@ -47,6 +47,7 @@ class Media extends Sql
           if ($registerError === false) {
             $media->saveMedia();
             $saved = true;
+            header("Location: /medias-list");
           } else {
             $formErrors[] = "Nom de média déjà utilisé";
           }
