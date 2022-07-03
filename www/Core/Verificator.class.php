@@ -50,6 +50,14 @@ class Verificator
         $result[] = "Le champs " . $name . " ne peut pas être vide";
       }
 
+      // verificator injection js
+      if ($input["type"] === 'text' || $input["type"] === 'email' ) {
+        $specialChar = preg_match("/[\[\'()}{:\'#~><>,;\|\/\\+\`\]]/" ,$data[$name]);
+        if ($specialChar) {
+          $result[] = "Le champs " . $name . " ne peut pas contenir de caractère spéciaux";
+        }
+      }
+
       if ($input["type"] == "email" && !self::checkEmail($data[$name])) {
         $result[] = $input["error"];
       }
