@@ -126,4 +126,12 @@ class MySqlBuilder implements QueryBuilder
 
     return $sql;
   }
+
+}
+
+class PostgreBuilder extends MysqlBuilder {
+  public function limit (int $from, int $offset): QueryBuilder {
+    $this->query->limit = " LIMIT " . $from . "OFFSET " . $offset;
+    return $this;
+  }
 }
