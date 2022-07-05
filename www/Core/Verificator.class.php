@@ -51,7 +51,7 @@ class Verificator
       }
 
       // verificator injection js
-      if ($input["type"] === 'text' || $input["type"] === 'email' ) {
+      if ($input["type"] === 'text' || $input["type"] === 'email' || $input["type"] === 'textarea' ) {
         $specialChar = preg_match("/[\[\'()}{:\'#~><>,;\|\/\\+\`\]]/" ,$data[$name]);
         if ($specialChar) {
           $result[] = "Le champs " . $name . " ne peut pas contenir de caractère spéciaux";
