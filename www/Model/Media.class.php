@@ -41,7 +41,7 @@ class Media extends Sql
       ),
       0,
       92
-    ) . "-" . date('y-m-d'), ENT_COMPAT);
+    ) . "-" . date('y-m-d'));
   }
 
   public function getMediaType(): ?string
