@@ -34,14 +34,14 @@ class Media extends Sql
 
   public function setName(?string $name): void
   {
-    $this->name = mb_strimwidth(
+    $this->name = htmlspecialchars(mb_strimwidth(
       trim(
         preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($name)))),
         '-'
       ),
       0,
       92
-    ) . "-" . date('y-m-d');
+    ) . "-" . date('y-m-d'));
   }
 
   public function getMediaType(): ?string
