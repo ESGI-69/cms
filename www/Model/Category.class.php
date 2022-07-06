@@ -35,7 +35,7 @@ class Category extends Sql
 
   protected function setName(?string $name): void
   {
-    $this->name = htmlspecialchars($name);
+    $this->name = htmlspecialchars($name, ENT_COMPAT);
   }
 
   public function getCategoryInfo(?string $id): array
