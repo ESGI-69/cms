@@ -30,12 +30,12 @@ interface QueryBuilder
    */
   public function join(int $joinType, string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder;
 
-  public function or(string $row , string $value);
-  
+  public function or(string $row, string $value);
+
   public function getQuery();
 }
 
-class MySqlBuilder implements QueryBuilder 
+class MySqlBuilder implements QueryBuilder
 {
   private $query;
   private $table;
@@ -136,11 +136,12 @@ class MySqlBuilder implements QueryBuilder
     } else if ($joinType === 3) {
       $join = 'FULL JOIN ';
     }
-    $this->query->join[] = $join . $table . ' ON ' . $this->table . '.' .$rowTableOne . $operator . $table . '.' .$rowTableTwo;
+    $this->query->join[] = $join . $table . ' ON ' . $this->table . '.' . $rowTableOne . $operator . $table . '.' . $rowTableTwo;
     return $this;
   }
 
-  public function or(string $row , string $value): QueryBuilder {
+  public function or(string $row, string $value): QueryBuilder
+  {
     $this->query->or[] = $row . ' IS ' . $value;
     return $this;
   }
@@ -173,15 +174,20 @@ class MySqlBuilder implements QueryBuilder
       $sql .= " OR " . implode(" OR ", $this->query->or);
     }
 
+    if (isset($this->query->innerJoin)) {
+      $sql .= " " . implode(" ", $this->query->innerJoin);
+    }
+
     $sql .= ';';
 
     return $sql;
   }
-
 }
 
-class PostgreBuilder extends MysqlBuilder {
-  public function limit (int $from, int $offset): QueryBuilder {
+class PostgreBuilder extends MysqlBuilder
+{
+  public function limit(int $from, int $offset): QueryBuilder
+  {
     $this->query->limit = " LIMIT " . $from . "OFFSET " . $offset;
     return $this;
   }
