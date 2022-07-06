@@ -174,10 +174,6 @@ class MySqlBuilder implements QueryBuilder
       $sql .= " OR " . implode(" OR ", $this->query->or);
     }
 
-    if (isset($this->query->innerJoin)) {
-      $sql .= " " . implode(" ", $this->query->innerJoin);
-    }
-
     $sql .= ';';
 
     return $sql;
