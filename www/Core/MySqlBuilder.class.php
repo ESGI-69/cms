@@ -20,9 +20,18 @@ interface QueryBuilder
 
   public function order(string $column);
 
-  public function innerJoin(string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder;
-  
+  /**
+   * $joinType asked:
+   *
+   * - `0` = INNER JOIN
+   * - `1` = LEFT JOIN
+   * - `2` = RIGHT JOIN
+   * - `3` = FULL JOIN
+   */
+  public function join(int $joinType, string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder;
 
+  public function or(string $row , string $value);
+  
   public function getQuery();
 }
 
@@ -105,9 +114,34 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
-  public function innerJoin(string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder
+
+  /**
+   * $joinType asked:
+   *
+   * - `0` = INNER JOIN
+   * - `1` = LEFT JOIN
+   * - `2` = RIGHT JOIN
+   * - `3` = FULL JOIN
+   */
+  public function join(int $joinType, string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder
   {
-    $this->query->innerJoin[] = 'INNER JOIN ' . $table . ' ON ' . $this->table . '.' .$rowTableOne . $operator . $table . '.' .$rowTableTwo;
+    $join = '';
+
+    if ($joinType === 0) {
+      $join = 'INNER JOIN ';
+    } else if ($joinType === 1) {
+      $join = 'LEFT JOIN ';
+    } else if ($joinType === 2) {
+      $join = 'RIGHT JOIN ';
+    } else if ($joinType === 3) {
+      $join = 'FULL JOIN ';
+    }
+    $this->query->join[] = $join . $table . ' ON ' . $this->table . '.' .$rowTableOne . $operator . $table . '.' .$rowTableTwo;
+    return $this;
+  }
+
+  public function or(string $row , string $value): QueryBuilder {
+    $this->query->or[] = $row . ' IS ' . $value;
     return $this;
   }
 
@@ -117,6 +151,10 @@ class MySqlBuilder implements QueryBuilder
 
     if (isset($this->query->set)) {
       $sql .= " SET " . implode(", ", $this->query->set);
+    }
+
+    if (isset($this->query->join)) {
+      $sql .= " " . implode(" ", $this->query->join);
     }
 
     if (!empty($this->query->where)) {
@@ -131,8 +169,8 @@ class MySqlBuilder implements QueryBuilder
       $sql .= " " . $this->query->order;
     }
 
-    if (isset($this->query->innerJoin)) {
-      $sql .= " " . implode(" ", $this->query->innerJoin);
+    if (isset($this->query->or)) {
+      $sql .= " OR " . implode(" OR ", $this->query->or);
     }
 
     $sql .= ';';
