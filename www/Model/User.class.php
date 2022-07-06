@@ -61,7 +61,7 @@ class User extends Sql
    */
   public function setFirstname(?string $firstname): void
   {
-    $this->firstname = htmlspecialchars(ucwords(strtolower(trim($firstname))));
+    $this->firstname = htmlspecialchars(ucwords(strtolower(trim($firstname))), ENT_COMPAT);
   }
 
   /**
@@ -77,7 +77,7 @@ class User extends Sql
    */
   public function setLastname(?string $lastname): void
   {
-    $this->lastname = htmlspecialchars(strtoupper(trim($lastname)));
+    $this->lastname = htmlspecialchars(strtoupper(trim($lastname)), ENT_COMPAT);
   }
 
   /**
@@ -93,7 +93,7 @@ class User extends Sql
    */
   public function setEmail(string $email): void
   {
-    $this->email = htmlspecialchars(strtolower(trim($email)));
+    $this->email = htmlspecialchars(strtolower(trim($email)), ENT_COMPAT);
   }
 
   /**
@@ -109,7 +109,7 @@ class User extends Sql
    */
   public function setPassword(string $password): void
   {
-    $this->password = htmlspecialchars(password_hash($password, PASSWORD_DEFAULT));
+    $this->password = password_hash($password, PASSWORD_DEFAULT);
   }
 
   /**
