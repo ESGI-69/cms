@@ -20,6 +20,9 @@ interface QueryBuilder
 
   public function order(string $column);
 
+  public function innerJoin(string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder;
+  
+
   public function getQuery();
 }
 
@@ -102,6 +105,12 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
+  public function innerJoin(string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder
+  {
+    $this->query->innerJoin[] = 'INNER JOIN ' . $table . ' ON ' . $this->table . '.' .$rowTableOne . $operator . $table . '.' .$rowTableTwo;
+    return $this;
+  }
+
   public function getQuery()
   {
     $sql = $this->query->base;
@@ -120,6 +129,10 @@ class MySqlBuilder implements QueryBuilder
 
     if (isset($this->query->order)) {
       $sql .= " " . $this->query->order;
+    }
+
+    if (isset($this->query->innerJoin)) {
+      $sql .= " " . implode(" ", $this->query->innerJoin);
     }
 
     $sql .= ';';
