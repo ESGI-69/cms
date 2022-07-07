@@ -7,6 +7,7 @@ use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Core\Mailer;
+use App\Core\Loger;
 use App\Model\User as UserModel;
 
 class User extends Sql
@@ -19,6 +20,8 @@ class User extends Sql
     $userInfos = null;
 
     $formErrors = [];
+
+    $log =  Loger::getInstance();
 
     if (!empty($_POST)) {
       $formErrors = Verificator::checkForm($user->getLoginForm(), $_POST);
@@ -35,7 +38,10 @@ class User extends Sql
               $login = true;
               $userInfos = array(
                 "firstname" => $queryResult["firstname"],
+                "email" => $queryResult["email"],
               );
+
+              $log->save("User '" . $queryResult["firstname"] . "' with email '" . $queryResult["email"] . "' logged in");
 
               setcookie('wikikiToken', $queryResult['token'], time() + 60 * 60 * 24 * 30);
             } else {
@@ -61,6 +67,7 @@ class User extends Sql
     $isMailSent = null;
     $registered = false;
     $registerError = false;
+    $log =  Loger::getInstance();
 
     $formErrors = [];
 
@@ -76,6 +83,7 @@ class User extends Sql
           $mailer = new Mailer();
           $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
           $registered = true;
+          $log->save("User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' registered");
         } else {
           $formErrors[] = "Email déjà utilisé";
         }
