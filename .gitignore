@@ -1,5 +1,6 @@
 db_data
 .DS_Store
 www/conf.inc.php
+*.log
 
 user-media/
