@@ -10,7 +10,7 @@ class Loger
   private function __construct()
   {
     if (!file_exists('Logs/')){
-      mkdir('Logs/',0777);
+      mkdir('Logs/', 0777);
     }
     $this->file = fopen("Logs/general.log", "a");
   }
