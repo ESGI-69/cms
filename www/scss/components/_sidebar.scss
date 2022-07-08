@@ -20,6 +20,10 @@
       height: 70px;
       background: $color-primary;
 
+      &__home-link{
+        width: 100%;
+      }  
+
       &__logo {
         fill: $color-white;
         max-width: 75%;
