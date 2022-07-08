@@ -21,7 +21,7 @@ class Article extends Sql
     return $this->id;
   }
 
-  public function getFrom(int $sectionQuantity, int $additionalSectionQuantity): array
+  public function getFrom(): array
   {
     $category = new Category();
     $categories = $category->getAll();
@@ -29,25 +29,8 @@ class Article extends Sql
     $user = new User();
     $adminUsers = $user->getAllAdmins();
 
-    // Sections creation
-
-    $sections = [];
-
-    for ($sectionIndex = 0; $sectionIndex < $sectionQuantity; $sectionIndex++) {
-      foreach ($this->getSectionFormInputs($sectionIndex + 1) as $sectionName => $section) {
-        $sections[$sectionName] = $section;
-      }
-    }
-
-    // Additionnal section creation
-
-    $additionalSections = [];
-
-    for ($additionalSectionIndex = 0; $additionalSectionIndex < $additionalSectionQuantity; $additionalSectionIndex++) {
-      foreach ($this->getAdditionalSectionFormInputs($additionalSectionIndex + 1) as $additionalSectionName => $additionalSection) {
-        $additionalSections[$additionalSectionName] = $additionalSection;
-      }
-    }
+    $media = new Media();
+    $medias = $media->getAll();
 
     return [
       "config" => [
@@ -70,6 +53,15 @@ class Article extends Sql
               "unicity" => "true",
               "errorUnicity" => "Le titre doit être unique",
             ],
+            "image" => [
+              "label" => "Image",
+              "type" => "media",
+              "medias" => $medias,
+              "required" => true,
+              "id" => "image",
+              "unicity" => "true",
+              "errorUnicity" => "Le titre doit être unique",
+            ],
             "content" => [
               "label" => "Contenu",
               "type" => "wysiwyg",
@@ -78,9 +70,6 @@ class Article extends Sql
               "error" => "Un article se doit d'avois un contenu.",
             ],
           ]
-        ],
-        "Séctions" => [
-          'inputs' => $sections,
         ],
       ],
       'right' => [
@@ -110,55 +99,6 @@ class Article extends Sql
             ],
           ],
         ],
-        'Séctions somplémentaires' => [
-          'inputs' => $additionalSections,
-        ],
-      ],
-    ];
-  }
-
-  public function getSectionFormInputs(int $index): array
-  {
-    return [
-      "title-$index" => [
-        "label" => "Titre de la section $index",
-        "type" => "text",
-        "placeholder" => "Section $index title",
-        "required" => true,
-        "class" => "input",
-        "id" => "section-title-$index",
-        "error" => "Titre de la section $index invalide",
-      ],
-      "content-$index" => [
-        "label" => "Contenu de la section $index",
-        "type" => "wysiwyg",
-        "placeholder" => "The cat (Felis catus) is a domestic species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family. A cat can either be a house cat, a farm cat or a feral cat; the latter ranges freely and avoids human contact. Domestic cats are valued by humans for companionship and their ability to kill rodents. About 60 cat breeds are recognized by various cat registries.",
-        "required" => true,
-        "class" => "content left-padding",
-        "input-label-group-additional-class" => "left-padding",
-        "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
-      ],
-    ];
-  }
-
-  public function getAdditionalSectionFormInputs(int $index): array
-  {
-    return [
-      "additional-key-$index" => [
-        "label" => "Titre $index",
-        "type" => "input",
-        "class" => "input",
-        "placeholder" => "Titre $index",
-        "required" => true,
-        "error" => "Le title ne doit pas être vide",
-      ],
-      "additional-value-$index" => [
-        "label" => "Valeur $index",
-        "type" => "input",
-        "class" => "input",
-        "placeholder" => "Valeur $index",
-        "required" => true,
-        "error" => "La valeur ne doit pas être vide",
       ],
     ];
   }
