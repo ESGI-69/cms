@@ -44,7 +44,7 @@
                   <!-- SELECT -->
                   <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
                     <?php foreach ($input['options'] as $option) : ?>
-                      <option value="<?= $option[$input['valueKey']] ?>"><?= $option[$input['labelKey']] ?></option>
+                      <option value="<?= $option->{$input['valueKey']} ?>"><?= $option->{$input['labelKey']} ?></option>
                     <?php endforeach; ?>
                   </select>
                 <?php elseif ($input["type"] === 'media') : ?>
@@ -56,7 +56,27 @@
                         <option value="<?= $media->id ?>"><?= $media->name ?></option>
                       <?php endforeach; ?>
                     </select>
+                  </div>
+
+                  <script>
+                    const medias = <?= json_encode($input['medias']) ?>;
+                    document.querySelector('#<?= $input["id"] ?>').addEventListener('change', function(event) {
+                      // Replace the image src with selected media
+                      document.querySelector('#<?= $input["id"] ?>-img').src = medias.find(media => media.id === event.target.value).path;
+                    });
+                  </script>
                 <?php else : ?>
+                  <?php if ($input["type"] === 'wysiwyg') : ?>
+                    <script>
+                      const beforeSumbit = (event) => {
+                        event.preventDefault();
+                        // Send the content of the wysiwyg to the hidden input
+                        console.log('csqdqs');
+                        tinymce.triggerSave();
+                        document.querySelector('#form').requestSubmit();
+                      };
+                    </script>
+                  <?php endif; ?>
                   <!-- INPUT -->
                   <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> value="<?= $input["value"] ?? '' ?>" <?= empty($input["accept"]) ? "" : 'accept="' . $input["accept"] . '"' ?>>
                 <?php endif; ?>
@@ -64,17 +84,14 @@
             <?php endforeach; ?>
           <?php endforeach; ?>
 
-
-
-
           <?php if ($side === 'left') : ?>
             <!-- Boutton de validation -->
             <div class="actions">
-              <input class="button button--primary button--big" type="submit" value="<?= $data["config"]["submit"] ?? "Valider" ?>">
+              <input onclick="beforeSumbit(event)" class="button button--primary button--big" type="submit" value="<?= $data["config"]["submit"] ?? "Valider" ?>">
             </div>
           <?php endif ?>
 
-          <?php if ($errors) : ?>
+          <?php if (isset($errors)) : ?>
             <?php foreach ($errors as $error) : ?>
               <div class="error">
                 <?= $error ?>
