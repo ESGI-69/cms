@@ -133,7 +133,7 @@ class Media extends Sql
       $this->setPath($this->getMediaType());
       $this->setUserId();
     } catch (Exception $e) {
-      echo "Impossible d'assigner les properties du Model User";
+      echo "Impossible d'assigner les properties du Model Media";
       print_r($e);
     }
   }

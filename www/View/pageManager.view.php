@@ -1,1 +1,1 @@
-<h1>PageManager</h1>
+<?php $this->includePartial("form", $page->getPageForm()) ?>

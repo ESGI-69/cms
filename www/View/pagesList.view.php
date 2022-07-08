@@ -1,1 +1,3 @@
-<?php $this->includePartial("form", $page->getPageForm()) ?>
+<div class="action-buttons">
+  <a class="button button--primary button--big" href="/page-manager">New page</a>
+</div>

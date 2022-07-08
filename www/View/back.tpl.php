@@ -17,7 +17,7 @@
     tinymce.init({
       menubar: false,
       selector: 'input[type=wysiwyg]',
-      plugins: 'a11ychecker advcode casechange tinymcespellchecker',
+      plugins: '',
       toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright',
       toolbar_mode: 'floating',
       // tinycomments_mode: 'embedded',

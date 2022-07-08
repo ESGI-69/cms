@@ -20,13 +20,42 @@ class Page
   }
   public function pageManager()
   {
-    $view = new View("pageManager", "back");
+    $page = new PageModel();
+    $saved = false;
+    $formErrors = [];
+    $registerError = false;
+
+    // à faire
+    if (isset($_GET['id'])) {
+      // $this->editMedia($_GET['editId']);
+    } else {
+      if (!empty($_POST)) {
+        echo "test";
+        $formErrors = Verificator::checkForm($page->getPageForm(), $_POST);
+        if (count($formErrors) === 0) {
+          $page->setPageInfo();
+          $registerError = $page->checkExisting('title');
+          if ($registerError === false) {
+            $page->savePage();
+            $saved = true;
+            header("Location: /pages-list");
+          } else {
+            $formErrors[] = "Nom de page déjà utilisé";
+          }
+        }
+      }
+    }
+
+
+    $view = new View("pageManager", "back", "New page");
+    $view->assign("page", $page);
+    $view->assign("success", $saved);
+    $view->assign("errors", $formErrors);
 
   }
   public function page()
   {
     $view = new View("page", "front");
-
   }
   
 }

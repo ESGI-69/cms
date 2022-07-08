@@ -55,7 +55,7 @@ class Media extends Sql
       }
     }
 
-    $view = new View("mediaManager", "back", "Editer - MEDIA NAME");
+    $view = new View("mediaManager", "back", "New Media");
     $view->assign("media", $media);
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);

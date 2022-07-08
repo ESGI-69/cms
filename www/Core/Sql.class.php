@@ -111,6 +111,50 @@ abstract class Sql
     }
   }
 
+  public function savePage()
+  {
+
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+
+    /**
+     * TODO : create getId() method
+     *        or
+     *        use Authenticator::getUser()->getId() ?s
+     */
+
+    if ($this->getId() === null) {
+      $columnsFiltred = $columns;
+      unset($columnsFiltred['id']);
+
+      $sql = $this->mysqlBuilder
+        ->insert($columnsFiltred)
+        ->getQuery();
+      $this->executeQuery($sql, 0, $columnsFiltred);
+    }
+
+    /**
+     * TODO : update an user with save()method : 
+     *        send his id through the form
+     *        or
+     *        update the user where token = $_COOKIE['wikikiToken']
+     */
+    else {
+      $update = [];
+      foreach ($columns as $column => $value) {
+        $update[] = $column . "=:" . $column;
+      }
+
+      $sqlNew = $this->mysqlBuilder
+        ->update()
+        ->set($columns)
+        ->where('id')
+        ->getQuery();
+
+      $this->executeQuery($sqlNew, 0, $columns);
+    }
+  }
+
   public function saveMedia()
   {
     $columns = get_object_vars($this);
