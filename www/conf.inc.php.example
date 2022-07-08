@@ -1,0 +1,17 @@
+<?php
+
+define("DBUSER", "");
+define("DBPWD", "");
+define("DBHOST", "");
+define("DBNAME", "");
+define("DBPORT", "");
+define("DBDRIVER", "");
+define("DBPREFIXE", "");
+
+define("MAILHOST", "");
+define("MAILPORT", "");
+define("MAILUSER", "");
+define("MAILPWD", "");
+define("MAILALIAS", "");
+
+define("TINYMCE_TOKEN", "");
