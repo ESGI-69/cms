@@ -471,6 +471,20 @@ a.link:visited {
 .back form .input-label-group.left-padding {
   padding-left: 2em;
 }
+.back form .media-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  width: 100%;
+  margin-top: 0.5em;
+  width: 100%;
+}
+.back form .media-selector__select {
+  flex-grow: 1;
+}
+.back form .media-selector__preview {
+  max-width: 150px;
+}
 
 .wk_sidebar {
   height: 100vh;
