@@ -1,8 +1,5 @@
 <?php if (!$success) : ?>
-  <?php $this->includePartial("form", $article->getFrom($_GET['sectionsQuantity'] ?? 0, $_GET['additionalSectionsQuantity'] ?? 0)) ?>
+  <?php $this->includePartial("form", $article->getFrom()) ?>
 <?php else : ?>
-  <p>
-    Bravo <?= $userInfos["firstname"] ?>, vous êtes connecté ! 👏
-  </p>
-  <a href="/">Retour à l'accueil</a>
+  <?php header("Location: /articles-list"); ?>
 <?php endif; ?>
