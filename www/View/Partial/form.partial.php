@@ -47,13 +47,15 @@
                       <option value="<?= $option[$input['valueKey']] ?>"><?= $option[$input['labelKey']] ?></option>
                     <?php endforeach; ?>
                   </select>
-                <?php elseif ($input["type"] === 'select') : ?>
-                  <!-- IMAGE -->
-                  <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
-                    <?php foreach ($input['options'] as $value => $label) : ?>
-                      <option value="<?= $value ?>"><?= $label ?></option>
-                    <?php endforeach; ?>
-                  </select>
+                <?php elseif ($input["type"] === 'media') : ?>
+                  <!-- MEDIA -->
+                  <div class="media-selector">
+                    <img class="media-selector__preview" id="<?= $input["id"] . "-img" ?>" src="<?= $input['medias'][0]->path ?>">
+                    <select class="media-selector__select" name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
+                      <?php foreach ($input['medias'] as $media) : ?>
+                        <option value="<?= $media->id ?>"><?= $media->name ?></option>
+                      <?php endforeach; ?>
+                    </select>
                 <?php else : ?>
                   <!-- INPUT -->
                   <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> value="<?= $input["value"] ?? '' ?>" <?= empty($input["accept"]) ? "" : 'accept="' . $input["accept"] . '"' ?>>
