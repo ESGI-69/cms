@@ -12,7 +12,7 @@
 
 <body class="<?= $this->template ?> <?= $this->view ?>">
   <script src="/js/chart.min.js"></script> <!-- Script de chart -->
-  <script src="https://cdn.tiny.cloud/1/hwgre5j1e94ouquulufuygnjd0vqdzl0udis1n4fo7vjz7ia/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/<?= TINYMCE_TOKEN ?>/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
       menubar: false,
