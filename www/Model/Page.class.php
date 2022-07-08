@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Core\Sql;
+use App\Core\AuthManager;
 
 class Page extends Sql
 
@@ -13,8 +14,9 @@ class Page extends Sql
   protected $content = null;
   protected $subtile = null;
   protected $user_id = null;
+  protected $navigation = null;
   protected $category_id = null;
-  
+
 
   public function __construct()
   {
@@ -33,7 +35,7 @@ class Page extends Sql
 
   public function setTitle(?string $title): void
   {
-    $this->title = trim($title);
+    $this->title = htmlspecialchars(trim($title), ENT_COMPAT);
   }
 
   public function getUrl(): ?string
@@ -43,7 +45,14 @@ class Page extends Sql
 
   public function setUrl(?string $url): void
   {
-    $this->url = str_replace(' ', '-', strtolower(trim($url)));
+    $this->url = mb_strimwidth(
+      trim(
+        preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($url)))),
+        '-'
+      ),
+      0,
+      92
+    ) . "-" . date('y-m-d');
   }
 
   public function getContent(): ?string
@@ -53,7 +62,7 @@ class Page extends Sql
 
   public function setContent(?string $content): void
   {
-    $this->content = $content;
+    $this->content = htmlspecialchars($content, ENT_COMPAT);
   }
 
   public function getSubtile(): ?string
@@ -63,7 +72,7 @@ class Page extends Sql
 
   public function setSubtile(?string $subtile): void
   {
-    $this->subtile = trim($subtile);
+    $this->subtile = htmlspecialchars(trim($subtile), ENT_COMPAT);
   }
 
   public function getUserId(): ?int
@@ -71,9 +80,19 @@ class Page extends Sql
     return $this->user_id;
   }
 
-  public function setUserId(?int $user_id): void
+  public function setUserId(): void
   {
-    $this->user_id = $user_id;
+    $this->user_id = AuthManager::userInfos()['id'];
+  }
+
+  public function getNavigation(): ?int
+  {
+    return $this->navigation;
+  }
+
+  public function setNavigation(?int $navigation): void
+  {
+    $this->navigation = $navigation;
   }
 
   public function getCategoryId(): ?int
@@ -86,54 +105,98 @@ class Page extends Sql
     $this->category_id = $category_id;
   }
 
-  public function getPageForm(): array {
+  public function getPageForm(): array
+  {
+    $navigation = [
+      [
+        'value' => 'navbar',
+        'name' => 'Navbar'
+      ],
+      [
+        'value' => "footer",
+        'name' => 'Footer'
+      ]
+    ];
+
     return [
       "config" => [
         "method" => "POST",
         "action" => "",
-        "submit" => "Ajouter"
+        "submit" => "Ajouter",
+        "success" => "Page ajoutée avec succès",
       ],
-      "inputs" => [
-        "title" => [
-          "type" => "text",
-          "placeholder" => "Titre",
-          "id" => "titleForm",
-          "class" => "inputForm",
-          "required" => true,
-          "error" => "Veuillez entrer un titre",
-          "min" => 2,
-          "max" => 100,
+      'left' => [
+        'Adding a page' => [
+          "inputs" => [
+            "title" => [
+              "label" => "Title",
+              "type" => "text",
+              "placeholder" => "Title",
+              "id" => "titleForm",
+              "class" => "input",
+              "required" => true,
+              "error" => "Veuillez entrer un titre",
+              "min" => 2,
+              "max" => 100,
+            ],
+            "subtitle" => [
+              "label" => "Subtitle",
+              "type" => "text",
+              "placeholder" => "Sous-titre",
+              "id" => "subtitleForm",
+              "class" => "input",
+              "required" => true,
+              "error" => "Veuillez entrer un sous-titre",
+              "min" => 2,
+              "max" => 100,
+            ],
+            "content" => [
+              "label" => "Content",
+              "type" => "wysiwyg",
+              "placeholder" => "Content",
+              "id" => "contentForm",
+              "class" => "textareaForm ",
+              "required" => true,
+              "error" => "Veuillez entrer un contenu",
+              "min" => 2,
+              "max" => 10000,
+            ],
+          ]
         ],
-        "subtitle" => [
-          "type" => "text",
-          "placeholder" => "Sous-titre",
-          "id" => "subtitleForm",
-          "class" => "inputForm",
-          "required" => true,
-          "error" => "Veuillez entrer un sous-titre",
-          "min" => 2,
-          "max" => 100,
+      ],
+      'right' => [
+        'Informations complémentaires' => [
+          'inputs' => [
+            "image" => [
+              "label" => "Navigation",
+              "type" => "select",
+              "placeholder" => "Naviation",
+              "id" => "selectForm",
+              "valueKey" => "value",
+              "labelKey" => "name",
+              "options" => $navigation,
+              "class" => "input",
+              "required" => true,
+              "error" => "Veuillez téléverser une image",
+              "accept" => ""
+            ],
+          ],
         ],
-        "image" => [
-          "type" => "file",
-          "placeholder" => "Image",
-          "id" => "imageForm",
-          "class" => "inputForm",
-          "required" => true,
-          "error" => "Veuillez téléverser une image",
-          "accept" => ""
-        ],
-        "content" => [
-          "type" => "wysiwyg",
-          "placeholder" => "Contenu",
-          "id" => "contentForm",
-          "class" => "textareaForm ",
-          "required" => true,
-          "error" => "Veuillez entrer un contenu",
-          "min" => 2,
-          "max" => 10000,
-        ],
-      ]
+      ],
     ];
+  }
+  public function setPageInfo(): void
+  {
+    try {
+      $this->setTitle($_POST['title']);
+      $this->setUrl($_POST['title']);
+      $this->setContent($_POST['content']);
+      $this->setSubtile($_POST['subtitle']);
+      $this->setUserId();
+      $this->setNavigation($_POST['navigation']);
+    } catch (\Exception $e) {
+      echo "Impossible d'assigner les properties du Model Page";
+      print_r($e);
+    }
   }
 }

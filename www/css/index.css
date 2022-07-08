@@ -664,26 +664,41 @@ a.link:visited {
   flex-wrap: wrap;
 }
 
-.page-creation {
+.pagemanager > main {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
-.page-creation__cards {
+.pagemanager > main .cards {
+  display: flex;
+  flex-wrap: nowrap;
   gap: 2rem;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 4fr 1fr;
 }
-.page-creation__cards .card.right {
+.pagemanager > main .cards .card {
+  background: #ffffff;
+  border: 1px solid #D5E0F0;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+.pagemanager > main .cards .card.left {
+  flex-grow: 1;
+}
+.pagemanager > main .cards .card.right {
   width: 300px;
 }
-.page-creation__cards .card .dual-group {
+.pagemanager > main .cards .card .dual-group {
   display: flex;
   gap: 1em;
+  max-width: 100%;
 }
-.page-creation__cards .card .dual-group > * {
-  flex-grow: 1;
+.pagemanager > main .cards .card .dual-group > * {
+  width: calc(50% - 8px);
+}
+.pagemanager > main__section {
+  padding-left: em(32);
+  display: flex;
+  flex-direction: column;
+  gap: em(10);
 }
 
 .pages-list {
