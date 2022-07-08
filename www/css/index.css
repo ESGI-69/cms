@@ -506,6 +506,9 @@ a.link:visited {
   height: 70px;
   background: #006ACB;
 }
+.wk_sidebar__container__logo-container__home-link {
+  width: 100%;
+}
 .wk_sidebar__container__logo-container__logo {
   fill: #ffffff;
   max-width: 75%;

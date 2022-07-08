@@ -23,7 +23,7 @@ class Media extends Sql
 
     $this->medias = $media->getAll();
 
-    $view = new View("mediasList", "back", "Liste des médias");
+    $view = new View("mediasList", "back", "Medias");
     $view->assign("media", $media);
     $view->assign("medias", $this->medias);
   }
