@@ -21,7 +21,7 @@ class Article extends Sql
     return $this->id;
   }
 
-  public function getFrom(): array
+  public function getForm(): array
   {
     $category = new Category();
     $categories = $category->getAll();
