@@ -137,18 +137,4 @@ class Media extends Sql
       print_r($e);
     }
   }
-
-  public function delete($idMedia)
-  {
-    $sql = $this->mysqlBuilder
-      ->delete()
-      ->where('id')
-      ->getQuery();
-
-    $option = [
-      'id' => $idMedia
-    ];
-
-    $this->executeQuery($sql, 0, $option);
-  }
 }
