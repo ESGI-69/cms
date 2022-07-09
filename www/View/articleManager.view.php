@@ -1,5 +1,5 @@
 <?php if (!$success) : ?>
-  <?php $this->includePartial("form", $article->getFrom()) ?>
+  <?php $this->includePartial("form", $article->getForm()) ?>
 <?php else : ?>
   <?php header("Location: /articles-list"); ?>
 <?php endif; ?>
