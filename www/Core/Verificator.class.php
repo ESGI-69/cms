@@ -16,7 +16,13 @@ class Verificator
           }
         }
       }
-      $config = $backConfig[0];
+      if (count($backConfig) > 1) {
+        $config = [
+          'inputs' => array_merge($backConfig[0]['inputs'], $backConfig[1]['inputs']),
+        ];
+      } else {
+        $config = $backConfig[0];
+      }
     }
 
     $result = [];
@@ -51,8 +57,8 @@ class Verificator
       }
 
       // verificator injection js
-      if ($input["type"] === 'text' || $input["type"] === 'email' || $input["type"] === 'textarea' ) {
-        $specialChar = preg_match("/[\[\'()}{:\'#~><>,;\|\/\\+\`\]]/" ,$data[$name]);
+      if ($input["type"] === 'text' || $input["type"] === 'email' || $input["type"] === 'textarea') {
+        $specialChar = preg_match("/[\[\'()}{:\'#~><>,;\|\/\\+\`\]]/", $data[$name]);
         if ($specialChar) {
           $result[] = "Le champs " . $name . " ne peut pas contenir de caractère spéciaux";
         }
