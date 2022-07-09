@@ -20,9 +20,9 @@
     <?php endif; ?>
   </form>
 <?php else : ?>
-  <form class="cards <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if (isset($data["config"]["enctype"])) {
-                                                                                                                                                                                echo 'enctype="' . $data["config"]["enctype"] . '"';
-                                                                                                                                                                              } ?>>
+  <form id="form" class="cards <?= $view ?? '' ?> <?= $formErrors ?? 'no error' ?>" method="<?= $data["config"]["method"] ?? "POST" ?>" action="<?= $data["config"]["action"] ?? "" ?>" <?php if (isset($data["config"]["enctype"])) {
+                                                                                                                                                                                          echo 'enctype="' . $data["config"]["enctype"] . '"';
+                                                                                                                                                                                        } ?>>
     <!-- Le CSRF token -->
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
     <?php foreach ($data as $side => $sideContent) : ?>
