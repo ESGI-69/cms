@@ -107,16 +107,8 @@ class Page extends Sql
 
   public function getPageForm(): array
   {
-    $navigation = [
-      [
-        'value' => 'navbar',
-        'name' => 'Navbar'
-      ],
-      [
-        'value' => "footer",
-        'name' => 'Footer'
-      ]
-    ];
+    $navigation = new Navigation();
+    $navigations = $navigation->getAll();
 
     return [
       "config" => [
@@ -174,7 +166,7 @@ class Page extends Sql
               "id" => "selectForm",
               "valueKey" => "value",
               "labelKey" => "name",
-              "options" => $navigation,
+              "options" => $navigations,
               "class" => "input",
               "required" => true,
               "error" => "Veuillez téléverser une image",
