@@ -71,7 +71,6 @@
                       const beforeSumbit = (event) => {
                         event.preventDefault();
                         // Send the content of the wysiwyg to the hidden input
-                        console.log('csqdqs');
                         tinymce.triggerSave();
                         document.querySelector('#form').requestSubmit();
                       };
