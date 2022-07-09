@@ -14,8 +14,15 @@ class Page
   {
     $page = new PageModel();
 
+    if (isset($_GET['deletedId'])) {
+      $page->delete($_GET['deletedId']);
+    }
+
+    $this->pages = $page->getAll();
+
     $view = new View("pagesList", "back", "Pages");
     $view->assign("page", $page);
+    $view->assign("pages", $this->pages);
 
   }
   public function pageManager()

@@ -307,4 +307,19 @@ abstract class Sql
 
     return $this->executeQuery($sql, 2);
   }
+
+  public function delete($id)
+  {
+    $sql = $this->mysqlBuilder
+      ->delete()
+      ->where('id')
+      ->getQuery();
+
+    $option = [
+      'id' => $id
+    ];
+
+    $this->executeQuery($sql, 0, $option);
+  }
 }
+
