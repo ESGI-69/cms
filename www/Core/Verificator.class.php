@@ -81,12 +81,6 @@ class Verificator
     if (!$containMedia) {
       // Le nb de inputs envoyés - 1 pour le csrf_token
       if (count($data) - 1 != count($config['inputs'])) {
-        echo "test";
-        echo "<pre>";
-        print_r($data);
-        echo "<br>";
-        print_r($config);
-        echo "</pre>";
         die("Tentative de hack !!!!");
       }
 
