@@ -12,10 +12,9 @@ class Page extends Sql
   protected $title = null;
   protected $url = null;
   protected $content = null;
-  protected $subtile = null;
+  protected $subtitle = null;
   protected $user_id = null;
-  protected $navigation = null;
-  protected $category_id = null;
+  protected $navigation_id = null;
 
 
   public function __construct()
@@ -70,14 +69,14 @@ class Page extends Sql
     $this->content = htmlspecialchars($content, ENT_COMPAT);
   }
 
-  public function getSubtile(): ?string
+  public function getsubtitle(): ?string
   {
-    return $this->subtile;
+    return $this->subtitle;
   }
 
-  public function setSubtile(?string $subtile): void
+  public function setsubtitle(?string $subtitle): void
   {
-    $this->subtile = htmlspecialchars(trim($subtile), ENT_COMPAT);
+    $this->subtitle = htmlspecialchars(trim($subtitle), ENT_COMPAT);
   }
 
   public function getUserId(): ?int
@@ -92,12 +91,12 @@ class Page extends Sql
 
   public function getNavigation(): ?int
   {
-    return $this->navigation;
+    return $this->navigation_id;
   }
 
   public function setNavigation(?int $navigation): void
   {
-    $this->navigation = $navigation;
+    $this->navigation_id = $navigation;
   }
 
   public function getPageInfo(?string $id): array
@@ -116,7 +115,7 @@ class Page extends Sql
       $this->setTitle($result->title);
       $this->setUrl($result->url);
       $this->setContent($result->content);
-      $this->setSubtile($result->subtitle);
+      $this->setsubtitle($result->subtitle);
       $this->setUserId($result->user_id);
       $this->setNavigation($navigationValue);
       return [
@@ -124,7 +123,7 @@ class Page extends Sql
         'title' => $this->gettitle(),
         'url' => $this->getUrl(),
         'content' => $this->getContent(),
-        'subtitle' => $this->getSubtile(),
+        'subtitle' => $this->getsubtitle(),
         'user_id' => $this->getUserId(),
         'navigation' => $this->getNavigation(),
       ];
@@ -159,7 +158,7 @@ class Page extends Sql
               "max" => 100,
             ],
             "subtitle" => [
-              "value" => $this->getSubtile() ? $this->getSubtile() : "",
+              "value" => $this->getsubtitle() ? $this->getsubtitle() : "",
               "label" => "Subtitle",
               "type" => "text",
               "placeholder" => "Sous-titre",
@@ -193,7 +192,7 @@ class Page extends Sql
               "type" => "select",
               "placeholder" => "Naviation",
               "id" => "selectForm",
-              "valueKey" => "value",
+              "valueKey" => "id",
               "labelKey" => "name",
               "options" => $navigations,
               "selected" => $this->getNavigation() ? $this->getNavigation() : "",
@@ -213,7 +212,7 @@ class Page extends Sql
       $this->setTitle($_POST['title']);
       $this->setUrl($_POST['title']);
       $this->setContent($_POST['content']);
-      $this->setSubtile($_POST['subtitle']);
+      $this->setsubtitle($_POST['subtitle']);
       $this->setUserId();
       $this->setNavigation($_POST['navigation']);
     } catch (\Exception $e) {

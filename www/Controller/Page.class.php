@@ -38,9 +38,9 @@ class Page
       $page->getPageInfo($_GET['id']);
     } else {
       if (!empty($_POST)) {
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo "</pre>";
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
         $formErrors = Verificator::checkForm($page->getPageForm(), $_POST);
         if (count($formErrors) === 0) {
           $page->setPageInfo();
