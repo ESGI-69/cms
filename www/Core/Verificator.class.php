@@ -7,7 +7,7 @@ class Verificator
   public static function checkForm($config, $data): array
   {
     // If we are in a backend form
-    if ($config['left'] || $config['right']) {
+    if (!isset($config['inputs'])) {
       $backConfig = [];
       foreach ($config as $side => $section) {
         if ($side !== 'config') {

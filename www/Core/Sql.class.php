@@ -198,10 +198,10 @@ abstract class Sql
     return $emailExist;
   }
 
-  public function login(string $email): array
+  public function login(string $email): object
   {
     $sql = $this->mysqlBuilder
-      ->select(['password', 'status', 'token', 'firstname'])
+      ->select(['password', 'status', 'token', 'firstname', 'email'])
       ->where('email')
       ->limit(0, 1)
       ->getQuery();

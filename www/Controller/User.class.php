@@ -31,23 +31,23 @@ class User extends Sql
         if (empty($queryResult)) {
           $formErrors[] = "Email ou mot de passe invalide";
         } else {
-          if ($queryResult['status'] === "0") {
+          if ($queryResult->status === "0") {
             $formErrors[] = "Confirmez votre mail";
-          } else if ($queryResult['status'] === "1") {
-            if (password_verify($_POST['password'], $queryResult['password'])) {
+          } else if ($queryResult->status === "1") {
+            if (password_verify($_POST['password'], $queryResult->password)) {
               $login = true;
               $userInfos = array(
-                "firstname" => $queryResult["firstname"],
-                "email" => $queryResult["email"],
+                "firstname" => $queryResult->firstname,
+                "email" => $queryResult->email,
               );
 
-              $log->save("User '" . $queryResult["firstname"] . "' with email '" . $queryResult["email"] . "' logged in");
+              $log->save("User '" . $queryResult->firstname . "' with email '" . $queryResult->email . "' logged in");
 
-              setcookie('wikikiToken', $queryResult['token'], time() + 60 * 60 * 24 * 30);
+              setcookie('wikikiToken', $queryResult->token, time() + 60 * 60 * 24 * 30);
             } else {
               $formErrors[] = "Email ou mot de passe invalide";
             }
-          } else if ($queryResult['status'] === "2") {
+          } else if ($queryResult->status === "2") {
             $formErrors[] = "🫵 Vous etes banni 🫵";
           }
         }
