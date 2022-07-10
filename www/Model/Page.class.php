@@ -23,6 +23,11 @@ class Page extends Sql
     parent::__construct();
   }
 
+  protected function setId($id)
+  {
+    $this->id = $id;
+  }
+
   public function getId(): ?int
   {
     return $this->id;
@@ -95,14 +100,36 @@ class Page extends Sql
     $this->navigation = $navigation;
   }
 
-  public function getCategoryId(): ?int
+  public function getPageInfo(?string $id): array
   {
-    return $this->category_id;
-  }
-
-  public function setCategoryId(?int $category_id): void
-  {
-    $this->category_id = $category_id;
+    $this->id = $id;
+    $result = $this->get($id);
+    // print_r($result);
+    if (isset($result)) {
+      $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id');
+      $navigationValue = 0;
+      if ($navigation[0]->value === 'footer' ){
+        $navigationValue = 1;
+      } elseif ($navigation[0]->value === 'navbar') {
+        $navigationValue = 2;
+      }
+      $this->setId($result->id);
+      $this->setTitle($result->title);
+      $this->setUrl($result->url);
+      $this->setContent($result->content);
+      $this->setSubtile($result->subtitle);
+      $this->setUserId($result->user_id);
+      $this->setNavigation($navigationValue);
+      return [
+        'id' => $this->getId(),
+        'title' => $this->gettitle(),
+        'url' => $this->getUrl(),
+        'content' => $this->getContent(),
+        'subtitle' => $this->getSubtile(),
+        'user_id' => $this->getUserId(),
+        'navigation' => $this->getNavigation(),
+      ];
+    }
   }
 
   public function getPageForm(): array
@@ -121,6 +148,7 @@ class Page extends Sql
         'Adding a page' => [
           "inputs" => [
             "title" => [
+              "value" => $this->getTitle() ? $this->getTitle() : "",
               "label" => "Title",
               "type" => "text",
               "placeholder" => "Title",
@@ -132,6 +160,7 @@ class Page extends Sql
               "max" => 100,
             ],
             "subtitle" => [
+              "value" => $this->getSubtile() ? $this->getSubtile() : "",
               "label" => "Subtitle",
               "type" => "text",
               "placeholder" => "Sous-titre",
@@ -143,6 +172,7 @@ class Page extends Sql
               "max" => 100,
             ],
             "content" => [
+              "value" => $this->getContent() ? $this->getContent() : "",
               "label" => "Content",
               "type" => "wysiwyg",
               "placeholder" => "Content",
@@ -159,7 +189,7 @@ class Page extends Sql
       'right' => [
         'Informations complémentaires' => [
           'inputs' => [
-            "image" => [
+            "navigation" => [
               "label" => "Navigation",
               "type" => "select",
               "placeholder" => "Naviation",
@@ -167,6 +197,7 @@ class Page extends Sql
               "valueKey" => "value",
               "labelKey" => "name",
               "options" => $navigations,
+              "selected" => $this->getNavigation() ? $this->getNavigation() : "",
               "class" => "input",
               "required" => true,
               "error" => "Veuillez téléverser une image",

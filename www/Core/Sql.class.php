@@ -67,6 +67,28 @@ abstract class Sql
     return $result;
   }
 
+  public function getJoin(int $id, string $table, string $rowA, string $rowB)
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->join(0, $table, $rowA, $rowB)
+      ->where('id')
+      ->getQuery();
+
+    $option = [
+      'id' => $id
+    ];
+
+    $result = $this->executeQuery($sql, 2, $option);
+    echo "<pre>";
+    echo"<br>";
+    echo"<br>";
+    echo "result :  ";
+    var_dump($result);
+    echo "</pre>";
+    return $result;
+  }
+
   public function saveUser()
   {
 
@@ -277,6 +299,7 @@ abstract class Sql
    * - `0` = no fetch
    * - `1` = fetch
    * - `2` = fetchAll
+   * - `3` = for join queries
    */
   public function executeQuery(string $query, int $fetchType, array $option = null)
   {

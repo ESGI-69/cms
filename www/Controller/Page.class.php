@@ -34,10 +34,13 @@ class Page
 
     // à faire
     if (isset($_GET['id'])) {
-      // $this->editMedia($_GET['editId']);
+      // $this->editPage($_GET['editId']);
+      $page->getPageInfo($_GET['id']);
     } else {
       if (!empty($_POST)) {
-        echo "test";
+        // echo "<pre>";
+        // print_r($_POST);
+        // echo "</pre>";
         $formErrors = Verificator::checkForm($page->getPageForm(), $_POST);
         if (count($formErrors) === 0) {
           $page->setPageInfo();
