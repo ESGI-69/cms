@@ -63,16 +63,8 @@
             Users
           </span>
         </a>
-        <a href="#" class="wk_sidebar__container__navigation__section__item">
-          <svg xmlns="http://www.w3.org/2000/svg" class="wk_sidebar__container__navigation__section__item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          <span>
-            Comments moderation
-          </span>
-        </a>
       </section>
-      <span class="wk_sidebar__container__navigation__section__title">General</span>
+      <!-- <span class="wk_sidebar__container__navigation__section__title">General</span>
       <section class="wk_sidebar__container__navigation__section">
         <a href="#" class="wk_sidebar__container__navigation__section__item">
           <svg xmlns="http://www.w3.org/2000/svg" class="wk_sidebar__container__navigation__section__item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,7 +78,7 @@
           </svg>
           <span>Preferences</span>
         </a>
-        </ul>
+        </ul> -->
     </div>
 
   </div>
@@ -96,8 +88,10 @@
       <?= $userInfos['firstname'] ?>
       <?= $userInfos['lastname'] ?>
     </span>
-    <svg class="wk_sidebar__footer__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-    </svg>
+    <a class="wk_sidebar__footer__icon" href="/logout">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" height="24" width="24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16L21 12M21 12L17 8M21 12L7 12M13 16V17C13 18.6569 11.6569 20 10 20H6C4.34315 20 3 18.6569 3 17V7C3 5.34315 4.34315 4 6 4H10C11.6569 4 13 5.34315 13 7V8" />
+      </svg>
+    </a>
   </footer>
 </nav>
