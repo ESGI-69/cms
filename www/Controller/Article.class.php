@@ -22,6 +22,17 @@ class Article
 
     if (!empty($_POST)) {
       $formErrors = Verificator::checkForm($article->getForm(), $_POST);
+      if (count($formErrors) === 0) {
+        $article->setArticleInfo();
+        $registerError = $article->checkExisting('title');
+        if ($registerError === false) {
+          $article->save();
+          $success = true;
+          header("Location: /articles-list");
+        } else {
+          $formErrors[] = "Titre déjà utilisé";
+        }
+      }
     }
 
     $view = new View("articleManager", "back", isset($_GET['id']) ? 'ARTICLE NAME - Edit' : 'New Article');
