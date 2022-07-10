@@ -11,7 +11,17 @@ class Article
 
   public function articlesList()
   {
+    $article = new ArticleModel();
+
+    if (isset($_GET['deletedId'])) {
+      $article->delete($_GET['deletedId']);
+    }
+
+    $this->articles = $article->getAll();
+
     $view = new View("articlesList", "back", "Articles");
+    $view->assign("article", $article);
+    $view->assign("articles", $this->articles);
   }
 
   public function articleManager()
