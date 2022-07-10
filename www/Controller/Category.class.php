@@ -57,7 +57,7 @@ class Category
           $category->setCategoryInfo();
           $registerError = $category->checkExisting('name');
           if ($registerError === false) {
-            $category->saveCategory();
+            $category->save();
             $saved = true;
             // redirect to categoriesList
             header("Location: /categories-list");

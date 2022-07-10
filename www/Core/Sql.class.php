@@ -83,7 +83,7 @@ abstract class Sql
     return $result;
   }
 
-  public function saveUser()
+  public function save()
   {
 
     $columns = get_object_vars($this);
@@ -94,54 +94,6 @@ abstract class Sql
      *        or
      *        use Authenticator::getUser()->getId() ?s
      */
-
-    if ($this->getId() === null) {
-      $columnsFiltred = $columns;
-      unset($columnsFiltred['id']);
-
-      $sql = $this->mysqlBuilder
-        ->insert($columnsFiltred)
-        ->getQuery();
-      $this->executeQuery($sql, 0, $columnsFiltred);
-    }
-
-    /**
-     * TODO : update an user with save()method : 
-     *        send his id through the form
-     *        or
-     *        update the user where token = $_COOKIE['wikikiToken']
-     */
-    else {
-      $update = [];
-      foreach ($columns as $column => $value) {
-        $update[] = $column . "=:" . $column;
-      }
-
-      $sqlNew = $this->mysqlBuilder
-        ->update()
-        ->set($columns)
-        ->where('id')
-        ->getQuery();
-
-      $this->executeQuery($sqlNew, 0, $columns);
-    }
-  }
-
-  public function savePage()
-  {
-
-    $columns = get_object_vars($this);
-    $columns = array_diff_key($columns, get_class_vars(get_class()));
-
-    /**
-     * TODO : create getId() method
-     *        or
-     *        use Authenticator::getUser()->getId() ?s
-     */
-
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
 
     if ($this->getId() === null) {
       $columnsFiltred = $columns;
@@ -207,10 +159,6 @@ abstract class Sql
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
 
-    echo "<pre>";
-    print_r($columns);
-    echo "</pre>";
-
     $update = [];
     foreach ($columns as $column => $value) {
       $update[] = $column . "=:" . $column;
@@ -223,26 +171,6 @@ abstract class Sql
       ->getQuery();
 
     $this->executeQuery($sqlNew, 0, $columns);
-  }
-
-  public function saveCategory()
-  {
-    $columns = get_object_vars($this);
-    $columns = array_diff_key($columns, get_class_vars(get_class()));
-
-    if ($this->getId() === null) {
-
-      $columnsFiltred = $columns;
-      unset($columnsFiltred['id']);
-
-      $sql = $this->mysqlBuilder
-        ->insert($columnsFiltred)
-        ->getQuery();
-
-      $options = $columnsFiltred;
-
-      $this->executeQuery($sql, 0, $options);
-    }
   }
 
   public function checkExisting(string $where)
