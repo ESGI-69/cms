@@ -80,12 +80,6 @@ abstract class Sql
     ];
 
     $result = $this->executeQuery($sql, 2, $option);
-    echo "<pre>";
-    echo"<br>";
-    echo"<br>";
-    echo "result :  ";
-    var_dump($result);
-    echo "</pre>";
     return $result;
   }
 
