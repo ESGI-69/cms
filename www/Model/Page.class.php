@@ -104,7 +104,6 @@ class Page extends Sql
   {
     $this->id = $id;
     $result = $this->get($id);
-    // print_r($result);
     if (isset($result)) {
       $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id');
       $navigationValue = 0;
