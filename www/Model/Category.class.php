@@ -86,18 +86,4 @@ class Category extends Sql
   {
     $this->setName($_POST['name']);
   }
-
-  public function delete($idCat)
-  {
-    $sql = $this->mysqlBuilder
-      ->delete()
-      ->where('id')
-      ->getQuery();
-
-    $option = [
-      'id' => $idCat
-    ];
-
-    $this->executeQuery($sql, 0, $option);
-  }
 }

@@ -98,7 +98,7 @@ class MySqlBuilder implements QueryBuilder
   public function where(string $column, string $operator = '='): QueryBuilder
   {
 
-    $this->query->where[] = $column . $operator . ":" . $column;
+    $this->query->where[] = $this->table . "." . $column . $operator . ":" . $column;
     return $this;
   }
 
@@ -136,7 +136,7 @@ class MySqlBuilder implements QueryBuilder
     } else if ($joinType === 3) {
       $join = 'FULL JOIN ';
     }
-    $this->query->join[] = $join . $table . ' ON ' . $this->table . '.' . $rowTableOne . $operator . $table . '.' . $rowTableTwo;
+    $this->query->join[] = $join . $table . ' ON ' . $this->table . '.' . $rowTableOne . ' ' . $operator . ' ' . $table . '.' . $rowTableTwo;
     return $this;
   }
 

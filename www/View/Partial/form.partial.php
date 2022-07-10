@@ -43,8 +43,15 @@
                 <?php if ($input["type"] === 'select') : ?>
                   <!-- SELECT -->
                   <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
+                    <?php $i = 1; $selected = ""?>
                     <?php foreach ($input['options'] as $option) : ?>
-                      <option value="<?= $option->{$input['valueKey']} ?>"><?= $option->{$input['labelKey']} ?></option>
+                      <?php 
+                        if ($i === $input["selected"]) {
+                          $selected = "selected";
+                        }  
+                      ?>
+                      <option value="<?= $option->{$input['valueKey']} ?>" <?= $selected ?> ><?= $option->{$input['labelKey']} ?></option>
+                      <?php $i++?>
                     <?php endforeach; ?>
                   </select>
                 <?php elseif ($input["type"] === 'media') : ?>

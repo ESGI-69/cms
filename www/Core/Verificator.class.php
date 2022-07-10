@@ -8,6 +8,7 @@ class Verificator
   {
     // If we are in a backend form
     if ($config['left'] || $config['right']) {
+      echo "if backend";
       $backConfig = [];
       foreach ($config as $side => $section) {
         if ($side !== 'config') {
@@ -80,6 +81,12 @@ class Verificator
     if (!$containMedia) {
       // Le nb de inputs envoyés - 1 pour le csrf_token
       if (count($data) - 1 != count($config['inputs'])) {
+        echo "test";
+        echo "<pre>";
+        print_r($data);
+        echo "<br>";
+        print_r($config);
+        echo "</pre>";
         die("Tentative de hack !!!!");
       }
 
