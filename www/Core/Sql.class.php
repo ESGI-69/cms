@@ -139,6 +139,10 @@ abstract class Sql
      *        use Authenticator::getUser()->getId() ?s
      */
 
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
+
     if ($this->getId() === null) {
       $columnsFiltred = $columns;
       unset($columnsFiltred['id']);
