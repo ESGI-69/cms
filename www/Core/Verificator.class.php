@@ -8,7 +8,6 @@ class Verificator
   {
     // If we are in a backend form
     if ($config['left'] || $config['right']) {
-      echo "if backend";
       $backConfig = [];
       foreach ($config as $side => $section) {
         if ($side !== 'config') {
