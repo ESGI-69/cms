@@ -106,7 +106,7 @@ class Page extends Sql
     if (isset($result)) {
       $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id');
       $navigationValue = 0;
-      if ($navigation[0]->value === 'footer' ){
+      if ($navigation[0]->value === 'footer') {
         $navigationValue = 1;
       } elseif ($navigation[0]->value === 'navbar') {
         $navigationValue = 2;

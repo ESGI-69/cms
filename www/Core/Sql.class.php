@@ -271,4 +271,3 @@ abstract class Sql
     $this->executeQuery($sql, 0, $option);
   }
 }
-
