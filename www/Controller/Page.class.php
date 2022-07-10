@@ -23,7 +23,6 @@ class Page
     $view = new View("pagesList", "back", "Pages");
     $view->assign("page", $page);
     $view->assign("pages", $this->pages);
-
   }
   public function pageManager()
   {
@@ -34,19 +33,28 @@ class Page
 
     // à faire
     if (isset($_GET['id'])) {
-      // $this->editPage($_GET['editId']);
       $page->getPageInfo($_GET['id']);
+      if (!empty($_POST)) {
+        $formErrors = Verificator::checkForm($page->getPageForm(), $_POST);
+        if (count($formErrors) === 0) {
+          $page->setPageInfo();
+          if ($registerError === false) {
+            $page->edit();
+            $saved = true;
+            header("Location: /pages-list");
+          } else {
+            $formErrors[] = "Nom de page déjà utilisé";
+          }
+        }
+      }
     } else {
       if (!empty($_POST)) {
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
         $formErrors = Verificator::checkForm($page->getPageForm(), $_POST);
         if (count($formErrors) === 0) {
           $page->setPageInfo();
           $registerError = $page->checkExisting('title');
           if ($registerError === false) {
-            $page->savePage();
+            $page->save();
             $saved = true;
             header("Location: /pages-list");
           } else {
@@ -61,11 +69,9 @@ class Page
     $view->assign("page", $page);
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);
-
   }
   public function page()
   {
     $view = new View("page", "front");
   }
-  
 }
