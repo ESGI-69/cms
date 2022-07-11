@@ -4,7 +4,6 @@ namespace App\Core;
 
 use App\Core\MySqlBuilder;
 
-
 abstract class Sql
 {
   private $pdo;
@@ -198,7 +197,7 @@ abstract class Sql
     return $emailExist;
   }
 
-  public function login(string $email): object
+  public function login(string $email)
   {
     $sql = $this->mysqlBuilder
       ->select(['password', 'status', 'token', 'firstname', 'email'])
