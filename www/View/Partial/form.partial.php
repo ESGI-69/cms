@@ -98,7 +98,7 @@
                     </script>
                   <?php endif; ?>
                   <!-- INPUT -->
-                  <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> value="<?= $input["value"] ?? '' ?>" <?= empty($input["accept"]) ? "" : 'accept="' . $input["accept"] . '"' ?>>
+                  <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> value="<?= html_entity_decode($input["value"]) ?? '' ?>" <?= empty($input["accept"]) ? "" : 'accept="' . $input["accept"] . '"' ?>>
                 <?php endif; ?>
               </div>
             <?php endforeach; ?>
