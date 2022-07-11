@@ -256,6 +256,17 @@ abstract class Sql
     return $this->executeQuery($sql, 2);
   }
 
+  public function getLast(int $quantity): array
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->order('createdAt', 'DESC')
+      ->limit(0, $quantity)
+      ->getQuery();
+
+    return $this->executeQuery($sql, 2);
+  }
+
   public function delete($id)
   {
     $sql = $this->mysqlBuilder
