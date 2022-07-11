@@ -198,8 +198,6 @@ class Page extends Sql
               "selected" => $this->getNavigation() ? $this->getNavigation() : "",
               "class" => "input",
               "required" => true,
-              "error" => "Veuillez téléverser une image",
-              "accept" => ""
             ],
           ],
         ],
