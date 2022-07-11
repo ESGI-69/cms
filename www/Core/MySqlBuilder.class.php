@@ -108,9 +108,13 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
-  public function order(string $column): QueryBuilder
+  public function order(string $column, string $suffix = null): QueryBuilder
   {
-    $this->query->order = ' ORDER BY ' . $column;
+    if ($suffix === null) {
+      $this->query->order = ' ORDER BY ' . $column;
+    } else {
+      $this->query->order = ' ORDER BY ' . $column . ' ' . $suffix;
+    }
     return $this;
   }
 
@@ -162,12 +166,12 @@ class MySqlBuilder implements QueryBuilder
       $sql .= " WHERE " . implode(" AND ", $this->query->where);
     }
 
-    if (isset($this->query->limit)) {
-      $sql .= " " . $this->query->limit;
-    }
-
     if (isset($this->query->order)) {
       $sql .= " " . $this->query->order;
+    }
+
+    if (isset($this->query->limit)) {
+      $sql .= " " . $this->query->limit;
     }
 
     if (isset($this->query->or)) {
