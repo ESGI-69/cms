@@ -43,25 +43,38 @@
                 <?php if ($input["type"] === 'select') : ?>
                   <!-- SELECT -->
                   <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
-                    <?php $i = 1;
-                    $selected = "" ?>
                     <?php foreach ($input['options'] as $option) : ?>
+                      <?php $selected = "" ?>
                       <?php
-                      if ($i === $input["selected"]) {
+                      if ($option->id === $input["selected"]) {
                         $selected = "selected";
                       }
                       ?>
                       <option value="<?= $option->{$input['valueKey']} ?>" <?= $selected ?>><?= $option->{$input['labelKey']} ?></option>
-                      <?php $i++ ?>
                     <?php endforeach; ?>
                   </select>
                 <?php elseif ($input["type"] === 'media') : ?>
                   <!-- MEDIA -->
                   <div class="media-selector">
-                    <img class="media-selector__preview" id="<?= $input["id"] . "-img" ?>" src="<?= $input['medias'][0]->path ?>">
+                    <?php
+                    $selectedMedia;
+                    // find the selected media
+                    foreach ($input['medias'] as $media) {
+                      if ($input['value'] == $media->id) {
+                        $selectedMedia = $media;
+                      }
+                    }
+                    ?>
+                    <img class="media-selector__preview" id="<?= $input["id"] . "-img" ?>" src="<?= $selectedMedia->path ?>">
                     <select class="media-selector__select" name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
                       <?php foreach ($input['medias'] as $media) : ?>
-                        <option value="<?= $media->id ?>"><?= $media->name ?></option>
+                        <?php $selected = "" ?>
+                        <?php
+                        if ($media->id === $selectedMedia->id) {
+                          $selected = "selected";
+                        }
+                        ?>
+                        <option value="<?= $media->id ?>" <?= $selected ?>><?= $media->name ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
