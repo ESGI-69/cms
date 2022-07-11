@@ -18,6 +18,11 @@ class Article extends Sql
     parent::__construct();
   }
 
+  protected function setId($id)
+  {
+    $this->id = $id;
+  }
+
   /**
    * @return null|int
    */
@@ -76,6 +81,30 @@ class Article extends Sql
     return $this->category_id;
   }
 
+  public function getArticleInfo(?string $id): array
+  {
+    $this->setId($id);
+    $result = $this->get($this->getId());
+    if (isset($result)) {
+      $media = $this->getJoin($result->id, 'wk_media', 'media_id', 'id')[0]->id;
+      $author = $this->getJoin($result->id, 'wk_user', 'user_id', 'id')[0]->id;
+      $category = $this->getJoin($result->id, 'wk_category', 'category_id', 'id')[0]->id;
+      $this->setTitle($result->title);
+      $this->setMedia($media);
+      $this->setContent($result->content);
+      $this->setAuthor($author);
+      $this->setCategory($category);
+      return [
+        'id' => $this->getId(),
+        'title' => $this->getTitle(),
+        'media' => $this->getMedia(),
+        'content' => $this->getContent(),
+        'author' => $this->getAuthor(),
+        'category' => $this->getCategory(),
+      ];
+    }
+  }
+
   public function getForm(): array
   {
     $category = new Category();
@@ -91,13 +120,14 @@ class Article extends Sql
       "config" => [
         "method" => "POST",
         "action" => "",
-        "submit" => empty($this->getId()) ? "Créer la page" : "Modifier la page",
-        "success" => "La page a bien été créé !",
+        "submit" => empty($this->getId()) ? "Créer l'article" : "Modifier l'article",
+        "success" => "L'article a bien été créé !",
       ],
       'left' => [
         "Informations Principales" => [
           'inputs' => [
             "title" => [
+              "value" => $this->getTitle() ? $this->getTitle() : "",
               "label" => "Titre",
               "type" => "text",
               "placeholder" => "Cat",
@@ -109,6 +139,7 @@ class Article extends Sql
               "errorUnicity" => "Le titre doit être unique",
             ],
             "media_id" => [
+              "value" => $this->getMedia() ? $this->getMedia() : "",
               "label" => "Image",
               "type" => "media",
               "medias" => $medias,
@@ -116,8 +147,10 @@ class Article extends Sql
               "id" => "image",
             ],
             "content" => [
+              "value" => $this->getContent() ? $this->getContent() : "",
               "label" => "Contenu",
               "type" => "wysiwyg",
+              "id" => "wysiwyg",
               "placeholder" => "The cat (Felis catus) is a domestic species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family. A cat can either be a house cat, a farm cat or a feral cat; the latter ranges freely and avoids human contact. Domestic cats are valued by humans for companionship and their ability to kill rodents. About 60 cat breeds are recognized by various cat registries.",
               "required" => true,
               "error" => "Un article se doit d'avoir un contenu.",
@@ -129,6 +162,7 @@ class Article extends Sql
         'Informations complémentaires' => [
           'inputs' => [
             "category_id" => [
+              "selected" => $this->getCategory() ? $this->getCategory() : "",
               "label" => "Catégorie",
               "type" => "select",
               "options" => $categories,
@@ -140,6 +174,7 @@ class Article extends Sql
               "error" => "Catégorie invalide",
             ],
             "user_id" => [
+              "selected" => $this->getAuthor() ? $this->getAuthor() : "",
               "label" => "Auteur",
               "type" => "select",
               "options" => $adminUsers,
