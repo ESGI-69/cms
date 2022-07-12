@@ -12,6 +12,7 @@ class Article extends Sql
   protected $content = null;
   protected $user_id = null;
   protected $category_id = null;
+  protected $createdAt = null;
 
   public function __construct()
   {
@@ -51,6 +52,11 @@ class Article extends Sql
     return $this->media_id;
   }
 
+  public function getMediaPath(): ?string
+  {
+    return $this->getJoin($this->getId(), 'wk_media', 'media_id', 'id')[0]->path;
+  }
+
   public function setContent(?string $content): void
   {
     $this->content = htmlspecialchars(trim($content), ENT_COMPAT);
@@ -71,6 +77,21 @@ class Article extends Sql
     return $this->user_id;
   }
 
+  public function getAuthorFirstname(): string
+  {
+    return $this->getJoin($this->getId(), 'wk_user', 'user_id', 'id')[0]->firstname;
+  }
+
+  public function getAuthorLastname(): string
+  {
+    return $this->getJoin($this->getId(), 'wk_user', 'user_id', 'id')[0]->lastname;
+  }
+
+  public function getAuthorEmail(): string
+  {
+    return $this->getJoin($this->getId(), 'wk_user', 'user_id', 'id')[0]->email;
+  }
+
   public function setCategory(?string $category_id): void
   {
     $this->category_id = htmlspecialchars(trim($category_id), ENT_COMPAT);
@@ -81,11 +102,21 @@ class Article extends Sql
     return $this->category_id;
   }
 
+  public function getCategoryName(): string
+  {
+    return $this->getJoin($this->getId(), 'wk_category', 'category_id', 'id')[0]->name;
+  }
+
+  public function getArticleCreationDate(): string
+  {
+    return $this->createdAt;
+  }
+
   public function getArticleInfo(?string $id): array
   {
     $this->setId($id);
     $result = $this->get($this->getId());
-    if (isset($result)) {
+    if (isset($result) && $result !== false) {
       $media = $this->getJoin($result->id, 'wk_media', 'media_id', 'id')[0]->id;
       $author = $this->getJoin($result->id, 'wk_user', 'user_id', 'id')[0]->id;
       $category = $this->getJoin($result->id, 'wk_category', 'category_id', 'id')[0]->id;
@@ -94,6 +125,7 @@ class Article extends Sql
       $this->setContent($result->content);
       $this->setAuthor($author);
       $this->setCategory($category);
+      $this->createdAt = $result->createdAt;
       return [
         'id' => $this->getId(),
         'title' => $this->getTitle(),
@@ -101,7 +133,10 @@ class Article extends Sql
         'content' => $this->getContent(),
         'author' => $this->getAuthor(),
         'category' => $this->getCategory(),
+        'createdAt' => $this->getArticleCreationDate(),
       ];
+    } else {
+      return [];
     }
   }
 

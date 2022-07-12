@@ -50,7 +50,7 @@ abstract class Sql
   /**
    * @param int $id
    */
-  public function get(?int $id): object
+  public function get(?int $id)
   {
     $sql = $this->mysqlBuilder
       ->select(['*'])
