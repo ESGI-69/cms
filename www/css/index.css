@@ -47,7 +47,7 @@ body.front {
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   color: #EDF6F9;
 }
@@ -67,6 +67,7 @@ body.front .user-actions {
   right: 2rem;
 }
 body.front main {
+  margin-top: 225px;
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -786,6 +787,14 @@ a.link:visited {
 .front.home .search input {
   width: 300px;
   font-size: 1em;
+}
+
+.front.article img {
+  width: 200px;
+  height: auto;
+}
+.front.article .end {
+  font-size: 0.875em;
 }
 
 /*# sourceMappingURL=index.css.map */
