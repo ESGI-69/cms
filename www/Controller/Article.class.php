@@ -69,8 +69,21 @@ class Article
     $view->assign('success', $success);
   }
 
-  public function article()
+  public function frontView()
   {
-    $view = new View("article", "front", "Article");
+    if (isset($_GET['id'])) {
+      $article = new ArticleModel();
+      $articleInfos = $article->getArticleInfo($_GET['id']);
+      if (empty($articleInfos)) {
+        header("Location: /");
+      } else {
+        $articleMedia = $article->getJoin($article->getId(), 'wk_media', 'media_id', 'id');
+        $view = new View("article", "front", $article->getTitle());
+        $view->assign('article', $article);
+        $view->assign('articleMedia', $articleMedia);
+      }
+    } else {
+      $view = new View("article", "front", "Article");
+    }
   }
 }
