@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Core\Sql;
 use PHPMailer\PHPMailer\Exception;
+use stdClass;
 
 class User extends Sql
 {
@@ -298,6 +299,133 @@ class User extends Sql
       print_r($e);
     }
   }
+
+  public function getUserForm(): array
+  {
+
+    $roleUn = new stdClass();
+    $roleDeux = new stdClass();
+    $roleTrois = new stdClass();
+
+    $roleUn->role = '1';
+    $roleUn->roleName = 'Admin';
+    $roleDeux->role = '2';
+    $roleDeux->roleName = 'Moderator';
+    $roleTrois->role = '3';
+    $roleTrois->roleName = 'User';
+
+    $finalArray = [
+      $roleUn,
+      $roleDeux,
+      $roleTrois,
+    ];
+
+    return [
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "S'inscrire",
+        "success" => "Votre compte a bien été créé !",
+      ],
+      'left' => [
+        'Adding a user' => [
+          'inputs' => [
+            "email" => [
+              "label" => "Email",
+              "value" => "",
+              "type" => "email",
+              "placeholder" => "Votre email ...",
+              "required" => true,
+              "class" => "input",
+              "id" => "emailForm",
+              "error" => "Email incorrect",
+              "unicity" => "true",
+              "errorUnicity" => "Email déjà en bdd",
+            ],
+            "password" => [
+              "label" => "Password",
+              "value" => "",
+              "type" => "password",
+              "placeholder" => "Votre mot de passe ...",
+              "required" => true,
+              "class" => "input",
+              "id" => "pwdForm",
+              "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
+            ],
+            "passwordConfirm" => [
+              "label" => "Password Confirmation",
+              "value" => "",
+              "type" => "password",
+              "placeholder" => "Confirmation ...",
+              "required" => true,
+              "class" => "input",
+              "id" => "pwdConfirmForm",
+              "confirm" => "password",
+              "error" => "Votre mot de passe de confirmation ne correspond pas",
+            ],
+            "firstname" => [
+              "label" => "Firstname",
+              "value" => "",
+              "type" => "text",
+              "placeholder" => "Votre prénom ...",
+              "class" => "input",
+              "id" => "firstnameForm",
+              "min" => 2,
+              "max" => 50,
+              "error" => "Prénom incorrect"
+            ],
+            "lastname" => [
+              "label" => "Lastname",
+              "value" => "",
+              "type" => "text",
+              "placeholder" => "Votre nom ...",
+              "class" => "input",
+              "id" => "lastnameForm",
+              "min" => 2,
+              "max" => 100,
+              "error" => "Nom incorrect"
+            ],
+          ]
+        ]
+      ],
+      'right' => [
+        'Informations complémentaires' => [
+          'inputs' => [
+            "role" => [
+              "label" => "Role",
+              "value" => "",
+              "type" => "select",
+              "placeholder" => "Votre role ...",
+              "required" => true,
+              "class" => "input",
+              "valueKey" => "role",
+              "labelKey" => "roleName",
+              "id" => "roleForm",
+              "error" => "Role incorrect",
+              "options" => $finalArray
+            ]
+          ]
+        ]
+      ]
+    ];
+  }
+
+  public function setUserInfo(): void
+  {
+    try {
+      $this->generateToken();
+      $this->generateEmailToken();
+      $this->setEmail($_POST['email']);
+      $this->setPassword($_POST['password']);
+      $this->setFirstname($_POST['firstname']);
+      $this->setLastname($_POST['lastname']);
+      $this->setRole($_POST['role']);
+    } catch (Exception $e) {
+      echo "Impossible d'assigner les properties du Model User";
+      print_r($e);
+    }
+  }
+
 
   public function getLoginForm(): array
   {

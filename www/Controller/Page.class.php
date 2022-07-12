@@ -37,7 +37,6 @@ class Page
     $formErrors = [];
     $registerError = false;
 
-    // à faire
     if (isset($_GET['id'])) {
       $page->getPageInfo($_GET['id']);
       if (!empty($_POST)) {

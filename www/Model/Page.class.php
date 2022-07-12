@@ -135,6 +135,8 @@ class Page extends Sql
     $navigation = new Navigation();
     $navigations = $navigation->getAll();
 
+    print_r($navigations);
+
     return [
       "config" => [
         "method" => "POST",

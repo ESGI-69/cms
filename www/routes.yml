@@ -78,3 +78,13 @@
   controller: log
   action: logsShow
   security: 1
+
+/users-list:
+  controller: user
+  action: usersList
+  security: 1
+
+/user-manager:
+  controller: user
+  action: userManager
+  security: 1
