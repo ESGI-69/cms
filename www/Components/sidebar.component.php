@@ -19,7 +19,7 @@
       </section>
       <section class="wk_sidebar__container__navigation__section">
         <span class="wk_sidebar__container__navigation__section__title">Content</span>
-        <a href="/pages-list" class="wk_sidebar__container__navigation__section__item <?= $_SERVER['REQUEST_URI'] === '/pages-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
+        <a href="/pages-list" class="wk_sidebar__container__navigation__section__item <?= substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?")) === '/pages-list' || $_SERVER["REQUEST_URI"] === '/pages-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
           <svg xmlns="http://www.w3.org/2000/svg" class="wk_sidebar__container__navigation__section__item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
@@ -27,7 +27,7 @@
             Pages
           </span>
         </a>
-        <a href="/articles-list" class="wk_sidebar__container__navigation__section__item <?= $_SERVER['REQUEST_URI'] === '/articles-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
+        <a href="/articles-list" class="wk_sidebar__container__navigation__section__item <?= substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?")) === '/articles-list' || $_SERVER["REQUEST_URI"] === '/articles-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
           <svg xmlns="http://www.w3.org/2000/svg" class="wk_sidebar__container__navigation__section__item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
@@ -35,7 +35,7 @@
             Articles
           </span>
         </a>
-        <a href="/categories-list" class="wk_sidebar__container__navigation__section__item <?= $_SERVER['REQUEST_URI'] === '/categories-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
+        <a href="/categories-list" class="wk_sidebar__container__navigation__section__item <?= substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?")) === '/categories-list' || $_SERVER["REQUEST_URI"] === '/categories-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
           <svg xmlns="http://www.w3.org/2000/svg" class="wk_sidebar__container__navigation__section__item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
@@ -55,7 +55,7 @@
 
       <section class="wk_sidebar__container__navigation__section">
         <span class="wk_sidebar__container__navigation__section__title">Management</span>
-        <a href="/users-list" class="wk_sidebar__container__navigation__section__item <?= $_SERVER['REQUEST_URI'] === '/users-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
+        <a href="/users-list" class="wk_sidebar__container__navigation__section__item <?= substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?")) === '/users-list' || $_SERVER["REQUEST_URI"] === '/users-list' ? 'wk_sidebar__container__navigation__section__item--selected' : '' ?>">
           <svg xmlns="http://www.w3.org/2000/svg" class="wk_sidebar__container__navigation__section__item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
