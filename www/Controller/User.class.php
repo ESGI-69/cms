@@ -121,4 +121,76 @@ class User extends Sql
     $view = new View('verify');
     $view->assign('isEmailVerified', $this->isEmailVerified);
   }
+
+  public function usersList()
+  {
+    $user = new UserModel();
+
+    if (isset($_GET['deletedId'])) {
+      $user->delete($_GET['deletedId']);
+    }
+
+    $this->users = $user->getAll();
+
+    $view = new View("usersList", "back", "Users");
+    $view->assign("user", $user);
+    $view->assign("users", $this->users);
+
+  }
+
+  public function userManager()
+  {
+    $user = new UserModel();
+    $formErrors = [];
+    $registerError = false;
+    $isMailSent = null;
+    $registered = false;
+
+    // à faire
+    if (isset($_GET['id'])) {
+      $user->getUserInfos($_GET['id']);
+      if (!empty($_POST)) {
+        $formErrors = Verificator::checkForm($user->getUserForm(), $_POST);
+        if (count($formErrors) === 0) {
+          $user->setUserInfo();
+          if ($registerError === false) {
+            $user->edit();
+            $saved = true;
+            header("Location: /users-list");
+          } else {
+            $formErrors[] = "Nom de user déjà utilisé";
+          }
+        }
+      }
+    } else {
+      echo"blo";
+      if (!empty($_POST)) {
+        $formErrors = Verificator::checkForm($user->getUserForm(), $_POST);
+        // Si il n'y a pas d'erreur dans le form
+        if (count($formErrors) === 0) {
+          $user->setUserInfo();
+          $registerError = $user->checkExisting('email');
+          // check si l'email n'est pas déjà utilisé
+          if (!$registerError) {
+            $user->save();
+            $mailer = new Mailer();
+            $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+            $registered = true;
+            header("Location: /users-list");
+          } else {
+            $formErrors[] = "Email déjà utilisé";
+          }
+        }
+      }
+    }
+
+
+    $view = new View("userManager", "back", "New user");
+    $view->assign("user", $user);
+    $view->assign("success", $registered);
+    $view->assign("errors", $formErrors);
+    $view->assign("registerError", $registerError);
+    $view->assign("isMailSent", $isMailSent);
+  }
+
 }
