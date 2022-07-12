@@ -98,6 +98,7 @@ class Media extends Sql
         'Ajout d\'un média' => [
           "inputs" => [
             "name" => [
+              "value" => $this->getName() || "",
               "label" => "Nom du média",
               "type" => "text",
               "placeholder" => "Nom du média...",
