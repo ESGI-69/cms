@@ -1,0 +1,15 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+
+.front {
+  &.article {
+    img {
+      width: 200px;
+      height: auto;
+    }
+
+    .end {
+      font-size: em(14);
+    }
+  }
+}
