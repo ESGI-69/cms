@@ -6,6 +6,8 @@ use App\Core\CleanWords;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
+use App\Core\Logger;
+
 use App\Model\Page as PageModel;
 
 class Page
@@ -26,6 +28,7 @@ class Page
   }
   public function pageManager()
   {
+    $log = Logger::getInstance();
     $page = new PageModel();
     $saved = false;
     $formErrors = [];
@@ -41,6 +44,7 @@ class Page
           if ($registerError === false) {
             $page->edit();
             $saved = true;
+            $log->add("page", "Page '" . $page->getTitle() . "' edited by user n." . $page->getUserId() . "!");
             header("Location: /pages-list");
           } else {
             $formErrors[] = "Nom de page déjà utilisé";
@@ -56,6 +60,7 @@ class Page
           if ($registerError === false) {
             $page->save();
             $saved = true;
+            $log->add("page", "Page '" . $page->getTitle() . "' created by user n." . " $page->getUserId " . "!");
             header("Location: /pages-list");
           } else {
             $formErrors[] = "Nom de page déjà utilisé";
