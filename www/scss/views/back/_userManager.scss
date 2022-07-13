@@ -1,0 +1,45 @@
+@use '../../variables' as *;
+
+.usermanager > main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  .cards {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2rem;
+
+    .card {
+      background: $color-white;
+      border: 1px solid $color-border;
+      box-shadow: $shadow-card;
+      border-radius: 4px;
+
+      &.left {
+        flex-grow: 1;
+      }
+
+      &.right {
+        width: 300px;
+      }
+
+      .dual-group {
+        display: flex;
+        gap: 1em;
+        max-width: 100%;
+
+        &>* {
+          width: calc(50% - 8px);
+        }
+      }
+    }
+  }
+
+  &__section {
+    padding-left: em(32);
+    display: flex;
+    flex-direction: column;
+    gap: em(10);
+  }
+}
