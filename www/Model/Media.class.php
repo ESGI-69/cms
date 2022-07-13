@@ -22,6 +22,11 @@ class Media extends Sql
     parent::__construct();
   }
 
+  protected function setId($id)
+  {
+    $this->id = $id;
+  }
+
   public function getId(): ?int
   {
     return $this->id;
@@ -82,6 +87,27 @@ class Media extends Sql
   public function setUserId(): void
   {
     $this->user_id = AuthManager::userInfos()['id'];
+  }
+
+  public function getMediaInfo(?string $id): array
+  {
+    $this->setId($id);
+    $result = $this->get($this->getId());
+    if (isset($result)) {
+      $this->setName($result['name']);
+      $this->setMediaType($result['type']);
+      $this->setPath($result['type']);
+      $this->setSize($result['size']);
+      $this->setUserId($result['user_id']);
+      return [
+        'id' => $this->getId(),
+        'name' => $this->getName(),
+        'type' => $this->getMediaType(),
+        'path' => $this->getPath(),
+        'size' => $this->getSize(),
+        'user_id' => $this->getUserId(),
+      ];
+    }
   }
 
   public function getMediaForm(): array
