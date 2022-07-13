@@ -113,6 +113,11 @@ class User extends Sql
     $this->password = password_hash($password, PASSWORD_DEFAULT);
   }
 
+  public function setSamePassword(string $password): void
+  {
+    $this->password = $password;
+  }
+
   /**
    * @return int
    */
@@ -427,7 +432,11 @@ class User extends Sql
     $result = $this->get($this->id);
     try {
       $this->setEmail($_POST['email']);
-      $this->setPassword($_POST['password']);
+      if ($_POST['password'] === ""){
+        $this->setSamePassword($result->password);
+      } else {
+        $this->setPassword($_POST['password']);
+      }
       $this->setFirstname($_POST['firstname']);
       $this->setLastname($_POST['lastname']);
       $this->setRole($_POST['role']);
