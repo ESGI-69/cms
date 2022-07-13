@@ -153,6 +153,20 @@ abstract class Sql
     }
   }
 
+  public function saveLog(string $type, string $action)
+  {
+    $sql = $this->mysqlBuilder
+      ->insert(['type' => 'type', 'action' => 'action'])
+      ->getQuery();
+
+    $options = [
+      'type' => $type,
+      'action' => $action
+    ];
+
+    $this->executeQuery($sql, 0, $options);
+  }
+
   public function edit()
   {
     $columns = get_object_vars($this);

@@ -30,7 +30,7 @@ interface QueryBuilder
    */
   public function join(int $joinType, string $table, string $rowTableOne, string $rowTableTwo, string $operator = '='): QueryBuilder;
 
-  public function or(string $row, string $value);
+  public function or(string $row, string $value): QueryBuilder;
 
   public function getQuery();
 }

@@ -21,7 +21,7 @@ class User extends Sql
 
     $formErrors = [];
 
-    $log =  Logger::getInstance();
+    $log = Logger::getInstance();
 
     if (!empty($_POST)) {
       $formErrors = Verificator::checkForm($user->getLoginForm(), $_POST);
@@ -41,7 +41,7 @@ class User extends Sql
                 "email" => $queryResult->email,
               );
 
-              $log->save("User '" . $queryResult->firstname . "' with email '" . $queryResult->email . "' logged in");
+              $log->add("user", "User '" . $queryResult->firstname . "' with email '" . $queryResult->email . "' logged in");
 
               setcookie('wikikiToken', $queryResult->token, time() + 60 * 60 * 24 * 30);
             } else {
@@ -83,7 +83,7 @@ class User extends Sql
           $mailer = new Mailer();
           $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
           $registered = true;
-          $log->save("User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' registered");
+          $log->add("user", "User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' registered");
         } else {
           $formErrors[] = "Email déjà utilisé";
         }
