@@ -156,7 +156,7 @@ class User extends Sql
           if ($registerError === false) {
             $user->edit();
             $registered = true;
-            //header("Location: /users-list");
+            header("Location: /users-list");
           } else {
             $formErrors[] = "Email déjà utilisé";
           }
