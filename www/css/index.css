@@ -771,6 +771,43 @@ a.link:visited {
   gap: 0.5rem;
 }
 
+.usermanager > main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.usermanager > main .cards {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+.usermanager > main .cards .card {
+  background: #ffffff;
+  border: 1px solid #D5E0F0;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+.usermanager > main .cards .card.left {
+  flex-grow: 1;
+}
+.usermanager > main .cards .card.right {
+  width: 300px;
+}
+.usermanager > main .cards .card .dual-group {
+  display: flex;
+  gap: 1em;
+  max-width: 100%;
+}
+.usermanager > main .cards .card .dual-group > * {
+  width: calc(50% - 8px);
+}
+.usermanager > main__section {
+  padding-left: em(32);
+  display: flex;
+  flex-direction: column;
+  gap: em(10);
+}
+
 .front.home .username {
   font-size: 2em;
   font-weight: bold;
