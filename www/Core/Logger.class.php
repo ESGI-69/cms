@@ -2,9 +2,9 @@
 
 namespace App\Core;
 
-use APP\Core\Sql;
+use App\Model\Log as LogModel;
 
-class Logger extends Sql
+class Logger
 {
   private static $instance = null;
   private $file = null;
@@ -15,8 +15,6 @@ class Logger extends Sql
       mkdir('Logs/', 0777);
     }
     $this->file = fopen("Logs/general.log", "a");
-
-    parent::__construct();
   }
 
   public static function getInstance()
@@ -32,6 +30,11 @@ class Logger extends Sql
     $currentTime = date('[Y/m/d, H:i:s]');
     fwrite($this->file, $currentTime . " " . $type . " - " . $action . PHP_EOL);
 
-    $this->saveLog($type, $action);
+    $log = new LogModel();
+
+    $log->setType($type);
+    $log->setAction($action);
+
+    $log->save();
   }
 }
