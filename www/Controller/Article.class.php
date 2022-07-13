@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\View;
+use App\Core\Logger;
 use App\Core\Verificator;
 use App\Model\Article as ArticleModel;
 
@@ -12,8 +13,11 @@ class Article
   public function articlesList()
   {
     $article = new ArticleModel();
+    $log = Logger::getInstance();
 
     if (isset($_GET['deletedId'])) {
+      $article->getArticleInfo($_GET['deletedId']);
+      $log->add("article", "Article '" . $article->getTitle() . "' deleted by user n." . $article->getAuthor() . "!");
       $article->delete($_GET['deletedId']);
     }
 
@@ -26,6 +30,7 @@ class Article
 
   public function articleManager()
   {
+    $log = Logger::getInstance();
     $success = false;
     $article = new ArticleModel();
     $formErrors = [];
@@ -40,6 +45,7 @@ class Article
           if ($registerError === false) {
             $article->edit();
             $success = true;
+            $log->add("article", "Article '" . $article->getTitle() . "' edited by user n." . $article->getAuthor() . "!");
             header("Location: /articles-list");
           } else {
             $formErrors[] = "Titre déjà utilisé";
@@ -55,6 +61,7 @@ class Article
           if ($registerError === false) {
             $article->save();
             $success = true;
+            $log->add("article", "Article '" . $article->getTitle() . "' created by user n." . $article->getAuthor() . "!");
             header("Location: /articles-list");
           } else {
             $formErrors[] = "Titre déjà utilisé";
