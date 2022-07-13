@@ -104,23 +104,17 @@ class Page extends Sql
     $this->id = $id;
     $result = $this->get($id);
     if (isset($result)) {
-      $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id');
-      $navigationValue = 0;
-      if ($navigation[0]->value === 'footer') {
-        $navigationValue = 1;
-      } elseif ($navigation[0]->value === 'navbar') {
-        $navigationValue = 2;
-      }
+      $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id')[0]->id;
       $this->setId($result->id);
       $this->setTitle($result->title);
       $this->setUrl($result->url);
       $this->setContent($result->content);
       $this->setsubtitle($result->subtitle);
       $this->setUserId($result->user_id);
-      $this->setNavigation($navigationValue);
+      $this->setNavigation($navigation);
       return [
         'id' => $this->getId(),
-        'title' => $this->gettitle(),
+        'title' => $this->getTitle(),
         'url' => $this->getUrl(),
         'content' => $this->getContent(),
         'subtitle' => $this->getsubtitle(),
@@ -135,7 +129,6 @@ class Page extends Sql
     $navigation = new Navigation();
     $navigations = $navigation->getAll();
 
-    print_r($navigations);
 
     return [
       "config" => [

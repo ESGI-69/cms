@@ -207,6 +207,11 @@ abstract class Sql
     if (!empty($result)) {
       $emailExist = true;
     }
+    if ($result){
+      if ($columns["id"] === $result->id){
+        $emailExist = false;
+      }
+    }
 
     return $emailExist;
   }

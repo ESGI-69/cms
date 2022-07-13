@@ -146,29 +146,28 @@ class User extends Sql
     $isMailSent = null;
     $registered = false;
 
-    // à faire
     if (isset($_GET['id'])) {
-      $user->getUserInfos($_GET['id']);
+      $user->getUserInfosAdmin($_GET['id']);
       if (!empty($_POST)) {
         $formErrors = Verificator::checkForm($user->getUserForm(), $_POST);
         if (count($formErrors) === 0) {
-          $user->setUserInfo();
+          $user->setUserInfosAdmin();
+          $registerError = $user->checkExisting('email');
           if ($registerError === false) {
             $user->edit();
-            $saved = true;
+            $registered = true;
             header("Location: /users-list");
           } else {
-            $formErrors[] = "Nom de user déjà utilisé";
+            $formErrors[] = "Email déjà utilisé";
           }
         }
       }
     } else {
-      echo"blo";
       if (!empty($_POST)) {
         $formErrors = Verificator::checkForm($user->getUserForm(), $_POST);
         // Si il n'y a pas d'erreur dans le form
         if (count($formErrors) === 0) {
-          $user->setUserInfo();
+          $user->setUserInfosAdmin();
           $registerError = $user->checkExisting('email');
           // check si l'email n'est pas déjà utilisé
           if (!$registerError) {
