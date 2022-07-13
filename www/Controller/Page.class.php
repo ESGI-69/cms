@@ -14,9 +14,12 @@ class Page
 {
   public function pagesList()
   {
+    $log = Logger::getInstance();
     $page = new PageModel();
 
     if (isset($_GET['deletedId'])) {
+      $page->getPageInfo($_GET['deletedId']);
+      $log->add("page", "Page '" . $page->getTitle() . "' edited by user n." . $page->getUserId() . "!");
       $page->delete($_GET['deletedId']);
     }
 
