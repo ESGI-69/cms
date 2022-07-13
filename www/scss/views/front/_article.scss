@@ -4,12 +4,17 @@
 .front {
   &.article {
     img {
-      width: 200px;
+      width: 100%;
       height: auto;
     }
 
     .end {
       font-size: em(14);
+    }
+
+    h4 {
+      font-weight: 300;
+      color: $color-front-secondary--light;
     }
   }
 }
