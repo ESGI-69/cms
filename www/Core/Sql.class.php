@@ -216,6 +216,31 @@ abstract class Sql
     return $emailExist;
   }
 
+  public function mailedChanged(){
+    $columns = get_object_vars($this);
+    $columns = array_diff_key($columns, get_class_vars(get_class()));
+    $emailChanged = true;
+
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->where('email')
+      ->limit(0, 1)
+      ->getQuery();
+
+    $option = [
+      'email' => $columns['email']
+    ];
+
+    $result = $this->executeQuery($sql, 1, $option);
+
+    if ($result->email === $columns ['email']){
+      $emailChanged = false;
+    }
+
+    return $emailChanged;
+
+  }
+
   public function login(string $email)
   {
     $sql = $this->mysqlBuilder

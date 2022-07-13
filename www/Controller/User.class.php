@@ -154,6 +154,10 @@ class User extends Sql
           $user->setUserInfosAdmin();
           $registerError = $user->checkExisting('email');
           if ($registerError === false) {
+            if ($user->mailedChanged()) {
+              $mailer = new Mailer();
+              $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+            }
             $user->edit();
             $registered = true;
             header("Location: /users-list");
