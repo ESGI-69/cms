@@ -45,11 +45,17 @@
                   <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
                     <?php foreach ($input['options'] as $option) : ?>
                       <?php $selected = "" ?>
+                      
                       <?php
+                      if (gettype($input["selected"]) === "integer"){
+                        $input['selected'] = strval($input['selected']);
+                      }
                       if ($option->id === $input["selected"]) {
                         $selected = "selected";
                       }
+
                       ?>
+
                       <option value="<?= $option->{$input['valueKey']} ?>" <?= $selected ?>><?= $option->{$input['labelKey']} ?></option>
                     <?php endforeach; ?>
                   </select>

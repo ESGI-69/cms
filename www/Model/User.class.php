@@ -216,6 +216,11 @@ class User extends Sql
     return $this->emailVerifyToken;
   }
 
+  public function setEmailToken(?string $token): void
+  {
+    $this->emailVerifyToken = $token;
+  }
+
   public  function generateEmailToken(): void
   {
     $this->emailVerifyToken = substr(bin2hex(random_bytes(128)), 0, 64);
@@ -307,11 +312,11 @@ class User extends Sql
     $roleDeux = new stdClass();
     $roleTrois = new stdClass();
 
-    $roleUn->role = '1';
+    $roleUn->id = '1';
     $roleUn->roleName = 'Admin';
-    $roleDeux->role = '2';
+    $roleDeux->id = '2';
     $roleDeux->roleName = 'Moderator';
-    $roleTrois->role = '3';
+    $roleTrois->id = '3';
     $roleTrois->roleName = 'User';
 
     $finalArray = [
@@ -319,6 +324,12 @@ class User extends Sql
       $roleDeux,
       $roleTrois,
     ];
+
+    $required = true;
+
+    if (isset($_GET['id'])) {
+      $required = false;
+    }
 
     return [
       "config" => [
@@ -332,7 +343,7 @@ class User extends Sql
           'inputs' => [
             "email" => [
               "label" => "Email",
-              "value" => "",
+              "value" => $this->getEmail() ? $this->getEmail() : '',
               "type" => "email",
               "placeholder" => "Votre email ...",
               "required" => true,
@@ -347,7 +358,7 @@ class User extends Sql
               "value" => "",
               "type" => "password",
               "placeholder" => "Votre mot de passe ...",
-              "required" => true,
+              "required" => $required,
               "class" => "input",
               "id" => "pwdForm",
               "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
@@ -357,7 +368,7 @@ class User extends Sql
               "value" => "",
               "type" => "password",
               "placeholder" => "Confirmation ...",
-              "required" => true,
+              "required" => $required,
               "class" => "input",
               "id" => "pwdConfirmForm",
               "confirm" => "password",
@@ -365,7 +376,7 @@ class User extends Sql
             ],
             "firstname" => [
               "label" => "Firstname",
-              "value" => "",
+              "value" => $this->getFirstname() ? $this->getFirstname() : '',
               "type" => "text",
               "placeholder" => "Votre prénom ...",
               "class" => "input",
@@ -376,7 +387,7 @@ class User extends Sql
             ],
             "lastname" => [
               "label" => "Lastname",
-              "value" => "",
+              "value" => $this->getLastname() ? $this->getLastname() : '',
               "type" => "text",
               "placeholder" => "Votre nom ...",
               "class" => "input",
@@ -396,9 +407,10 @@ class User extends Sql
               "value" => "",
               "type" => "select",
               "placeholder" => "Votre role ...",
+              "selected" => $this->getRole() ? $this->getRole() : '',
               "required" => true,
               "class" => "input",
-              "valueKey" => "role",
+              "valueKey" => "id",
               "labelKey" => "roleName",
               "id" => "roleForm",
               "error" => "Role incorrect",
@@ -410,22 +422,43 @@ class User extends Sql
     ];
   }
 
-  public function setUserInfo(): void
+  public function setUserInfosAdmin(): void
   {
+    $result = $this->get($this->id);
     try {
-      $this->generateToken();
-      $this->generateEmailToken();
       $this->setEmail($_POST['email']);
       $this->setPassword($_POST['password']);
       $this->setFirstname($_POST['firstname']);
       $this->setLastname($_POST['lastname']);
       $this->setRole($_POST['role']);
+      $this->setStatus($result->status);
+      $this->setToken($result->token);
+      $this->setEmailToken($result->emailVerifyToken);
     } catch (Exception $e) {
       echo "Impossible d'assigner les properties du Model User";
       print_r($e);
     }
   }
 
+  public function getUserInfosAdmin(?string $id): array
+  {
+    $this->id = $id;
+    $result = $this->get($id);
+    if (isset($result)) {
+      $this->setId($result->id);
+      $this->setEmail($result->email);
+      $this->setFirstname($result->firstname);
+      $this->setLastname($result->lastname);
+      $this->setRole($result->role);
+      return [
+        'id' => $this->getId(),
+        'title' => $this->getEmail(),
+        'url' => $this->getFirstname(),
+        'content' => $this->getLastname(),
+        'subtitle' => $this->getRole(),
+      ];
+    }
+  }
 
   public function getLoginForm(): array
   {
