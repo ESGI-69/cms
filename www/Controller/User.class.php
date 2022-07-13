@@ -7,7 +7,7 @@ use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Core\Mailer;
-use App\Core\Loger;
+use App\Core\Logger;
 use App\Model\User as UserModel;
 
 class User extends Sql
@@ -21,7 +21,7 @@ class User extends Sql
 
     $formErrors = [];
 
-    $log =  Loger::getInstance();
+    $log =  Logger::getInstance();
 
     if (!empty($_POST)) {
       $formErrors = Verificator::checkForm($user->getLoginForm(), $_POST);
@@ -67,7 +67,7 @@ class User extends Sql
     $isMailSent = null;
     $registered = false;
     $registerError = false;
-    $log =  Loger::getInstance();
+    $log = Logger::getInstance();
 
     $formErrors = [];
 
