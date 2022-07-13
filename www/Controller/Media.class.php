@@ -15,7 +15,7 @@ class Media extends Sql
 {
   public function mediasList()
   {
-    $log = new Logger();
+    $log = Logger::getInstance();
     $media = new MediaModel();
 
     if (isset($_GET['deletedId'])) {
@@ -34,7 +34,7 @@ class Media extends Sql
 
   public function mediaManager()
   {
-    $log = new Logger();
+    $log = Logger::getInstance();
     $media = new MediaModel();
     $saved = false;
     $formErrors = [];
