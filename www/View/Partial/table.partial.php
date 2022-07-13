@@ -39,14 +39,14 @@
             <?php if ($data['config']['editButton'] === true) : ?>
               <td class="container-table__table__body__tr__td">
                 <a href="<?= $data['config']['editUrl'] ?>?id=<?= $row->id ?>">
-                  <i class="fas fa-edit"></i>
+                  Edit
                 </a>
               </td>
             <?php endif; ?>
             <?php if ($data['config']['deleteButton'] === true) : ?>
               <td class="container-table__table__body__tr__td">
-                <a href="<?= $data['config']['deleteUrl'] ?>?id=<?= $row->id ?>">
-                  <i class="fas fa-trash-alt"></i>
+                <a href="<?= $data['config']['deleteUrl'] ?>?deletedId=<?= $row->id ?>">
+                  Delete
                 </a>
               </td>
             <?php endif; ?>
