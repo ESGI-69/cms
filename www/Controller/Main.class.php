@@ -13,8 +13,16 @@ class Main
     $article = new ArticleModel();
     $articles = $article->getLast(5);
 
+    $articlesList = [];
+
+    foreach ($articles as $article) {
+      $currentArticle = new ArticleModel();
+      $currentArticle->getArticleInfo($article->id);
+      $articlesList[] = $currentArticle;
+    }
+
     $view = new View("home");
-    $view->assign("articles", $articles);
+    $view->assign("articles", $articlesList);
   }
 
 

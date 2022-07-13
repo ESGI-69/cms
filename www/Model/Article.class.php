@@ -8,6 +8,7 @@ class Article extends Sql
 {
   protected $id = null;
   protected $title = null;
+  protected $subtitle = null;
   protected $media_id = null;
   protected $content = null;
   protected $user_id = null;
@@ -42,6 +43,16 @@ class Article extends Sql
     return $this->title;
   }
 
+  public function setSubtitle(?string $subtitle): void
+  {
+    $this->subtitle = htmlspecialchars(trim($subtitle), ENT_COMPAT);
+  }
+
+  public function getSubtitle(): ?string
+  {
+    return $this->subtitle;
+  }
+
   public function setMedia(?string $media_id): void
   {
     $this->media_id = htmlspecialchars(trim($media_id), ENT_COMPAT);
@@ -64,7 +75,12 @@ class Article extends Sql
 
   public function getContent(): ?string
   {
-    return $this->content;
+    return html_entity_decode(html_entity_decode($this->content));
+  }
+
+  public function getShortedContent(): ?string
+  {
+    return substr(strip_tags($this->getContent()), 0, 256);
   }
 
   public function setAuthor(?string $user_id): void
@@ -121,6 +137,7 @@ class Article extends Sql
       $author = $this->getJoin($result->id, 'wk_user', 'user_id', 'id')[0]->id;
       $category = $this->getJoin($result->id, 'wk_category', 'category_id', 'id')[0]->id;
       $this->setTitle($result->title);
+      $this->setSubtitle($result->subtitle);
       $this->setMedia($media);
       $this->setContent($result->content);
       $this->setAuthor($author);
@@ -129,6 +146,7 @@ class Article extends Sql
       return [
         'id' => $this->getId(),
         'title' => $this->getTitle(),
+        'subtitle' => $this->getSubtitle(),
         'media' => $this->getMedia(),
         'content' => $this->getContent(),
         'author' => $this->getAuthor(),
@@ -165,13 +183,23 @@ class Article extends Sql
               "value" => $this->getTitle() ? $this->getTitle() : "",
               "label" => "Titre",
               "type" => "text",
-              "placeholder" => "Cat",
+              "placeholder" => "Chat",
               "required" => true,
               "class" => "input",
               "id" => "title",
               "error" => "Titre invalide",
               "unicity" => "true",
               "errorUnicity" => "Le titre doit être unique",
+            ],
+            "subtitle" => [
+              "value" => $this->getSubtitle() ? $this->getSubtitle() : "",
+              "label" => "Sous-titre",
+              "type" => "text",
+              "placeholder" => "Sous-espèce issue de la domestication du Chat sauvage",
+              "required" => false,
+              "class" => "input",
+              "id" => "subtitle",
+              "error" => "Sous-titre invalide",
             ],
             "media_id" => [
               "value" => $this->getMedia() ? $this->getMedia() : "",
@@ -186,7 +214,7 @@ class Article extends Sql
               "label" => "Contenu",
               "type" => "wysiwyg",
               "id" => "wysiwyg",
-              "placeholder" => "The cat (Felis catus) is a domestic species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family. A cat can either be a house cat, a farm cat or a feral cat; the latter ranges freely and avoids human contact. Domestic cats are valued by humans for companionship and their ability to kill rodents. About 60 cat breeds are recognized by various cat registries.",
+              "placeholder" => "Il est l’un des principaux animaux de compagnie et compte aujourd’hui une cinquantaine de races différentes reconnues par les instances de certification. Dans de très nombreux pays, le chat entre dans le cadre de la législation sur les carnivores domestiques à l’instar du chien et du furet. Essentiellement territorial, le chat est un prédateur de petites proies comme les rongeurs ou les oiseaux.",
               "required" => true,
               "error" => "Un article se doit d'avoir un contenu.",
             ],
@@ -230,6 +258,7 @@ class Article extends Sql
   {
     try {
       $this->setTitle($_POST['title']);
+      $this->setSubtitle($_POST['subtitle']);
       $this->setMedia($_POST['media_id']);
       $this->setContent($_POST['content']);
       $this->setCategory($_POST['category_id']);

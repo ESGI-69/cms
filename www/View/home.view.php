@@ -4,20 +4,16 @@
   <input class="input" type="text" name="search" placeholder="Rechercher un article" />
   <button class="button button--primary button--big" type="submit">Search</button>
 </form>
-<span class="last-article">
-  <h2 class="last-article__title">Recent posts</h2>
+<div class="last-article">
+  <h2 class="last-article__title">Les articles les plus récents</h2>
   <div class="last-article__list">
     <?php foreach ($articles as $article) : ?>
-      <div class="last-article__list__item">
-        <img class="last-article__list__item__img" src="<?= $article->media_id ?>" alt="<?= $article->title ?>" />
-        <a href="/article?id=<?= $article->id ?>" class="last-article__list__item__link">
-          <h3><?= $article->title ?></h3>
-        </a>
-        <span class="last-article__list__item__date"><?= $article->createdAt ?></span>
-        <!-- Author -->
-        <span class="last-article__list__item__author"><?= $article->user_id ?></span>
-        <p class="last-article__list__item__content"><?= $article->content ?></p>
-      </div>
+      <a href="/article?id=<?= $article->getId() ?>" class="last-article__list__item">
+        <h3 class="last-article__list__item__title"><?= $article->getTitle() ?></h3>
+        <img class="last-article__list__item__image" src="<?= $article->getMediaPath() ?>" alt="<?= $article->getTitle() ?>" />
+        <span class="last-article__list__item__creation-infos">Le <?= $article->getArticleCreationDate() ?> par <?= $article->getAuthorFirstname() ?> <?= $article->getAuthorLastname() ?></span>
+        <p class="last-article__list__item__content"><?= $article->getShortedContent() ?>...</p>
+      </a>
     <?php endforeach; ?>
   </div>
-</span>
+</div>

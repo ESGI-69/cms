@@ -788,13 +788,57 @@ a.link:visited {
   width: 300px;
   font-size: 1em;
 }
+.front.home .last-article {
+  width: 100%;
+}
+.front.home .last-article__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.front.home .last-article__list__item {
+  color: #EDF6F9;
+  text-decoration: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.5em;
+  grid-template-areas: "image title" "image creation_date" "image content";
+}
+.front.home .last-article__list__item:hover .last-article__list__item__title {
+  text-decoration: underline;
+}
+.front.home .last-article__list__item:hover .last-article__list__item__image {
+  filter: brightness(0.8);
+}
+.front.home .last-article__list__item__image {
+  grid-area: image;
+  width: 100%;
+  height: auto;
+}
+.front.home .last-article__list__item__title {
+  grid-area: title;
+  margin: 0;
+}
+.front.home .last-article__list__item__creation-infos {
+  grid-area: creation_date;
+  font-size: 0.75em;
+}
+.front.home .last-article__list__item__content {
+  grid-area: content;
+}
 
 .front.article img {
-  width: 200px;
+  width: 100%;
   height: auto;
 }
 .front.article .end {
   font-size: 0.875em;
+}
+.front.article h4 {
+  font-weight: 300;
+  color: #c6ced0;
 }
 
 /*# sourceMappingURL=index.css.map */
