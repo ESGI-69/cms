@@ -8,6 +8,8 @@ interface QueryBuilder
 
   public function select(array $columns): QueryBuilder;
 
+  public function selectCustom (array $columns,string $table): QueryBuilder;
+
   public function delete(): QueryBuilder;
 
   public function update(): QueryBuilder;
@@ -64,6 +66,14 @@ class MySqlBuilder implements QueryBuilder
     $this->init();
 
     $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $this->table;
+    return $this;
+  }
+
+  public function selectCustom (array $columns,string $table): QueryBuilder
+  {
+    $this->init();
+
+    $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $table;
     return $this;
   }
 

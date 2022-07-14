@@ -1,4 +1,11 @@
-<canvas id="myChart" width="400" height="400"></canvas>
+<!-- <canvas id="myChart" width="300" height="300"></canvas> -->
+
+<?php foreach ($numberContents as $content) : ?>
+  <div>
+    <span>There is <?= $content['number'] ?></span>
+    <span><?= $content['name'] ?></span>
+  </div>
+<?php endforeach; ?>
 
 <script>
   const ctx = document.getElementById('myChart').getContext('2d');
