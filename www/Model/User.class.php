@@ -511,7 +511,7 @@ class User extends Sql
       if (isset($_POST['role'])) {
         $this->setRole($_POST['role']);
       }
-      if (isset($_GET['id'])){
+      if (isset($_GET['id']) || $_SERVER['REQUEST_URI'] === '/me'){
         $this->setStatus($result->status);
         $this->setToken($result->token);
         $this->setEmailToken($result->emailVerifyToken);

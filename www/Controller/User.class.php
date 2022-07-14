@@ -139,7 +139,6 @@ class User extends Sql
     $view = new View("usersList", "back", "Users");
     $view->assign("user", $user);
     $view->assign("users", $this->users);
-
   }
 
   public function me()
@@ -150,29 +149,30 @@ class User extends Sql
     $registerError = false;
     $isMailSent = null;
     $registered = false;
-    $userInfos = $auth->userInfos();
 
-    $user->getUserInfosAdmin($userInfos['id']);
+    if ($auth->isAuth() === true) {
+      $userInfos = $auth->userInfos();
+      $user->getUserInfosAdmin($userInfos['id']);
 
-    if (!empty($_POST)) {
-      $formErrors = Verificator::checkForm($user->getUserFormFront(), $_POST);
-      if (count($formErrors) === 0) {
-        $user->setUserInfosAdmin();
-        $registerError = $user->checkExisting('email');
-        if ($registerError === false) {
-          if ($user->mailedChanged()) {
-            $mailer = new Mailer();
-            $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+      if (!empty($_POST)) {
+        $formErrors = Verificator::checkForm($user->getUserFormFront(), $_POST);
+        if (count($formErrors) === 0) {
+          $user->setUserInfosAdmin();
+          $registerError = $user->checkExisting('email');
+          if ($registerError === false) {
+            if ($user->mailedChanged()) {
+              $mailer = new Mailer();
+              $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+            }
+            $user->edit();
+            header("Location: /me");
+            $registered = true;
+          } else {
+            $formErrors[] = "Email déjà utilisé";
           }
-          $user->edit();
-          header("Location: /me");
-          $registered = true;
-        } else {
-          $formErrors[] = "Email déjà utilisé";
         }
       }
     }
-
 
     $view = new View("me", "front", "Profil");
     $view->assign("user", $user);
@@ -180,8 +180,9 @@ class User extends Sql
     $view->assign("errors", $formErrors);
     $view->assign("registerError", $registerError);
     $view->assign("isMailSent", $isMailSent);
+    $view->assign("isAuth", $auth->isAuth());
   }
-  
+
 
   public function userManager()
   {
@@ -243,5 +244,4 @@ class User extends Sql
     $view->assign("registerError", $registerError);
     $view->assign("isMailSent", $isMailSent);
   }
-
 }
