@@ -8,6 +8,6 @@ class Admin
 {
   public function dashboard()
   {
-    $view = new View("dashboard", "back");
+    $view = new View("dashboard", "back", "Dashboard");
   }
 }
