@@ -3,8 +3,6 @@
 namespace App\Model;
 
 use App\Core\Sql;
-use App\Core\AuthManager;
-use Stringable;
 
 class Log extends Sql
 {
