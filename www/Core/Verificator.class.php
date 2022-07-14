@@ -67,7 +67,8 @@ class Verificator
       if ($input["type"] == "email" && !self::checkEmail($data[$name])) {
         $result[] = $input["error"];
       }
-      if (!isset($_GET['id'])) {
+      if (isset($_GET['id']) || $_SERVER['REQUEST_URI'] === "/me") {
+      } else {
         if ($input["type"] == "password" && empty($input["confirm"]) && !self::checkPassword($data[$name])) {
           $result[] = $input["error"];
         }

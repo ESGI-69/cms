@@ -17,6 +17,9 @@
 /register:
   controller: user
   action: register
+/me:
+  controller: user
+  action: me
 
 /verify:
   controller: user

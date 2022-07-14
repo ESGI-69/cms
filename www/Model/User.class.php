@@ -427,19 +427,90 @@ class User extends Sql
     ];
   }
 
+  public function getUserFormFront(): array
+  {
+    return [
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "Edit",
+        "success" => "Votre compte a bien été créé !",
+      ],
+      'inputs' => [
+        "email" => [
+          "label" => "Email",
+          "value" => $this->getEmail() ? $this->getEmail() : '',
+          "type" => "email",
+          "placeholder" => "Votre email ...",
+          "required" => true,
+          "class" => "input",
+          "id" => "emailForm",
+          "error" => "Email incorrect",
+          "unicity" => "true",
+          "errorUnicity" => "Email déjà en bdd",
+        ],
+        "password" => [
+          "label" => "Password",
+          "value" => "",
+          "type" => "password",
+          "placeholder" => "Votre mot de passe ...",
+          "required" => false,
+          "class" => "input",
+          "id" => "pwdForm",
+          "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
+        ],
+        "passwordConfirm" => [
+          "label" => "Password Confirmation",
+          "value" => "",
+          "type" => "password",
+          "placeholder" => "Confirmation ...",
+          "required" => false,
+          "class" => "input",
+          "id" => "pwdConfirmForm",
+          "confirm" => "password",
+          "error" => "Votre mot de passe de confirmation ne correspond pas",
+        ],
+        "firstname" => [
+          "label" => "Firstname",
+          "value" => $this->getFirstname() ? $this->getFirstname() : '',
+          "type" => "text",
+          "placeholder" => "Votre prénom ...",
+          "class" => "input",
+          "id" => "firstnameForm",
+          "min" => 2,
+          "max" => 50,
+          "error" => "Prénom incorrect"
+        ],
+        "lastname" => [
+          "label" => "Lastname",
+          "value" => $this->getLastname() ? $this->getLastname() : '',
+          "type" => "text",
+          "placeholder" => "Votre nom ...",
+          "class" => "input",
+          "id" => "lastnameForm",
+          "min" => 2,
+          "max" => 100,
+          "error" => "Nom incorrect"
+        ]
+      ]
+    ];
+  }
+
   public function setUserInfosAdmin(): void
   {
     $result = $this->get($this->id);
     try {
       $this->setEmail($_POST['email']);
-      if ($_POST['password'] === ""){
+      if ($_POST['password'] === "") {
         $this->setSamePassword($result->password);
       } else {
         $this->setPassword($_POST['password']);
       }
       $this->setFirstname($_POST['firstname']);
       $this->setLastname($_POST['lastname']);
-      $this->setRole($_POST['role']);
+      if (isset($_POST['role'])) {
+        $this->setRole($_POST['role']);
+      }
       if (isset($_GET['id'])){
         $this->setStatus($result->status);
         $this->setToken($result->token);
@@ -467,10 +538,10 @@ class User extends Sql
       $this->setRole($result->role);
       return [
         'id' => $this->getId(),
-        'title' => $this->getEmail(),
-        'url' => $this->getFirstname(),
-        'content' => $this->getLastname(),
-        'subtitle' => $this->getRole(),
+        'email' => $this->getEmail(),
+        'firstaname' => $this->getFirstname(),
+        'lastanme' => $this->getLastname(),
+        'role' => $this->getRole(),
       ];
     }
   }

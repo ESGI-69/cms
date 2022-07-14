@@ -5,7 +5,7 @@
 
     <?php foreach ($data["inputs"] as $name => $input) : ?>
 
-      <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> <?php if (!empty($input["accept"])) : ?> accept="<?= $input["accept"] ?? "" ?>" <?php endif; ?>>
+      <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> <?php if (!empty($input["accept"])) : ?> accept="<?= $input["accept"] ?? "" ?>" <?php endif; ?> value="<?= $input["value"] ?? "" ?>">
 
     <?php endforeach; ?>
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
@@ -45,9 +45,9 @@
                   <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
                     <?php foreach ($input['options'] as $option) : ?>
                       <?php $selected = "" ?>
-                      
+
                       <?php
-                      if (gettype($input["selected"]) === "integer"){
+                      if (gettype($input["selected"]) === "integer") {
                         $input['selected'] = strval($input['selected']);
                       }
                       if ($option->id === $input["selected"]) {

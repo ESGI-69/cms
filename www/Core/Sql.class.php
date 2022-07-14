@@ -219,7 +219,7 @@ abstract class Sql
   public function mailedChanged(){
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
-    $emailChanged = true;
+    $emailChanged = false;
 
     $sql = $this->mysqlBuilder
       ->select(['*'])
@@ -233,8 +233,8 @@ abstract class Sql
 
     $result = $this->executeQuery($sql, 1, $option);
 
-    if ($result->email === $columns ['email']){
-      $emailChanged = false;
+    if (empty($result)){
+      $emailChanged = true;
     }
 
     return $emailChanged;
