@@ -8,6 +8,7 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Core\Mailer;
 use App\Core\Logger;
+use App\Core\AuthManager;
 use App\Model\User as UserModel;
 
 class User extends Sql
@@ -140,6 +141,47 @@ class User extends Sql
     $view->assign("users", $this->users);
 
   }
+
+  public function me()
+  {
+    $user = new UserModel();
+    $auth = new AuthManager();
+    $formErrors = [];
+    $registerError = false;
+    $isMailSent = null;
+    $registered = false;
+    $userInfos = $auth->userInfos();
+
+    $user->getUserInfosAdmin($userInfos['id']);
+
+    if (!empty($_POST)) {
+      $formErrors = Verificator::checkForm($user->getUserFormFront(), $_POST);
+      if (count($formErrors) === 0) {
+        $user->setUserInfosAdmin();
+        $registerError = $user->checkExisting('email');
+        if ($registerError === false) {
+          if ($user->mailedChanged()) {
+            $mailer = new Mailer();
+            $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
+          }
+          $user->edit();
+          header("Location: /me");
+          $registered = true;
+        } else {
+          $formErrors[] = "Email déjà utilisé";
+        }
+      }
+    }
+
+
+    $view = new View("me", "front", "Profil");
+    $view->assign("user", $user);
+    $view->assign("success", $registered);
+    $view->assign("errors", $formErrors);
+    $view->assign("registerError", $registerError);
+    $view->assign("isMailSent", $isMailSent);
+  }
+  
 
   public function userManager()
   {
