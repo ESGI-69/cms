@@ -125,9 +125,12 @@ class User extends Sql
   public function usersList()
   {
     $user = new UserModel();
+    $log = Logger::getInstance();
+
 
     if (isset($_GET['deletedId'])) {
       $user->delete($_GET['deletedId']);
+      $log->add("user", "User with id '" . $_GET['deletedId'] . "' deleted");
     }
 
     $this->users = $user->getAll();
@@ -141,6 +144,7 @@ class User extends Sql
   public function userManager()
   {
     $user = new UserModel();
+    $log = Logger::getInstance();
     $formErrors = [];
     $registerError = false;
     $isMailSent = null;
@@ -160,6 +164,7 @@ class User extends Sql
             }
             $user->edit();
             $registered = true;
+            $log->add("user", "User with id '" . $_GET['id'] . "' edited");
             header("Location: /users-list");
           } else {
             $formErrors[] = "Email déjà utilisé";
@@ -179,6 +184,7 @@ class User extends Sql
             $mailer = new Mailer();
             $isMailSent = $mailer->sendVerifMail($user->getEmail(), $user->getEmailToken());
             $registered = true;
+            $log->add("user", "User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' added");
             header("Location: /users-list");
           } else {
             $formErrors[] = "Email déjà utilisé";

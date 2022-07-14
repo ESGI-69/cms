@@ -2,6 +2,7 @@
   'config' => [
     'editButton' => false,
     'deleteButton' => false,
+    'ignoredColumns' => [],
   ],
   'data' => $logs,
 ]; ?>
