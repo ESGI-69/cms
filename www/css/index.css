@@ -655,18 +655,6 @@ a.link:visited {
   text-align: center;
 }
 
-.dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-.dashboard .cards {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .pagemanager > main {
   display: flex;
   flex-direction: column;
