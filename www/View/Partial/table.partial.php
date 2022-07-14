@@ -34,19 +34,25 @@
         <?php foreach ($data['data'] as $row) { ?>
           <tr class="container-table__table__body__tr">
             <?php foreach (get_object_vars($row) as $column) : ?>
-              <td class="container-table__table__body__tr__td"><?= $column ?></td>
+              <td class="container-table__table__body__tr__td">
+                <?php
+                $column = substr(strip_tags(html_entity_decode(html_entity_decode($column))), 0, 100);
+                $ellipsis = strlen($column) >= 100 ? '...' : '';
+                ?>
+                <?= $column . $ellipsis ?>
+              </td>
             <?php endforeach; ?>
             <?php if ($data['config']['editButton'] === true) : ?>
               <td class="container-table__table__body__tr__td">
                 <a href="<?= $data['config']['editUrl'] ?>?id=<?= $row->id ?>">
-                  Edit
+                  Editer
                 </a>
               </td>
             <?php endif; ?>
             <?php if ($data['config']['deleteButton'] === true) : ?>
               <td class="container-table__table__body__tr__td">
                 <a href="<?= $data['config']['deleteUrl'] ?>?deletedId=<?= $row->id ?>">
-                  Delete
+                  Supprimer
                 </a>
               </td>
             <?php endif; ?>
