@@ -440,9 +440,15 @@ class User extends Sql
       $this->setFirstname($_POST['firstname']);
       $this->setLastname($_POST['lastname']);
       $this->setRole($_POST['role']);
-      $this->setStatus($result->status);
-      $this->setToken($result->token);
-      $this->setEmailToken($result->emailVerifyToken);
+      if (isset($_GET['id'])){
+        $this->setStatus($result->status);
+        $this->setToken($result->token);
+        $this->setEmailToken($result->emailVerifyToken);
+      } else {
+        $this->generateToken();
+        $this->generateEmailToken();
+      }
+
     } catch (Exception $e) {
       echo "Impossible d'assigner les properties du Model User";
       print_r($e);
