@@ -8,6 +8,7 @@
     'deleteButton' => true,
     'editUrl' => '/category-manager',
     'deleteUrl' => '/categories-list',
+    'ignoredColumns' => [],
   ],
   'data' => $categories,
 ]; ?>

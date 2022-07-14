@@ -8,6 +8,7 @@
     'deleteButton' => true,
     'editUrl' => '/page-manager',
     'deleteUrl' => '/pages-list',
+    'ignoredColumns' => [],
   ],
   'data' => $pages,
 ]; ?>

@@ -117,7 +117,7 @@ class Media extends Sql
         "method" => "POST",
         "action" => "",
         "submit" => "Ajouter / Modifier",
-        "success" => "Le média à bien été ajouté / modifié",
+        "success" => empty($this->getId()) ? "Add media" : "Edit media",
         "enctype" => "multipart/form-data"
       ],
       'left' => [

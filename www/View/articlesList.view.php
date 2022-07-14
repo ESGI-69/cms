@@ -8,6 +8,7 @@
     'deleteButton' => true,
     'editUrl' => '/article-manager',
     'deleteUrl' => '/articles-list',
+    'ignoredColumns' => [],
   ],
   'data' => $articles,
 ]; ?>

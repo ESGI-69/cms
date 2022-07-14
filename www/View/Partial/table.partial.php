@@ -20,7 +20,9 @@
       <thead class="container-table__table__header">
         <tr class="container-table__table__header__tr">
           <?php foreach (get_object_vars($data['data'][0]) as $columnName => $content) : ?>
-            <th class="container-table__table__header__tr__th"><?= $columnName ?></th>
+            <?php if (!in_array($columnName, $data['config']['ignoredColumns'])) : ?>
+              <th class="container-table__table__header__tr__th"><?= $columnName ?></th>
+            <?php endif; ?>
           <?php endforeach; ?>
           <?php if ($data['config']['editButton'] === true) : ?>
             <th class="container-table__table__header__tr__th">Editer</th>
@@ -33,14 +35,16 @@
       <tbody class="container-table__table__body">
         <?php foreach ($data['data'] as $row) { ?>
           <tr class="container-table__table__body__tr">
-            <?php foreach (get_object_vars($row) as $column) : ?>
-              <td class="container-table__table__body__tr__td">
-                <?php
-                $column = substr(strip_tags(html_entity_decode(html_entity_decode($column))), 0, 100);
-                $ellipsis = strlen($column) >= 100 ? '...' : '';
-                ?>
-                <?= $column . $ellipsis ?>
-              </td>
+            <?php foreach (get_object_vars($row) as $columnName => $column) : ?>
+              <?php if (!in_array($columnName, $data['config']['ignoredColumns'])) : ?>
+                <td class="container-table__table__body__tr__td">
+                  <?php
+                  $column = substr(strip_tags(html_entity_decode(html_entity_decode($column))), 0, 100);
+                  $ellipsis = strlen($column) >= 100 ? '...' : '';
+                  ?>
+                  <?= $column . $ellipsis ?>
+                </td>
+              <?php endif; ?>
             <?php endforeach; ?>
             <?php if ($data['config']['editButton'] === true) : ?>
               <td class="container-table__table__body__tr__td">
