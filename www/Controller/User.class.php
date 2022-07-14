@@ -149,6 +149,7 @@ class User extends Sql
     $registerError = false;
     $isMailSent = null;
     $registered = false;
+    $log = Logger::getInstance();
 
     if ($auth->isAuth() === true) {
       $userInfos = $auth->userInfos();
@@ -167,6 +168,7 @@ class User extends Sql
             $user->edit();
             header("Location: /me");
             $registered = true;
+            $log->add("user", "User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' edited");
           } else {
             $formErrors[] = "Email déjà utilisé";
           }
@@ -180,7 +182,7 @@ class User extends Sql
     $view->assign("errors", $formErrors);
     $view->assign("registerError", $registerError);
     $view->assign("isMailSent", $isMailSent);
-    $view->assign("isAuth", $auth->isAuth());
+    // $view->assign("isAuth", $auth->isAuth());
   }
 
 
