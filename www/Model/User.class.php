@@ -84,7 +84,7 @@ class User extends Sql
   /**
    * @return string
    */
-  public function getEmail(): string
+  public function getEmail(): ?string
   {
     return $this->email;
   }
@@ -340,7 +340,7 @@ class User extends Sql
       "config" => [
         "method" => "POST",
         "action" => "",
-        "submit" => "S'inscrire",
+        "submit" => empty($this->getId()) ? "Add user" : "Edit user",
         "success" => "Votre compte a bien été créé !",
       ],
       'left' => [

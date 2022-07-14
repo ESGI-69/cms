@@ -134,7 +134,7 @@ class Page extends Sql
       "config" => [
         "method" => "POST",
         "action" => "",
-        "submit" => "Ajouter",
+        "submit" => empty($this->getId()) ? "Add page" : "Edit page",
         "success" => "Page ajoutée avec succès",
       ],
       'left' => [

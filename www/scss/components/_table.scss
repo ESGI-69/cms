@@ -4,7 +4,7 @@
 .container-table {
   border: em(1) solid $color-border;
   border-radius: em(5);
-  overflow: hidden;
+  overflow-x: auto;
   box-shadow: $shadow;
 
   &__table {
