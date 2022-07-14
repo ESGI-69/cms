@@ -270,7 +270,7 @@ abstract class Sql
    * - `0` = no fetch
    * - `1` = fetch
    * - `2` = fetchAll
-   * - `3` = for join queries
+   * - `3` = count rows
    */
   public function executeQuery(string $query, int $fetchType, array $option = null)
   {
@@ -278,6 +278,13 @@ abstract class Sql
     if ($fetchType === 0) {
       $query->execute($option);
       return $query;
+    }
+
+    $query = $this->pdo->prepare($query);
+
+    if ($fetchType === 3) {
+      $query->execute($option);
+      return $query->rowCount();
     }
 
     $query->setFetchMode($this->pdo::FETCH_OBJ);
@@ -324,5 +331,15 @@ abstract class Sql
     ];
 
     $this->executeQuery($sql, 0, $option);
+  }
+  public function countRows($table)
+  {
+    $sql = $this->mysqlBuilder
+      ->selectCustom(['*'], $table)
+      ->getQuery();
+
+    $result = $this->executeQuery($sql, 3);
+
+    return $result;
   }
 }
