@@ -1,21 +1,28 @@
-<!-- <canvas id="myChart" width="300" height="300"></canvas> -->
-
-<?php foreach ($numberContents as $content) : ?>
-  <div>
-    <span>There is <?= $content['number'] ?></span>
-    <span><?= $content['name'] ?></span>
-  </div>
-<?php endforeach; ?>
+<div style="width: 300px; height: 300px;">
+  <canvas id="myChart" width="300" height="300"></canvas>
+</div>
 
 <script>
   const ctx = document.getElementById('myChart').getContext('2d');
+  $data = [
+    <?php foreach ($numberContents as $content) : ?>
+      <?= $content['number'] ?>,
+    <?php endforeach; ?>
+  ];
+  $label = [
+    <?php foreach ($numberContents as $content) : ?>
+      '<?= $content['name'] ?>',
+    <?php endforeach; ?>
+  ];
+  console.log($data);
+  console.log($label);
   const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: $label,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'number',
+        data: $data,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
