@@ -82,7 +82,7 @@ abstract class Sql
     return $result;
   }
 
-  public function save()
+  public function save(): string
   {
 
     $columns = get_object_vars($this);
@@ -124,6 +124,8 @@ abstract class Sql
 
       $this->executeQuery($sqlNew, 0, $columns);
     }
+
+    return $this->pdo->lastInsertId();
   }
 
   public function saveMedia()
@@ -205,10 +207,10 @@ abstract class Sql
     $result = $this->executeQuery($sql, 1, $option);
 
     if (!empty($result)) {
-      $emailExist = true;
+      $emailExist = $result->id;
     }
-    if ($result){
-      if ($columns["id"] === $result->id){
+    if ($result) {
+      if ($columns["id"] === $result->id) {
         $emailExist = false;
       }
     }
@@ -216,7 +218,8 @@ abstract class Sql
     return $emailExist;
   }
 
-  public function mailedChanged(){
+  public function mailedChanged()
+  {
     $columns = get_object_vars($this);
     $columns = array_diff_key($columns, get_class_vars(get_class()));
     $emailChanged = false;
@@ -233,12 +236,11 @@ abstract class Sql
 
     $result = $this->executeQuery($sql, 1, $option);
 
-    if (empty($result)){
+    if (empty($result)) {
       $emailChanged = true;
     }
 
     return $emailChanged;
-
   }
 
   public function login(string $email)
@@ -272,13 +274,12 @@ abstract class Sql
    */
   public function executeQuery(string $query, int $fetchType, array $option = null)
   {
+    $query = $this->pdo->prepare($query);
     if ($fetchType === 0) {
-      $result = $this->pdo->prepare($query);
-      $result->execute($option);
-      return $result;
+      $query->execute($option);
+      return $query;
     }
 
-    $query = $this->pdo->prepare($query);
     $query->setFetchMode($this->pdo::FETCH_OBJ);
 
     if ($fetchType === 1) {

@@ -29,6 +29,10 @@
   controller: user
   action: pwdforget
 
+/reset:
+  controller: user
+  action: pwdReset
+
 /article:
   controller: article
   action: frontView

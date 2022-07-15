@@ -9,6 +9,9 @@ body {
   display: flex;
   height: 100vh;
 }
+body a:visited {
+  color: #006ACB;
+}
 
 body.back main {
   box-sizing: border-box;

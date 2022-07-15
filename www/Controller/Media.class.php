@@ -43,7 +43,7 @@ class Media extends Sql
       $formErrors = Verificator::checkForm($media->getMediaForm(), $_POST);
       if (count($formErrors) === 0) {
         $media->setMediaInfo();
-        $registerError = $media->checkExisting('name');
+        $registerError = $media->checkExisting('name') !== false;
         if ($registerError === false) {
           $media->saveMedia();
           $saved = true;

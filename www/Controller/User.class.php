@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Core\CleanWords;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
@@ -10,6 +9,7 @@ use App\Core\Mailer;
 use App\Core\Logger;
 use App\Core\AuthManager;
 use App\Model\User as UserModel;
+use App\Model\PasswordReset as PasswordResetModel;
 
 class User extends Sql
 {
@@ -105,6 +105,7 @@ class User extends Sql
     if (isset($_COOKIE['wikikiToken'])) {
       setcookie('wikikiToken', null, -1);
       $success = true;
+      Header("Location: /");
     }
     $view = new View("logout");
     $view->assign("success", $success);
@@ -112,7 +113,89 @@ class User extends Sql
 
   public function pwdforget()
   {
-    echo "Mot de passe oublié";
+    $user = new UserModel();
+    $success = false;
+    $log = Logger::getInstance();
+    $email = null;
+    $passwordReset = new PasswordResetModel();
+
+    $formErrors = [];
+
+    if (!empty($_POST)) {
+      $formErrors = Verificator::checkForm($user->getPasswordForgetForm(), $_POST);
+      if (count($formErrors) === 0) {
+        $email = $_POST['email'];
+        $passwordReset->setEmail($email);
+        $user->setEmail($email);
+        if ($passwordReset->checkExisting('email') === false && $user->checkExisting('email') !== false) {
+          $mailer = new Mailer();
+          $passwordReset->setChangeKey(substr(bin2hex(random_bytes(128)), 0, 128));
+          $passwordReset->setExpDate(date('Y-m-d H:i:s', strtotime('+1 day')));
+          $passwordReset->setUserId($user->checkExisting('email'));
+          $id = $passwordReset->save();
+          $passwordReset->setId($id);
+          $success = $mailer->sendResetMail($email, ["id" => $passwordReset->getId(), "changeKey" => $passwordReset->getChangeKey()]);
+          if (!$success) {
+            $formErrors[] = "Erreur lors de l'envoi du mail. Contactez un admin.";
+          } else {
+            $log->add("user", "User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' asked for a new password");
+          }
+        } else {
+          if ($passwordReset->checkExisting('email') !== false) {
+            $formErrors[] = "Un mail de réinitialisation de mot de passe a déjà été envoyé";
+          }
+          if ($user->checkExisting('email') === false) {
+            $formErrors[] = "Email inconnu";
+          }
+        }
+      }
+    }
+
+    $view = new View("passwordForget", 'front', 'Mot de passe oublié');
+    $view->assign("user", $user);
+    $view->assign("success", $success);
+    $view->assign("errors", $formErrors);
+    $view->assign("email", $email);
+  }
+
+  public function pwdReset()
+  {
+    $log = Logger::getInstance();
+    $user = new UserModel();
+    $passwordReset = new PasswordResetModel();
+    $success = false;
+    $formErrors = [];
+
+    if ($_GET['id'] && $_GET['changeKey']) {
+      $info = $passwordReset->getPasswordResetInfo($_GET['id']);
+      if (!empty($info) && $passwordReset->getChangeKey() === $_GET['changeKey']) {
+        if (strtotime($passwordReset->getExpDate()) > strtotime(date('Y-m-d H:i:s'))) {
+          $user->getUserInfos($passwordReset->getUserId());
+          // Si le user a rempli le form pour changer son mot de passe
+          if (!empty($_POST)) {
+            $formErrors = Verificator::checkForm($user->getPasswordResetForm(), $_POST);
+            if (count($formErrors) === 0) {
+              $user->setPassword($_POST['password']);
+              $user->save();
+              $success = true;
+              $log->add("user", "User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' reset his password");
+              $passwordReset->delete($_GET['id']);
+            }
+          }
+        } else {
+          $formErrors[] = "Ce lien de réinitialisation de mot de passe a expiré";
+        }
+      } else {
+        $formErrors[] = "Ce lien de réinitialisation de mot de passe n'est pas valide";
+      }
+    } else {
+      $formErrors[] = "Ce lien de réinitialisation de mot de passe n'est pas valide";
+    }
+
+    $view = new View("passwordReset", 'front', 'Réinitialisation du mot de passe');
+    $view->assign("user", $user);
+    $view->assign("success", $success);
+    $view->assign("errors", $formErrors);
   }
 
   public function verify()
@@ -159,7 +242,7 @@ class User extends Sql
         $formErrors = Verificator::checkForm($user->getUserFormFront(), $_POST);
         if (count($formErrors) === 0) {
           $user->setUserInfosAdmin();
-          $registerError = $user->checkExisting('email');
+          $registerError = $user->checkExisting('email') !== false;
           if ($registerError === false) {
             if ($user->mailedChanged()) {
               $mailer = new Mailer();
@@ -201,7 +284,7 @@ class User extends Sql
         $formErrors = Verificator::checkForm($user->getUserForm(), $_POST);
         if (count($formErrors) === 0) {
           $user->setUserInfosAdmin();
-          $registerError = $user->checkExisting('email');
+          $registerError = $user->checkExisting('email') !== false;
           if ($registerError === false) {
             if ($user->mailedChanged()) {
               $mailer = new Mailer();
@@ -222,7 +305,7 @@ class User extends Sql
         // Si il n'y a pas d'erreur dans le form
         if (count($formErrors) === 0) {
           $user->setUserInfosAdmin();
-          $registerError = $user->checkExisting('email');
+          $registerError = $user->checkExisting('email') !== false;
           // check si l'email n'est pas déjà utilisé
           if (!$registerError) {
             $user->save();
