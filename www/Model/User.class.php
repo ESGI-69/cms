@@ -170,15 +170,25 @@ class User extends Sql
   /**
    * @return Object|null
    */
-  public function getUserInfos(): array
+  public function getUserInfos(string $id = null): array
   {
-    $sql = $this->mysqlBuilder
-      ->select(['*'])
-      ->where('token')
-      ->getQuery();
-    $option = [
-      'token' => $this->token
-    ];
+    if (isset($id)) {
+      $sql = $this->mysqlBuilder
+        ->select(['*'])
+        ->where('id')
+        ->getQuery();
+      $option = [
+        'id' => $id,
+      ];
+    } else {
+      $sql = $this->mysqlBuilder
+        ->select(['*'])
+        ->where('token')
+        ->getQuery();
+      $option = [
+        'token' => $this->token,
+      ];
+    }
     $result = $this->executeQuery($sql, 2, $option);
     $this->setEmail($result[0]->email);
     $this->setFirstname($result[0]->firstname);
@@ -511,7 +521,7 @@ class User extends Sql
       if (isset($_POST['role'])) {
         $this->setRole($_POST['role']);
       }
-      if (isset($_GET['id']) || $_SERVER['REQUEST_URI'] === '/me'){
+      if (isset($_GET['id']) || $_SERVER['REQUEST_URI'] === '/me') {
         $this->setStatus($result->status);
         $this->setToken($result->token);
         $this->setEmailToken($result->emailVerifyToken);
@@ -519,7 +529,6 @@ class User extends Sql
         $this->generateToken();
         $this->generateEmailToken();
       }
-
     } catch (Exception $e) {
       echo "Impossible d'assigner les properties du Model User";
       print_r($e);
@@ -583,5 +592,56 @@ class User extends Sql
       echo "Impossible d'assigner les properties du Model User";
       print_r($e);
     }
+  }
+
+  public function getPasswordForgetForm(): array
+  {
+    return [
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "Envoyer le lien de réinitialisation de mot de passe"
+      ],
+      'inputs' => [
+        "email" => [
+          "type" => "email",
+          "placeholder" => "Votre email ...",
+          "required" => true,
+          "class" => "input",
+          "id" => "emailForm",
+          "error" => "Email incorrect"
+        ]
+      ]
+    ];
+  }
+
+  public function getPasswordResetForm(): array
+  {
+    return [
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "Réinitialiser le mot de passe"
+      ],
+      'inputs' => [
+        "password" => [
+          "type" => "password",
+          "placeholder" => "Votre nouveau mot de passe ...",
+          "required" => true,
+          "class" => "input",
+          "id" => "pwdForm",
+          "error" => "Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres"
+        ],
+        "passwordConfirm" => [
+          "type" => "password",
+          "placeholder" => "Confirmation ...",
+          "required" => true,
+          "class" => "input",
+          "id" => "pwdConfirmForm",
+          "confirm" => "password",
+          "error" => "Votre mot de passe de confirmation ne correspond pas"
+        ]
+      ]
+    ];
   }
 }

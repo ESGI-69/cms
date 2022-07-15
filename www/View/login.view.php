@@ -2,6 +2,9 @@
 
 <?php if (!$success) : ?>
   <?php $this->includePartial("form", $user->getLoginForm()) ?>
+  <a href="/forget">
+    Mot de passe oublié ?
+  </a>
 <?php else : ?>
   <p>
     Bravo <?= $userInfos["firstname"] ?>, vous êtes connecté ! 👏

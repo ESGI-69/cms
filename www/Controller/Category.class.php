@@ -40,7 +40,7 @@ class Category
         $formErrors = Verificator::checkForm($category->getCategoryForm(), $_POST);
         if (count($formErrors) === 0) {
           $category->setCategoryInfo();
-          $registerError = $category->checkExisting('name');
+          $registerError = $category->checkExisting('name') !== false;
           if ($registerError === false) {
             $category->edit();
             $saved = true;
@@ -55,7 +55,7 @@ class Category
         $formErrors = Verificator::checkForm($category->getCategoryForm(), $_POST);
         if (count($formErrors) === 0) {
           $category->setCategoryInfo();
-          $registerError = $category->checkExisting('name');
+          $registerError = $category->checkExisting('name') !== false;
           if ($registerError === false) {
             $category->save();
             $saved = true;

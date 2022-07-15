@@ -57,7 +57,7 @@ class Article
         $formErrors = Verificator::checkForm($article->getForm(), $_POST);
         if (count($formErrors) === 0) {
           $article->setArticleInfo();
-          $registerError = $article->checkExisting('title');
+          $registerError = $article->checkExisting('title') !== false;
           if ($registerError === false) {
             $article->save();
             $success = true;

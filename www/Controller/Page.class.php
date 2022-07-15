@@ -58,7 +58,7 @@ class Page
         $formErrors = Verificator::checkForm($page->getPageForm(), $_POST);
         if (count($formErrors) === 0) {
           $page->setPageInfo();
-          $registerError = $page->checkExisting('title');
+          $registerError = $page->checkExisting('title') !== false;
           if ($registerError === false) {
             $page->save();
             $saved = true;
