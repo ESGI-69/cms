@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
-use App\Core\AuthManager;
+use App\Model\Article as ArticleModel;
 
 use App\Model\Category as CategoryModel;
 
@@ -68,11 +67,41 @@ class Category
       }
     }
 
-
-
     $view = new View("categoryManager", "back", isset($_GET['id']) ? $category->getName() . ' - Edit' : 'New Category');
     $view->assign("category", $category);
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);
+  }
+
+  public function categoriesView()
+  {
+    $category = new CategoryModel();
+    $categories = $category->getAll('name');
+    $view = new View("categoriesview", "front", "Categories");
+    $view->assign("categories", $categories);
+  }
+
+  public function categoryView()
+  {
+    $article = new ArticleModel();
+    $articles = $article->where('category_id', $_GET['id']);
+    $category = new CategoryModel();
+    if (isset($_GET['id'])) {
+      $category->getCategoryInfo($_GET['id']);
+    } else {
+      $category = null;
+    }
+
+    if (!empty($articles)) {
+      foreach ($articles as $article) {
+        $currentArticle = new ArticleModel();
+        $currentArticle->getArticleInfo($article->id);
+        $articlesList[] = $currentArticle;
+      }
+    }
+
+    $view = new View("categoryview", "front", $category ? $category->getName() : "Category");
+    $view->assign("category", $category);
+    $view->assign("articles", $articlesList ?? []);
   }
 }

@@ -308,11 +308,11 @@ abstract class Sql
     }
   }
 
-  public function getAll(): array
+  public function getAll(string $order = 'id'): array
   {
     $sql = $this->mysqlBuilder
       ->select(['*'])
-      ->order('id')
+      ->order($order)
       ->getQuery();
 
     return $this->executeQuery($sql, 2);
@@ -343,12 +343,32 @@ abstract class Sql
     $this->executeQuery($sql, 0, $option);
   }
 
+  public function where(string $columnName, string $columnValue)
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'])
+      ->where($columnName)
+      ->getQuery();
+
+    $option = [
+      $columnName => $columnValue
+    ];
+
+    $query = $this->executeQuery($sql, 2, $option);
+
+    if (empty($query)) {
+      return [];
+    } else {
+      return $query;
+    }
+  }
+
   public function countRows(?string $table = null)
   {
     if ($table === null) {
       $table = $this->table;
     }
-    
+
     $sql = $this->mysqlBuilder
       ->select(['*'], $table)
       ->getQuery();
@@ -386,6 +406,5 @@ abstract class Sql
     ];
 
     $this->executeQuery($sql, 0, $option);
-  }  
-
+  }
 }
