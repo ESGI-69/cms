@@ -546,6 +546,7 @@ a.link:visited {
 }
 .front-sidebar a:hover {
   color: #c6ced0;
+  cursor: pointer;
 }
 .front-sidebar .closebtn {
   position: absolute;
