@@ -76,6 +76,11 @@
             margin-right: 0.5rem;
           }
         }
+
+        &__item:visited {
+          color: $color-white;
+        }
+
       }
     }
   }
@@ -97,6 +102,9 @@
     &__icon {
       cursor: pointer;
       margin-left: auto;
+      color: $color-white;
+    }
+    &__icon:visited {
       color: $color-white;
     }
   }

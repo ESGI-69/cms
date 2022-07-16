@@ -291,7 +291,7 @@ abstract class Sql
       $query->execute($option);
       return $query;
     }
-    
+
     if ($fetchType === 3) {
       $query->execute($option);
       return $query->rowCount();
@@ -343,8 +343,12 @@ abstract class Sql
     $this->executeQuery($sql, 0, $option);
   }
 
-  public function countRows($table)
+  public function countRows(?string $table = null)
   {
+    if ($table === null) {
+      $table = $this->table;
+    }
+    
     $sql = $this->mysqlBuilder
       ->select(['*'], $table)
       ->getQuery();

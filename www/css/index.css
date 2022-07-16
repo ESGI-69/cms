@@ -558,6 +558,9 @@ a.link:visited {
   vertical-align: middle;
   margin-right: 0.5rem;
 }
+.wk_sidebar__container__navigation__section__item:visited {
+  color: #ffffff;
+}
 .wk_sidebar__footer {
   display: flex;
   align-items: center;
@@ -577,6 +580,9 @@ a.link:visited {
 .wk_sidebar__footer__icon {
   cursor: pointer;
   margin-left: auto;
+  color: #ffffff;
+}
+.wk_sidebar__footer__icon:visited {
   color: #ffffff;
 }
 
