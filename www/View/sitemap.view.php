@@ -3,7 +3,7 @@
 <!-- List des articles -->
 <?php foreach ($articles as $article): ?>
   <url>
-    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/article&amp;=<?= $article->id ?></loc>
+    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/article?id=<?= $article->id ?></loc>
     <lastmod><?= $article->updatedAt ?? $article->createdAt ?></lastmod>
     <changefreq>daily</changefreq>
   </url>
@@ -11,7 +11,7 @@
 <!-- List des pages -->
 <?php foreach ($pages as $page): ?>
   <url>
-    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/page&amp;=<?= $page->id ?></loc>
+    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/page?id=<?= $page->id ?></loc>
     <lastmod><?= $page->updatedAt ?? $page->createdAt ?></lastmod>
     <changefreq>monthly</changefreq>
   </url>
