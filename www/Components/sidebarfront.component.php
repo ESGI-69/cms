@@ -1,17 +1,20 @@
 <div id="mySidebar" class="front-sidebar">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a class="closebtn" id="closebtn">&times;</a>
   <a href="#">All Categories</a>
-  <?php foreach($sidebarFront as $sidebarElement)  : ?>
+  <?php foreach ($sidebarFront as $sidebarElement) : ?>
     <a href="/page?id=<?= $sidebarElement->id; ?>"><?= $sidebarElement->title; ?></a>
   <?php endforeach; ?>
 </div>
 
 <script>
-  function openNav() {
-    document.getElementById("mySidebar").classList.add("front-sidebar--open");
-  }
-
-  function closeNav() {
-    document.getElementById("mySidebar").classList.remove("front-sidebar--open");
-  }
+  const buttons = [
+    document.getElementById('closebtn'),
+    document.getElementById('burgerMenu'),
+  ];
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const mySidebar = document.getElementById('mySidebar');
+      mySidebar.classList.toggle('front-sidebar--open');
+    });
+  });
 </script>
