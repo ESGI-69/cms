@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Core\View;
-use App\Model\Footer as Footer;
+use App\Model\Component as Component;
 use App\Model\Article as ArticleModel;
 use App\Model\Page as PageModel;
 use App\Model\Category as CategoryModel;
@@ -47,9 +47,18 @@ class Main
     $view->assign("staticUrls", $routes);
   }
 
+  public static function sidebarFront(): array
+  {
+    $sidebar = new Component();
+    $sidebarId = $sidebar->getWhere("wk_navigation", "value", "navbar");
+    $sidebarElements = $sidebar->getNoModel("navigation_id", $sidebarId, "wk_page");
+    return $sidebarElements;
+  }
+
+
   public static function footer(): array
   {
-    $footer = new Footer();
+    $footer = new Component();
     $footerId = $footer->getWhere("wk_navigation", "value", "footer");
     $footerElements = $footer->getNoModel("navigation_id", $footerId, "wk_page");
 

@@ -1,0 +1,58 @@
+@use "../variables" as *;
+@use "../functions" as *;
+
+.front-sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: -251px;
+  box-sizing: border-box;
+  background-color: $color-front-primary;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+  border-left: 1px solid $color-front-secondary;
+  width: 250px;
+
+  a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: $color-white;
+    display: block;
+    transition: 0.3s;
+  }
+
+  a:visited {
+    color: $color-white;
+  }
+
+  a:hover {
+    color: $color-text-secondary;
+  }
+
+  .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  &--open {
+    right: 0;
+  }
+}
+@media screen and (max-height: 450px) {
+  .front-sidebar {
+    padding-top: 15px;
+
+    a {
+      font-size: 18px;
+    }
+  }
+}
+
+.openbtn:hover {
+  cursor: pointer;
+}

@@ -4,7 +4,7 @@ namespace App\Model;
 
 use App\Core\Sql;
 
-class Footer extends Sql
+class Component extends Sql
 {
   public function __construct()
   {
