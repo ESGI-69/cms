@@ -34,6 +34,14 @@
   controller: article
   action: frontView
 
+/categories:
+  controller: category
+  action: categoriesView
+
+/category:
+  controller: category
+  action: categoryView
+
 /dashboard:
   controller: admin
   action: dashboard

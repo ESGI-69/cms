@@ -9,8 +9,8 @@ body {
   display: flex;
   height: 100vh;
 }
-body a:visited {
-  color: #006ACB;
+body a, body a:visited {
+  color: #FFF;
 }
 
 body.back main {
@@ -760,6 +760,50 @@ a.link:visited {
   gap: 0.625em;
 }
 
+.articles {
+  width: 100%;
+}
+.articles__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.articles__list__item {
+  color: #EDF6F9;
+  text-decoration: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.5em;
+  grid-template-areas: "image title" "image creation_date" "image content";
+}
+.articles__list__item h3, .articles__list__item p, .articles__list__item span {
+  color: #EDF6F9;
+}
+.articles__list__item:hover .articles__list__item__title {
+  text-decoration: underline;
+}
+.articles__list__item:hover .articles__list__item__image {
+  filter: brightness(0.8);
+}
+.articles__list__item__image {
+  grid-area: image;
+  width: 100%;
+  height: auto;
+}
+.articles__list__item__title {
+  grid-area: title;
+  margin: 0;
+}
+.articles__list__item__creation-infos {
+  grid-area: creation_date;
+  font-size: 0.75em;
+}
+.articles__list__item__content {
+  grid-area: content;
+}
+
 .back.mediaslist .media-list__item {
   height: 400px;
   width: fit-content;
@@ -836,46 +880,6 @@ a.link:visited {
 .front.home .search input {
   width: 300px;
   font-size: 1em;
-}
-.front.home .last-article {
-  width: 100%;
-}
-.front.home .last-article__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-.front.home .last-article__list__item {
-  color: #EDF6F9;
-  text-decoration: none;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  grid-template-rows: auto auto 1fr;
-  gap: 0.5em;
-  grid-template-areas: "image title" "image creation_date" "image content";
-}
-.front.home .last-article__list__item:hover .last-article__list__item__title {
-  text-decoration: underline;
-}
-.front.home .last-article__list__item:hover .last-article__list__item__image {
-  filter: brightness(0.8);
-}
-.front.home .last-article__list__item__image {
-  grid-area: image;
-  width: 100%;
-  height: auto;
-}
-.front.home .last-article__list__item__title {
-  grid-area: title;
-  margin: 0;
-}
-.front.home .last-article__list__item__creation-infos {
-  grid-area: creation_date;
-  font-size: 0.75em;
-}
-.front.home .last-article__list__item__content {
-  grid-area: content;
 }
 
 .front.article img {
