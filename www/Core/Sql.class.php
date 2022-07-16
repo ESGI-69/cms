@@ -291,9 +291,7 @@ abstract class Sql
       $query->execute($option);
       return $query;
     }
-
-    $query = $this->pdo->prepare($query);
-
+    
     if ($fetchType === 3) {
       $query->execute($option);
       return $query->rowCount();
