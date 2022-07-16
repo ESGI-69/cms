@@ -85,6 +85,7 @@ class Article
         header("Location: /");
       } else {
         $article->incrementView(intval($_GET['id']), ['clickedOn']);
+        $articleInfos = $article->getArticleInfo($_GET['id']);
         $articleMedia = $article->getJoin($article->getId(), 'wk_media', 'media_id', 'id');
         $view = new View("article", "front", $article->getTitle());
         $view->assign('article', $article);

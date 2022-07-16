@@ -7,7 +7,8 @@
     <img src="<?= $article->getMediaPath() ?>" alt="<?= $article->getTitle() ?>">
     <div id="content"><?= $article->getContent() ?></div>
     <p class="end">
-      Publié par <b><?= $article->getAuthorFirstname() ?> <?= $article->getAuthorLastname() ?></b> dans <?= $article->getCategoryName() ?> le <?= $article->getArticleCreationDate() ?>.
+      Publié par <b><?= $article->getAuthorFirstname() ?> <?= $article->getAuthorLastname() ?></b> dans <?= $article->getCategoryName() ?> le <?= $article->getArticleCreationDate() ?>.<br>
+      Vue <?= $article->getClickedOn() ?> fois.
     </p>
   </article>
 <?php else : ?>
