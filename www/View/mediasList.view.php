@@ -9,7 +9,6 @@
         <span class="media-list__item__info__name">
           <?= $media->name ?>
         </span>
-        <a href="/media-manager?id=<?= $media->id ?>" class="button button--primary">Editer</a>
         <a href="/medias-list?deletedId=<?= $media->id ?>" class="button button--danger">Supprimer</a>
       </div>
     </div>
