@@ -14,7 +14,12 @@ class Admin extends Sql
 
   public function dashboard()
   {
+    $numberContentsTotal = 0;
     $numberContents = [
+      [
+        "number" => $this->countRows('wk_article'),
+        "name" => "Articles",
+      ],
       [
         "number" => $this->countRows('wk_user'),
         "name" => "Users",
@@ -23,10 +28,6 @@ class Admin extends Sql
       [
         "number" => $this->countRows('wk_page'),
         "name" => "Pages",
-      ],
-      [
-        "number" => $this->countRows('wk_article'),
-        "name" => "Articles",
       ],
       [
         "number" => $this->countRows('wk_media'),
@@ -38,8 +39,15 @@ class Admin extends Sql
       ],
     ];
 
+    foreach ($numberContents as $numberContent) {
+      $numberContentsTotal += $numberContent["number"];
+    }
+
+    $mostViewedArticle = $this->getHighest('clickedOn', 'wk_article');
 
     $view = new View("dashboard", "back", "Dashboard");
     $view->assign("numberContents", $numberContents);
+    $view->assign("mostViewedArticle", $mostViewedArticle);
+    $view->assign("numberContentsTotal", $numberContentsTotal);
   }
 }

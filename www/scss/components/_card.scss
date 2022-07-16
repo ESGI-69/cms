@@ -2,6 +2,7 @@
 @use '../functions' as *;
 
 .card {
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   gap: em(10);

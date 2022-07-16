@@ -14,6 +14,7 @@ class Article extends Sql
   protected $user_id = null;
   protected $category_id = null;
   protected $createdAt = null;
+  protected $clickedOn = 0;
 
   public function __construct()
   {
@@ -41,6 +42,16 @@ class Article extends Sql
   public function getTitle(): ?string
   {
     return $this->title;
+  }
+
+  public function getClickedOn(): int
+  {
+    return $this->clickedOn;
+  }
+
+  public function setClickedOn (int $clickedOn): void
+  {
+    $this->clickedOn = $clickedOn;
   }
 
   public function setSubtitle(?string $subtitle): void
@@ -138,6 +149,7 @@ class Article extends Sql
       $category = $this->getJoin($result->id, 'wk_category', 'category_id', 'id')[0]->id;
       $this->setTitle($result->title);
       $this->setSubtitle($result->subtitle);
+      $this->setClickedOn($result->clickedOn);
       $this->setMedia($media);
       $this->setContent($result->content);
       $this->setAuthor($author);
