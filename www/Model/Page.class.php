@@ -15,7 +15,8 @@ class Page extends Sql
   protected $subtitle = null;
   protected $user_id = null;
   protected $navigation_id = null;
-
+  protected $createdAt = null;
+  protected $updatedAt = null;
 
   public function __construct()
   {
@@ -99,6 +100,26 @@ class Page extends Sql
     $this->navigation_id = $navigation;
   }
 
+  public function getCreatedAt(): ?string
+  {
+    return $this->createdAt;
+  }
+
+  public function setCreatedAt(): void
+  {
+    $this->createdAt = date('Y-m-d H:i:s');
+  }
+
+  public function getUpdatedAt(): ?string
+  {
+    return $this->updatedAt;
+  }
+
+  public function setUpdatedAt(): void
+  {
+    $this->updatedAt = date('Y-m-d H:i:s');
+  }
+
   public function getPageInfo(?string $id): array
   {
     $this->id = $id;
@@ -112,6 +133,8 @@ class Page extends Sql
       $this->setsubtitle($result->subtitle);
       $this->setUserId($result->user_id);
       $this->setNavigation($navigation);
+      $this->setCreatedAt($result->created_at);
+      $this->setUpdatedAt($result->updated_at);
       return [
         'id' => $this->getId(),
         'title' => $this->getTitle(),
@@ -120,6 +143,8 @@ class Page extends Sql
         'subtitle' => $this->getsubtitle(),
         'user_id' => $this->getUserId(),
         'navigation' => $this->getNavigation(),
+        'created_at' => $this->getCreatedAt(),
+        'updated_at' => $this->getUpdatedAt()
       ];
     }
   }

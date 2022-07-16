@@ -2,4 +2,5 @@ RewriteEngine On
 # le flag QSA laisse les params apres l'url
 # (permet d'acceder aux params avec l'array $_GET)
 # https://httpd.apache.org/docs/2.2/en/rewrite/flags.html#flag_qsa
+RewriteRule ^sitemap\.xml$ index.php [L]
 RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?p=$1 [QSA]

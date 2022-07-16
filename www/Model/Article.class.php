@@ -14,6 +14,7 @@ class Article extends Sql
   protected $user_id = null;
   protected $category_id = null;
   protected $createdAt = null;
+  protected $updatedAt = null;
   protected $clickedOn = 0;
 
   public function __construct()
@@ -49,7 +50,7 @@ class Article extends Sql
     return $this->clickedOn;
   }
 
-  public function setClickedOn (int $clickedOn): void
+  public function setClickedOn(int $clickedOn): void
   {
     $this->clickedOn = $clickedOn;
   }
@@ -139,6 +140,11 @@ class Article extends Sql
     return $this->createdAt;
   }
 
+  public function getArticleUpdateDate(): string
+  {
+    return $this->updatedAt;
+  }
+
   public function getArticleInfo(?string $id): array
   {
     $this->setId($id);
@@ -155,6 +161,7 @@ class Article extends Sql
       $this->setAuthor($author);
       $this->setCategory($category);
       $this->createdAt = $result->createdAt;
+      $this->updatedAt = $result->updatedAt;
       return [
         'id' => $this->getId(),
         'title' => $this->getTitle(),
@@ -164,6 +171,7 @@ class Article extends Sql
         'author' => $this->getAuthor(),
         'category' => $this->getCategory(),
         'createdAt' => $this->getArticleCreationDate(),
+        'updatedAt' => $this->getArticleUpdateDate(),
       ];
     } else {
       return [];
