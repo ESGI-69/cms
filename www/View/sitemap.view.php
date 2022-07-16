@@ -13,7 +13,14 @@
   <url>
     <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/page?id=<?= $page->id ?></loc>
     <lastmod><?= $page->updatedAt ?? $page->createdAt ?></lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>daily</changefreq>
+  </url>
+<?php endforeach; ?>
+<!-- List des categories -->
+<?php foreach ($categories as $category): ?>
+  <url>
+    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/category?id=<?= $category->id ?></loc>
+    <changefreq>daily</changefreq>
   </url>
 <?php endforeach; ?>
 <!-- List des pages statics -->

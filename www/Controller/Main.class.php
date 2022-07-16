@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\View;
 use App\Model\Article as ArticleModel;
 use App\Model\Page as PageModel;
+use App\Model\Category as CategoryModel;
 
 class Main
 {
@@ -33,6 +34,8 @@ class Main
     $articles = $article->getAll();
     $page = new PageModel();
     $pages = $page->getAll();
+    $category = new CategoryModel();
+    $categories = $category->getAll();
 
     // Parse the routes.yaml file
     $routes = yaml_parse_file(__DIR__ . "/../routes.yml");
@@ -40,6 +43,7 @@ class Main
     $view = new View("sitemap", "none");
     $view->assign("articles", $articles);
     $view->assign("pages", $pages);
+    $view->assign("categories", $categories);
     $view->assign("staticUrls", $routes);
   }
 }
