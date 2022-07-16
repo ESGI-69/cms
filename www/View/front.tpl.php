@@ -44,6 +44,8 @@
     <?php include "View/" . $this->view . ".view.php"; ?>
   </main>
 
+  <?php include "Components/footer.component.php"; ?>
+
 </body>
 
 </html>

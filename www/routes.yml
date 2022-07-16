@@ -41,6 +41,9 @@
 /category:
   controller: category
   action: categoryView
+/page: 
+  controller: page
+  action: frontView
 
 /dashboard:
   controller: admin

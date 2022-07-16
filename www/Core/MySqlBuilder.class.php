@@ -20,7 +20,7 @@ interface QueryBuilder
 
   public function set($column, string $operator = '='): QueryBuilder;
 
-  public function where(string $column, string $operator = '='): QueryBuilder;
+  public function where(string $column, string $operator = '=', ?string $table = NULL ): QueryBuilder;
 
   public function limit(int $from, int $offset): QueryBuilder;
 
@@ -115,10 +115,14 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
-  public function where(string $column, string $operator = '='): QueryBuilder
+  public function where(string $column, string $operator = '=', ?string $table = NULL ): QueryBuilder
   {
 
-    $this->query->where[] = $this->table . "." . $column . $operator . ":" . $column;
+    if ($table === NULL) {
+      $table = $this->table;
+    }
+
+    $this->query->where[] = $table . "." . $column . $operator . ":" . $column;
     return $this;
   }
 

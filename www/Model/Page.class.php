@@ -62,7 +62,7 @@ class Page extends Sql
 
   public function getContent(): ?string
   {
-    return $this->content;
+    return html_entity_decode(html_entity_decode($this->content));
   }
 
   public function setContent(?string $content): void
