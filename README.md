@@ -1,8 +1,11 @@
 # Wikiki
 
+## Maquette
+Figma : https://www.figma.com/file/XpUJAFpK78t3fzxXDc7W23/CMS?node-id=31%3A4
+
 ## Suivi du projet
 
-Github Projec :  https://github.com/orgs/ESGI-69/projects/1/
+Github Project :  https://github.com/orgs/ESGI-69/projects/1/
 
 ## Installation & lancement
 
