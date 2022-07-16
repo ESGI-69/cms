@@ -8,6 +8,7 @@
     <meta name="description" content="<?= $pageDescription ?>">
   <?php endif; ?>
   <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 </head>
 
 <body class="<?= $this->template ?> <?= $this->view ?>">
