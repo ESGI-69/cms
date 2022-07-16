@@ -1,6 +1,6 @@
 <div id="mySidebar" class="front-sidebar">
   <a class="closebtn" id="closebtn">&times;</a>
-  <a href="#">All Categories</a>
+  <a href="/categories">All Categories</a>
   <?php foreach ($sidebarFront as $sidebarElement) : ?>
     <a href="/page?id=<?= $sidebarElement->id; ?>"><?= $sidebarElement->title; ?></a>
   <?php endforeach; ?>
