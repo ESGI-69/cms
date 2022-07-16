@@ -83,7 +83,6 @@ class Page
     if (isset($_GET['id'])) {
       $page = new PageModel();
       $pageInfos = $page->getPageInfo($_GET['id']);
-      print_r($pageInfos);
       if (empty($pageInfos)) {
         header("Location: /");
       } else {
