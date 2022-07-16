@@ -66,6 +66,18 @@ abstract class Sql
     return $result;
   }
 
+  public function getHighest(?string $item, ?string $table)
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'], $table)
+      ->order($item, 'DESC')
+      ->limit(0, 1)
+      ->getQuery();
+
+    $result = $this->executeQuery($sql, 1);
+    return $result;
+  }
+
   public function getJoin(int $id, string $table, string $rowA, string $rowB)
   {
     $sql = $this->mysqlBuilder
@@ -332,14 +344,46 @@ abstract class Sql
 
     $this->executeQuery($sql, 0, $option);
   }
+
   public function countRows($table)
   {
     $sql = $this->mysqlBuilder
-      ->selectCustom(['*'], $table)
+      ->select(['*'], $table)
       ->getQuery();
 
     $result = $this->executeQuery($sql, 3);
 
     return $result;
   }
+
+  public function incrementView(int $id, array $set)
+  {
+    $getValue = $this->mysqlBuilder
+      ->select($set)
+      ->where('id')
+      ->limit(0, 1)
+      ->getQuery();
+
+    $optionGetValue = [
+      'id' => $id
+    ];
+    $value = $this->executeQuery($getValue, 1, $optionGetValue);
+    $extractSet = $set[0];
+    $value = $value->$extractSet;
+    $value++;
+
+    $sql = $this->mysqlBuilder
+      ->update()
+      ->set('clickedOn')
+      ->where('id')
+      ->getQuery();
+
+    $option = [
+      'id' => $id,
+      'clickedOn' => $value
+    ];
+
+    $this->executeQuery($sql, 0, $option);
+  }  
+
 }

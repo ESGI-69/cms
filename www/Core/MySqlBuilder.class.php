@@ -6,9 +6,13 @@ interface QueryBuilder
 {
   public function insert(array $values): QueryBuilder;
 
-  public function select(array $columns): QueryBuilder;
-
-  public function selectCustom (array $columns,string $table): QueryBuilder;
+    /**
+   * $operator asked:
+   *
+   * - `0` = NONE
+   * - `1` = MAX
+   */
+  public function select(array $columns, string $table = "default", int $operator = 0): QueryBuilder;
 
   public function delete(): QueryBuilder;
 
@@ -20,7 +24,7 @@ interface QueryBuilder
 
   public function limit(int $from, int $offset): QueryBuilder;
 
-  public function order(string $column);
+  public function order(string $column, string $suffix = null);
 
   /**
    * $joinType asked:
@@ -61,19 +65,25 @@ class MySqlBuilder implements QueryBuilder
     return $this;
   }
 
-  public function select(array $columns): QueryBuilder
+  public function select(array $columns, string $table =  "default", int $operator = 0 ): QueryBuilder
   {
     $this->init();
 
-    $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $this->table;
-    return $this;
-  }
+    if ($table == "default") {
+      $tableSet = $this->table;
+    } else {
+      $tableSet = $table;
+    }
 
-  public function selectCustom (array $columns,string $table): QueryBuilder
-  {
-    $this->init();
+    if ($operator === 1){
+      $operatorStart = "MAX(";
+      $operatorEnd = ")";
+    } else {
+      $operatorStart = "";
+      $operatorEnd = "";
+    }
 
-    $this->query->base = "SELECT " . implode(', ', $columns) . " FROM " . $table;
+    $this->query->base = "SELECT " . $operatorStart . implode(', ', $columns) . $operatorEnd . " FROM " . $tableSet;
     return $this;
   }
 

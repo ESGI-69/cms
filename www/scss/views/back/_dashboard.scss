@@ -1,0 +1,19 @@
+@use "../../variables" as *;
+@use "../../functions" as *;
+
+.dashboard {
+  .btn-container {
+    display: flex;
+    flex-direction: row;
+    a {
+      width: fit-content;
+      margin: 0 em(8) em(16) 0;
+    }
+  }
+  .cards {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
