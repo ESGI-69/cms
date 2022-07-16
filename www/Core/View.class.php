@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\AuthManager;
+use App\Controller\Main;
 
 class View
 {
@@ -76,6 +77,7 @@ class View
     $this->data['isUser'] = AuthManager::isUser();
     $this->data['pageTitle'] = $this->pageTitle;
     $this->data['pageDescription'] = $this->pageDescription;
+    $this->data['footer'] = Main::footer();
     extract($this->data);
     include "View/" . $this->template . ".tpl.php";
   }

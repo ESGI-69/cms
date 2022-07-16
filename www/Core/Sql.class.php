@@ -78,6 +78,38 @@ abstract class Sql
     return $result;
   }
 
+  public function getWhere(string $table, string $nameRow, string $value): int 
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'], $table)
+      ->where($nameRow, '=', $table)
+      ->getQuery();
+
+      $option = [
+        $nameRow => $value
+      ];
+
+    $result = $this->executeQuery($sql, 1, $option);
+
+    return $result->id;
+  }
+
+  public function getNoModel(string $whereRow, $whereValue, string $table )
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['*'], $table)
+      ->where($whereRow, '=', $table)
+      ->getQuery();
+
+    $option = [
+      $whereRow => $whereValue
+    ];
+    
+    $result = $this->executeQuery($sql, 2, $option);
+
+    return $result;
+  }
+
   public function getJoin(int $id, string $table, string $rowA, string $rowB)
   {
     $sql = $this->mysqlBuilder

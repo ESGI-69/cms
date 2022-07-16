@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Core\View;
+use App\Model\Footer as Footer;
 use App\Model\Article as ArticleModel;
 use App\Model\Page as PageModel;
 use App\Model\Category as CategoryModel;
 
 class Main
 {
-
   public function home()
   {
     $article = new ArticleModel();
@@ -46,4 +46,14 @@ class Main
     $view->assign("categories", $categories);
     $view->assign("staticUrls", $routes);
   }
+
+  public static function footer(): array
+  {
+    $footer = new Footer();
+    $footerId = $footer->getWhere("wk_navigation", "value", "footer");
+    $footerElements = $footer->getNoModel("navigation_id", $footerId, "wk_page");
+
+    return $footerElements;
+  }
+
 }

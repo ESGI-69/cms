@@ -77,8 +77,21 @@ class Page
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);
   }
-  public function page()
+
+  public function frontView()
   {
-    $view = new View("page", "front");
+    if (isset($_GET['id'])) {
+      $page = new PageModel();
+      $pageInfos = $page->getPageInfo($_GET['id']);
+      print_r($pageInfos);
+      if (empty($pageInfos)) {
+        header("Location: /");
+      } else {
+        $view = new View("page", "front", $page->getTitle());
+        $view->assign('page', $page);
+      }
+    } else {
+      $view = new View("page", "front", "Page");
+    }
   }
 }

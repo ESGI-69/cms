@@ -1,0 +1,30 @@
+@use "../variables" as *;
+@use "../functions" as *;
+
+.front-footer {
+  padding: em(32);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: $color-front-primary;
+  display: flex;
+  justify-content: center;
+
+  &__item {
+    margin-right: em(16);
+    color: $color-white;
+    text-decoration: none;
+  }
+
+  &__item:last-child {
+    margin-right: 0;
+  }
+
+  &__item:visited {
+    color: $color-white;
+  }
+
+  &__item:hover {
+    color: $color-front-secondary--light;
+  }
+}
