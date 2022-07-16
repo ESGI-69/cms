@@ -2,10 +2,6 @@
   controller: main
   action: home
 
-/contact:
-  controller: main
-  action: contact
-
 /login:
   controller: user
   action: loginUser
@@ -17,6 +13,7 @@
 /register:
   controller: user
   action: register
+
 /me:
   controller: user
   action: me
@@ -95,3 +92,8 @@
   controller: user
   action: userManager
   security: 1
+
+# sitemap
+/sitemap.xml:
+  controller: main
+  action: sitemap
