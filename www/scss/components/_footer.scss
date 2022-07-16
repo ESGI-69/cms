@@ -4,11 +4,11 @@
 .front-footer {
   padding: em(32);
   position: absolute;
-  bottom: 0;
   width: 100%;
   background-color: $color-front-primary;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 
   &__item {
     margin-right: em(16);
