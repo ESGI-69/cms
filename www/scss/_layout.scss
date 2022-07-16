@@ -3,6 +3,7 @@
 
 body {
   &.back {
+    display: flex;
     main {
       box-sizing: border-box;
       padding: 2rem;
@@ -41,7 +42,9 @@ body {
     }
   }
 
-  &.front {
+  div.front {
+    min-height: calc(100vh - em(83));
+    background-color: $color-background;
     background-image: url('/assets/home-background.jpg');
     background-size: cover;
     background-position: center;
@@ -77,6 +80,7 @@ body {
       padding: em(32) em(64);
       width: 60vw;
       box-sizing: border-box;
+      margin-bottom: 80px;
     }
   }
 }

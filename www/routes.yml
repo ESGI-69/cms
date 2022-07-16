@@ -68,6 +68,7 @@
 /media-manager:
   controller: media
   action: mediaManager
+  security : 1
 
 /articles-list:
   controller: article
