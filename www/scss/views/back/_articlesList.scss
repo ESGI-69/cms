@@ -1,2 +1,62 @@
 @use '../../variables' as *;
 @use '../../functions' as *;
+
+.articles {
+  width: 100%;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: em(8);
+
+    &__item {
+      color: $color-front-secondary;
+      text-decoration: none;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      grid-template-rows: auto auto 1fr;
+      gap: em(8);
+      grid-template-areas: "image title"
+                           "image creation_date"
+                           "image content";
+
+      h3, p, span {   
+        color: $color-front-secondary;
+      }
+
+      &:hover {
+        .articles__list__item {
+          &__title {
+            text-decoration: underline;
+          }
+          
+          &__image {
+            filter: brightness(0.8);
+          }
+        }
+      }
+
+      &__image {
+        grid-area: image;
+        width: 100%;
+        height: auto;
+      }
+
+      &__title {
+        grid-area: title;
+        margin: 0;
+      }
+
+      &__creation-infos {
+        grid-area: creation_date;
+        font-size: em(12);
+      }
+
+      &__content {
+        grid-area: content;
+      }
+      
+    }
+  }
+}
