@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Core\View;
 use App\Core\Logger;
 use App\Core\Verificator;
+use App\Core\AuthManager;
 use App\Model\Article as ArticleModel;
+use App\Model\Comment as CommentModel;
 
 class Article
 {
@@ -81,15 +83,38 @@ class Article
     if (isset($_GET['id'])) {
       $article = new ArticleModel();
       $articleInfos = $article->getArticleInfo($_GET['id']);
+
       if (empty($articleInfos)) {
         header("Location: /");
       } else {
         if (strlen($article->getsubtitle()) >= 100) {
           $description = substr($article->getsubtitle(), 0, 165) . "...";
-        } else if(strlen($article->getsubtitle()) > 50) {
+        } else if (strlen($article->getsubtitle()) > 50) {
           $description = $article->getsubtitle() . " " . substr(strip_tags($article->getContent()), 0, 65) . "...";
         } else {
-          $description = $article->getsubtitle() . " " . substr(strip_tags($article->getContent()), 0, 115) . "..." ;
+          $description = $article->getsubtitle() . " " . substr(strip_tags($article->getContent()), 0, 115) . "...";
+        }
+        $comment = new CommentModel();
+
+        // Suppresion d'un commentaire
+        if (isset($_GET['deletedId'])) {
+          $comment->getCommentInfo($_GET['deletedId']);
+          $auth = new AuthManager();
+          if ($auth->userInfos()['id'] === $comment->getUserId()) {
+            $log = Logger::getInstance();
+            $log->add("comment", "Comment '" . $comment->getContent() . "' (" . $comment->getId() . ") deleted by user n." . $comment->getUserId() . "!");
+            $comment->delete($_GET['deletedId']);
+          }
+        }
+
+        // get all article comments
+        $comments = $comment->where('article_id', $_GET['id']);
+        if (!empty($comments)) {
+          foreach ($comments as $comment) {
+            $currentComment = new CommentModel();
+            $currentComment->getCommentInfo($comment->id);
+            $commentsList[] = $currentComment;
+          }
         }
 
         $article->incrementView(intval($_GET['id']), ['clickedOn']);
@@ -98,6 +123,7 @@ class Article
         $view = new View("article", "front", $article->getTitle(), $description);
         $view->assign('article', $article);
         $view->assign('articleMedia', $articleMedia);
+        $view->assign("comments", $commentsList ?? []);
       }
     } else {
       $view = new View("article", "front", "Article");

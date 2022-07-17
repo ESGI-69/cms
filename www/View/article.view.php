@@ -11,6 +11,39 @@
       Vue <?= $article->getClickedOn() ?> fois.
     </p>
   </article>
+
+  <hr style="width: 100%;">
+
+  <div class="comments">
+    <h2>Commentaires</h2>
+    <?php if (isset($comments) && !empty($comments)) : ?>
+      <?php foreach ($comments as $comment) : ?>
+        <div class="comment">
+          <p><?= $comment->getContent() ?></p>
+          <p class="end">
+            Commenté par <b><?= $comment->getAuthorFirstname() ?> <?= $comment->getAuthorLastname() ?></b> le <?= $comment->getCreatedAt() ?>.<br>
+            <?php if ($comment->getUserId() === $userInfos['id']) : ?>
+              <a href="/article?id=<?= $article->getId() ?>&deletedId=<?= $comment->getId() ?>">
+                Supprimer
+              </a>
+            <?php endif; ?>
+          </p>
+        </div>
+      <?php endforeach; ?>
+    <?php else : ?>
+      <p>Aucun commentaire n'a été posté pour l'instant.</p>
+    <?php endif; ?>
+
+    <h2>Ajouter un commentaire</h2>
+    <?php if ($isAuth) : ?>
+      <div class="comment-form">
+        <p>form</p>
+      </div>
+    <?php else : ?>
+      <p>Vous devez être connecté pour pouvoir commenter.</p>
+    <?php endif; ?>
+  </div>
+
 <?php else : ?>
   <h1>400 - Bad request</h1>
   <h3>Désolé, je ne sais pas comment vous avez atterri ici 🤷‍♂️</h3>
