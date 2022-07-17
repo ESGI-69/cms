@@ -140,7 +140,7 @@ class Article extends Sql
     return $this->createdAt;
   }
 
-  public function getArticleUpdateDate(): string
+  public function getArticleUpdateDate()
   {
     return $this->updatedAt;
   }
