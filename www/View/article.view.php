@@ -2,7 +2,7 @@
   <article>
     <h1><?= $article->getTitle() ?></h1>
     <?php if ($article->getSubtitle() && $article->getSubtitle() !== 'NULL') : ?>
-      <h4><?= $article->getSubtitle() ?></h4>
+      <h2 class="h2-front"><?= $article->getSubtitle() ?></h2>
     <?php endif; ?>
     <img src="<?= $article->getMediaPath() ?>" alt="<?= $article->getTitle() ?>">
     <div id="content"><?= $article->getContent() ?></div>

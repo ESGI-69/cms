@@ -1,6 +1,6 @@
 <div id="mySidebar" class="front-sidebar">
-  <a class="closebtn" id="closebtn">&times;</a>
-  <a href="/categories">All Categories</a>
+  <button aria-label="Close sidemenu" class="closebtn button button--primary" id="closebtn">&times;</button>
+  <a class="front-sidebar__first" href="/categories">All Categories</a>
   <?php foreach ($sidebarFront as $sidebarElement) : ?>
     <a href="/page?id=<?= $sidebarElement->id; ?>"><?= $sidebarElement->title; ?></a>
   <?php endforeach; ?>

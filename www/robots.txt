@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /Logs/
 Disallow: /Vendor/
-Disallow: conf.inc.php
+Disallow: /conf.inc.php

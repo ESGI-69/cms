@@ -534,6 +534,9 @@ a.link:visited {
   border-left: 1px solid #EDF6F9;
   width: 250px;
 }
+.front-sidebar__first {
+  margin-top: 2em;
+}
 .front-sidebar a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -557,6 +560,10 @@ a.link:visited {
 }
 .front-sidebar--open {
   right: 0;
+}
+.front-sidebar .closebtn:hover {
+  cursor: pointer;
+  border: none;
 }
 
 @media screen and (max-height: 450px) {
@@ -972,9 +979,20 @@ a.link:visited {
 .front.article .end {
   font-size: 0.875em;
 }
+.front.article .h2-front {
+  font-weight: 300;
+  color: #c6ced0;
+  font-size: 1em;
+}
 .front.article h4 {
   font-weight: 300;
   color: #c6ced0;
+}
+
+.h2-front {
+  font-weight: 300;
+  color: #c6ced0;
+  font-size: 1em;
 }
 
 /*# sourceMappingURL=index.css.map */
