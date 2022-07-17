@@ -8,7 +8,7 @@ body {
   margin: 0;
   height: 100vh;
 }
-body a, body a:visited {
+body.front a, body.front a:visited {
   color: #FFF;
 }
 
