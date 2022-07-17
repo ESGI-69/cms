@@ -850,6 +850,7 @@ a.link:visited {
   gap: 0.5em;
 }
 .articles__list__item {
+  word-break: break-word;
   color: #EDF6F9;
   text-decoration: none;
   width: 100%;

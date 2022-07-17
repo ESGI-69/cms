@@ -10,6 +10,7 @@
     gap: em(8);
 
     &__item {
+      word-break: break-word;
       color: $color-front-secondary;
       text-decoration: none;
       width: 100%;
