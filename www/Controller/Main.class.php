@@ -23,7 +23,10 @@ class Main
       $articlesList[] = $currentArticle;
     }
 
-    $view = new View("home");
+
+    $descDefault = "Welcome on wikiki, one of the best wiki and encyclopedia site in the world! Here you can find the best articles with rocks facts and more! Ours articles are verified and without fake news !";
+
+    $view = new View("home", "front", null, $descDefault);
     $view->assign("articles", $articlesList);
   }
 

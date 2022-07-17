@@ -55,7 +55,7 @@ class User extends Sql
       }
     }
 
-    $view = new View("Login", "front", "Connexion");
+    $view = new View("Login", "front", "Login", "Welcome on the login form of your favorite wiki and ecyclopedia. Start adding comments right now by login in with your account!");
     $view->assign("user", $user);
     $view->assign("success", $login);
     $view->assign("errors", empty($formErrors) ? null : $formErrors);
@@ -90,7 +90,7 @@ class User extends Sql
         }
       }
     }
-    $view = new View("register", 'front', 'Inscription');
+    $view = new View("register", 'front', 'Register', 'Welcome on the register form of your favorite wiki and ecyclopedia. Start adding comments right now by creating your account for free !');
     $view->assign("user", $user);
     $view->assign("success", $registered);
     $view->assign("errors", $formErrors);
@@ -192,7 +192,7 @@ class User extends Sql
       $formErrors[] = "Ce lien de réinitialisation de mot de passe n'est pas valide";
     }
 
-    $view = new View("passwordReset", 'front', 'Réinitialisation du mot de passe');
+    $view = new View("passwordReset", 'front', 'Password Reset', '');
     $view->assign("user", $user);
     $view->assign("success", $success);
     $view->assign("errors", $formErrors);

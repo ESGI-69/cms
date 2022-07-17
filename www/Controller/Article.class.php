@@ -84,10 +84,18 @@ class Article
       if (empty($articleInfos)) {
         header("Location: /");
       } else {
+        if (strlen($article->getsubtitle()) >= 100) {
+          $description = substr($article->getsubtitle(), 0, 165) . "...";
+        } else if(strlen($article->getsubtitle()) > 50) {
+          $description = $article->getsubtitle() . " " . substr(strip_tags($article->getContent()), 0, 65) . "...";
+        } else {
+          $description = $article->getsubtitle() . " " . substr(strip_tags($article->getContent()), 0, 115) . "..." ;
+        }
+
         $article->incrementView(intval($_GET['id']), ['clickedOn']);
         $articleInfos = $article->getArticleInfo($_GET['id']);
         $articleMedia = $article->getJoin($article->getId(), 'wk_media', 'media_id', 'id');
-        $view = new View("article", "front", $article->getTitle());
+        $view = new View("article", "front", $article->getTitle(), $description);
         $view->assign('article', $article);
         $view->assign('articleMedia', $articleMedia);
       }

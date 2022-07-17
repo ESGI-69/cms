@@ -124,7 +124,7 @@ class Page extends Sql
   {
     $this->id = $id;
     $result = $this->get($id);
-    if (isset($result)) {
+    if ($result !== false) {
       $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id')[0]->id;
       $this->setId($result->id);
       $this->setTitle($result->title);
@@ -147,6 +147,7 @@ class Page extends Sql
         'updatedAt' => $this->getUpdatedAt()
       ];
     }
+    return [];
   }
 
   public function getPageForm(): array
