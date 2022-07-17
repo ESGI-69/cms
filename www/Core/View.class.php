@@ -25,7 +25,7 @@ class View
       $this->pageTitle = $this->pageTitle . ' - ' . $pageTitle;
     }
     if ($pageDescription !== null) {
-      $this->pageDescription = $this->pageDescription . ' - ' . $pageDescription;
+      $this->pageDescription = $pageDescription;
     }
     $this->setView($view);
     $this->setTemplate($template);

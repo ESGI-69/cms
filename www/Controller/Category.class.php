@@ -77,7 +77,7 @@ class Category
   {
     $category = new CategoryModel();
     $categories = $category->getAll('name');
-    $view = new View("categoriesview", "front", "Categories");
+    $view = new View("categoriesview", "front", "Categories", "You can find all categories of your favorite wiki and encyclopedia here. Navigate through the categories to find the articles you are looking for.");
     $view->assign("categories", $categories);
   }
 
@@ -100,7 +100,7 @@ class Category
       }
     }
 
-    $view = new View("categoryview", "front", $category ? $category->getName() : "Category");
+    $view = new View("categoryview", "front", $category ? $category->getName() : "Category", "You can find all articles of the category ". $category->getName() ."  here. Navigate through the articles to find one of the category" . $category->getName() . " that piques your interest");
     $view->assign("category", $category);
     $view->assign("articles", $articlesList ?? []);
   }

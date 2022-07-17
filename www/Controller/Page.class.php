@@ -86,7 +86,14 @@ class Page
       if (empty($pageInfos)) {
         header("Location: /");
       } else {
-        $view = new View("page", "front", $page->getTitle());
+        if (strlen($page->getsubtitle()) >= 100) {
+          $description = substr($page->getsubtitle(), 0, 165) . "...";
+        } else if(strlen($page->getsubtitle()) > 50) {
+          $description = $page->getsubtitle() . " " . substr(strip_tags($page->getContent()), 0, 65) . "...";
+        } else {
+          $description = $page->getsubtitle() . " " . substr(strip_tags($page->getContent()), 0, 115) . "..." ;
+        }
+        $view = new View("page", "front", $page->getTitle(), $description);
         $view->assign('page', $page);
       }
     } else {
