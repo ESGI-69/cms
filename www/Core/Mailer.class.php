@@ -5,9 +5,9 @@ namespace App\Core;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require "./vendor/PHPMailer-6.5.3/src/Exception.php";
-require "./vendor/PHPMailer-6.5.3/src/PHPMailer.php";
-require "./vendor/PHPMailer-6.5.3/src/SMTP.php";
+require "./Vendor/PHPMailer-6.5.3/src/Exception.php";
+require "./Vendor/PHPMailer-6.5.3/src/PHPMailer.php";
+require "./Vendor/PHPMailer-6.5.3/src/SMTP.php";
 
 class Mailer
 {
