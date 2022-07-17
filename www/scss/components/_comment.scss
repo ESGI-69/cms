@@ -1,0 +1,16 @@
+@use "./../variables" as *;
+@use "./../functions" as *;
+
+.front {
+  .comment {
+    width: 100%;
+    margin-left: 1em;
+    padding-left: 1em;
+    border-radius: 2px;
+    border-left: 2px solid $color-white;
+  
+    .end {
+      font-size: em(14);
+    }
+  }
+}
