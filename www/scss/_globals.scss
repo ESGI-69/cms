@@ -7,7 +7,10 @@ body {
   margin: 0;
   height: 100vh;
 
-  a, a:visited {
-    color: #FFF;
+  &.front {
+    a, a:visited {
+      color: #FFF;
+    }
   }
+
 }
