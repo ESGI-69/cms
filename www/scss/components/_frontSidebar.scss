@@ -16,6 +16,10 @@
   border-left: 1px solid $color-front-secondary;
   width: 250px;
 
+  &__first {
+    margin-top: em(32);
+  }
+
   a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -42,6 +46,10 @@
   }
   &--open {
     right: 0;
+  }
+  .closebtn:hover{
+    cursor: pointer;
+    border: none;
   }
 }
 @media screen and (max-height: 450px) {

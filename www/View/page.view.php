@@ -2,7 +2,7 @@
   <div class="page">
     <h1><?= $page->getTitle() ?></h1>
     <?php if ($page->getSubtitle() && $page->getSubtitle() !== 'NULL') : ?>
-      <h4><?= $page->getSubtitle() ?></h4>
+      <h2 class="h2-front"><?= $page->getSubtitle() ?></h2>
     <?php endif; ?>
     <div id="content"><?= $page->getContent() ?></div>      
   </div>

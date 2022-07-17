@@ -1,0 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+
+.h2-front {
+  font-weight: 300;
+  color: $color-front-secondary--light;
+  font-size: em(16);
+}
