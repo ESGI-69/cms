@@ -1,4 +1,4 @@
-<h1>Login</h1>
+<h1>Connexion</h1>
 
 <?php if (!$success) : ?>
   <?php $this->includePartial("form", $user->getLoginForm()) ?>
