@@ -113,10 +113,29 @@ class Comment extends Sql
     }
   }
 
-  // public function getCommentForm(): array
-  // {
-  //   return [
-
-  //   ]
-  // }
+  public function getForm(): array
+  {
+    return [
+      "config" => [
+        "method" => "POST",
+        "action" => "",
+        "submit" => "Commenter",
+        "success" => "Votre commentaire a bien été ajouté",
+      ],
+      "inputs" => [
+        "content" => [
+          "value" => "",
+          "label" => "Commentaire",
+          "type" => "textarea",
+          "class" => "textarea-comment",
+          "placeholder" => "Cet article est super !",
+          "id" => "content",
+          "required" => true,
+          "error" => "Veuillez entrer un contenu",
+          "min" => 2,
+          "max" => 1000,
+        ],
+      ]
+    ];
+  }
 }

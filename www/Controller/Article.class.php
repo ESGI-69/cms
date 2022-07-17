@@ -81,7 +81,9 @@ class Article
   public function frontView()
   {
     if (isset($_GET['id'])) {
+      $auth = new AuthManager();
       $article = new ArticleModel();
+      $log = Logger::getInstance();
       $articleInfos = $article->getArticleInfo($_GET['id']);
 
       if (empty($articleInfos)) {
@@ -99,9 +101,7 @@ class Article
         // Suppresion d'un commentaire
         if (isset($_GET['deletedId'])) {
           $comment->getCommentInfo($_GET['deletedId']);
-          $auth = new AuthManager();
           if ($auth->userInfos()['id'] === $comment->getUserId()) {
-            $log = Logger::getInstance();
             $log->add("comment", "Comment '" . $comment->getContent() . "' (" . $comment->getId() . ") deleted by user n." . $comment->getUserId() . "!");
             $comment->delete($_GET['deletedId']);
           }
@@ -117,6 +117,21 @@ class Article
           }
         }
 
+        if (!empty($_POST)) {
+          $comment = new CommentModel();
+          $success = false;
+          $formErrors = Verificator::checkForm($comment->getForm(), $_POST);
+          if (count($formErrors) === 0) {
+            $comment->setContent($_POST['content']);
+            $comment->setArticleId($_GET['id']);
+            $comment->setUserId($auth->userInfos()['id']);
+            $comment->save();
+            $success = true;
+            $log->add("comment", "Comment '" . $article->getContent() . "' created by user n." . $article->getAuthor() . " on article n." . $article->getId() . "!");
+            header("Location: /article?id=" . $_GET['id']);
+          }
+        }
+
         $article->incrementView(intval($_GET['id']), ['clickedOn']);
         $articleInfos = $article->getArticleInfo($_GET['id']);
         $articleMedia = $article->getJoin($article->getId(), 'wk_media', 'media_id', 'id');
@@ -124,6 +139,9 @@ class Article
         $view->assign('article', $article);
         $view->assign('articleMedia', $articleMedia);
         $view->assign("comments", $commentsList ?? []);
+        $view->assign("comment", $comment);
+        $view->assign('errors', $formErrors ?? []);
+        $view->assign('success', $success ?? false);
       }
     } else {
       $view = new View("article", "front", "Article");

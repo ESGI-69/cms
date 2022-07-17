@@ -4,8 +4,11 @@
                                                                                                                                                                               } ?>>
 
     <?php foreach ($data["inputs"] as $name => $input) : ?>
-
-      <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> <?php if (!empty($input["accept"])) : ?> accept="<?= $input["accept"] ?? "" ?>" <?php endif; ?> value="<?= $input["value"] ?? "" ?>">
+      <?php if ($input["type"] === 'textarea') : ?>
+        <textarea name="<?= $name ?>" id="<?= $input["id"] ?? $name ?>" class="<?= $input["class"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" <?= $input["required"] ?? false ? 'required' : '' ?> <?= $input["min"] ?? false ? 'minlength="' . $input["min"] . '"' : '' ?> <?= $input["max"] ?? false ? 'maxlength="' . $input["max"] . '"' : '' ?>><?= $input["value"] ?? "" ?></textarea>
+      <?php else : ?>
+        <input type="<?= $input["type"] ?? "text" ?>" name="<?= $name ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>" <?= empty($input["required"]) ? "" : 'required="required"' ?> <?php if (!empty($input["accept"])) : ?> accept="<?= $input["accept"] ?? "" ?>" <?php endif; ?> value="<?= $input["value"] ?? "" ?>">
+      <?php endif; ?>
 
     <?php endforeach; ?>
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
