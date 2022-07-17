@@ -1,20 +1,20 @@
-<h1>Register</h1>
+<h1>S'inscrire</h1>
 <?php if(empty($user->getToken())) : ?>
   <?php $this->includePartial("form", $user->getRegisterForm()) ?>
 <?php elseif($registerError) : ?>
   <div class="form">
-    <div class="error">Email already used !</div>
+    <div class="error">Email déjà utilisé</div>
   </div>
 <?php elseif($user->getStatus() == 0) : ?>
-  Register successfull
+  Vous etes bien inscrit.
   <br>
     <?php if($isMailSent) : ?>
-        Confirm your mail first please
+        Veuillez vérifier votre email pour pouvoir utiliser votre compte.
     <?php else : ?>
-        Serveur smtp down contact an admin bg
+        Serveur smtp down contact un admin bg
     <?php endif; ?>
 <?php else : ?>
-  Successfully connected to your account <?= $user->getUsername() ?>.
+  Vous etes actuellement connecté au compte <?= $user->getUsername() ?>.
   <br>
-  <a href="/logout">Log out</a> to create an account.
+  <a href="/logout">Deconnectez vous</a> pour créer un compte.
 <?php endif; ?>
