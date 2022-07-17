@@ -133,8 +133,8 @@ class Page extends Sql
       $this->setsubtitle($result->subtitle);
       $this->setUserId($result->user_id);
       $this->setNavigation($navigation);
-      $this->setCreatedAt($result->created_at);
-      $this->setUpdatedAt($result->updated_at);
+      $this->setCreatedAt($result->createdAt);
+      $this->setUpdatedAt($result->updatedAt);
       return [
         'id' => $this->getId(),
         'title' => $this->getTitle(),
@@ -143,8 +143,8 @@ class Page extends Sql
         'subtitle' => $this->getsubtitle(),
         'user_id' => $this->getUserId(),
         'navigation' => $this->getNavigation(),
-        'created_at' => $this->getCreatedAt(),
-        'updated_at' => $this->getUpdatedAt()
+        'createdAt' => $this->getCreatedAt(),
+        'updatedAt' => $this->getUpdatedAt()
       ];
     }
   }
