@@ -1,9 +1,9 @@
 <span class="username">Bonjour <?= $userInfos["firstname"] ?? 'étranger' ?> 👋 </span>
 <span class="question">Que veux tu apprendre aujourd'hui ?</span>
-<form class="search" action="search.php" method="get">
+<!-- <form class="search" action="search.php" method="get">
   <input class="input" type="text" name="search" placeholder="Rechercher un article" />
   <button class="button button--primary button--big" type="submit">Search</button>
-</form>
+</form> -->
 <div class="articles">
   <h2 class="articles__title">Les articles les plus récents</h2>
   <div class="articles__list">
