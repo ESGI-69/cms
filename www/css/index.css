@@ -452,6 +452,11 @@ a.link:visited {
 .front .form input[type=submit] {
   margin-top: 0.5em;
 }
+.front .form .textarea-comment {
+  width: 100%;
+  height: 100px;
+  resize: none;
+}
 .front .form .error {
   padding: 0.5rem 1rem;
   background-color: #FF1B1C;

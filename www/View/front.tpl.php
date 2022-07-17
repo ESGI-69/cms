@@ -15,6 +15,18 @@
 </head>
 
 <body>
+  <script src="https://cdn.tiny.cloud/1/<?= TINYMCE_TOKEN ?>/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      menubar: false,
+      selector: 'input[type=wysiwyg]',
+      plugins: '',
+      toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright',
+      toolbar_mode: 'floating',
+      // tinycomments_mode: 'embedded',
+      // tinycomments_author: 'Author name',
+    });
+  </script>
   <div class="<?= $this->template ?> <?= $this->view ?>">
     <a href="/" class="logo" aria-label="Image button to the home">
       <svg width="314" height="76" viewBox="0 0 314 76" fill="none" xmlns="http://www.w3.org/2000/svg">

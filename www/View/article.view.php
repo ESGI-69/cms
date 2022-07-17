@@ -36,9 +36,7 @@
 
     <h2>Ajouter un commentaire</h2>
     <?php if ($isAuth) : ?>
-      <div class="comment-form">
-        <p>form</p>
-      </div>
+      <?php $this->includePartial("form", $comment->getForm()) ?>
     <?php else : ?>
       <p>Vous devez être connecté pour pouvoir commenter.</p>
     <?php endif; ?>
