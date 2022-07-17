@@ -752,7 +752,8 @@ a.link:visited {
 }
 .dashboard .cards {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1em;
   flex-direction: row;
   flex-wrap: wrap;
 }
