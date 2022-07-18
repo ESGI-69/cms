@@ -10,7 +10,6 @@ class Page extends Sql
 {
   protected $id = null;
   protected $title = null;
-  protected $url = null;
   protected $content = null;
   protected $subtitle = null;
   protected $user_id = null;
@@ -41,23 +40,6 @@ class Page extends Sql
   public function setTitle(?string $title): void
   {
     $this->title = htmlspecialchars(trim($title), ENT_COMPAT);
-  }
-
-  public function getUrl(): ?string
-  {
-    return $this->url;
-  }
-
-  public function setUrl(?string $url): void
-  {
-    $this->url = mb_strimwidth(
-      trim(
-        preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($url)))),
-        '-'
-      ),
-      0,
-      92
-    ) . "-" . date('y-m-d');
   }
 
   public function getContent(): ?string
@@ -128,7 +110,6 @@ class Page extends Sql
       $navigation = $this->getJoin($result->id, 'wk_navigation', 'navigation_id', 'id')[0]->id;
       $this->setId($result->id);
       $this->setTitle($result->title);
-      $this->setUrl($result->url);
       $this->setContent($result->content);
       $this->setsubtitle($result->subtitle);
       $this->setUserId($result->user_id);
@@ -138,7 +119,6 @@ class Page extends Sql
       return [
         'id' => $this->getId(),
         'title' => $this->getTitle(),
-        'url' => $this->getUrl(),
         'content' => $this->getContent(),
         'subtitle' => $this->getsubtitle(),
         'user_id' => $this->getUserId(),
@@ -229,7 +209,6 @@ class Page extends Sql
   {
     try {
       $this->setTitle($_POST['title']);
-      $this->setUrl($_POST['title']);
       $this->setContent($_POST['content']);
       $this->setsubtitle($_POST['subtitle']);
       $this->setUserId();
