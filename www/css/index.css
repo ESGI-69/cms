@@ -515,6 +515,54 @@ a.link:visited {
   font-size: 0.875em;
 }
 
+.install {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.install__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #D5E0F0;
+  background: white;
+  width: 500px;
+  padding: 2rem;
+}
+.install__container h2 {
+  margin-top: 0;
+}
+.install__container__form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+.install__container__form .button {
+  all: unset;
+  display: flex;
+  font-size: 0.75em;
+  font-weight: 500;
+  padding: 0.5em 0.75em;
+  border-radius: 0.25em;
+  color: #ffffff;
+  height: fit-content;
+  transition: all 0.2s ease-in-out;
+  padding: 0.875em 1.125em;
+  font-size: 1rem;
+  border: 1px solid #EDF6FF;
+  background-color: #006ACB;
+  outline-color: #006ACB;
+}
+.install__container__form .button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.install__container__form .button:hover {
+  cursor: pointer;
+}
+
 .front-footer {
   padding: 2em;
   position: absolute;
