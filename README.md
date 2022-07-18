@@ -31,7 +31,10 @@ sass www/scss/main.scss www/css/index.css
 docker-compose up
 ```
 
-go on ``` localhost:3000 ```
+And finally go on :
+```ssh 
+localhost:3000
+```
 
 ## Cookies
 
