@@ -2,6 +2,8 @@
   <a class="button button--primary button--big" href="/user-manager">New user</a>
 </div>
 
+<p>Deleting a user will delete all his articles & comments !</p>
+
 <?php $data = [
   'config' => [
     'editButton' => true,
