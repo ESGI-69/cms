@@ -1,6 +1,9 @@
 <div class="action-buttons">
   <a class="button button--primary button--big" href="/media-manager">New media</a>
 </div>
+
+<p>Deleting a media will delete all articles linked with it</p>
+
 <div class="media-list">
   <?php foreach ($medias as $media) : ?>
     <div class="media-list__item">
