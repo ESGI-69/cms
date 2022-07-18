@@ -67,32 +67,32 @@
 /medias-list:
   controller: media
   action: mediasList
-  security: 1
+  security: 2
 
 /media-manager:
   controller: media
   action: mediaManager
-  security: 1
+  security: 2
 
 /articles-list:
   controller: article
   action: articlesList
-  security: 1
+  security: 2
 
 /article-manager:
   controller: article
   action: articleManager
-  security: 1
+  security: 2
 
 /categories-list:
   controller: category
   action: categoriesList
-  security: 1
+  security: 2
 
 /category-manager:
   controller: category
   action: categoryManager
-  security: 1
+  security: 2
 
 /logs-view:
   controller: log
