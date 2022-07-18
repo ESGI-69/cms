@@ -78,23 +78,23 @@ abstract class Sql
     return $result;
   }
 
-  public function getWhere(string $table, string $nameRow, string $value): int 
+  public function getWhere(string $table, string $nameRow, string $value): int
   {
     $sql = $this->mysqlBuilder
       ->select(['*'], $table)
       ->where($nameRow, '=', $table)
       ->getQuery();
 
-      $option = [
-        $nameRow => $value
-      ];
+    $option = [
+      $nameRow => $value
+    ];
 
     $result = $this->executeQuery($sql, 1, $option);
 
     return $result->id;
   }
 
-  public function getNoModel(string $whereRow, $whereValue, string $table )
+  public function getNoModel(string $whereRow, $whereValue, string $table)
   {
     $sql = $this->mysqlBuilder
       ->select(['*'], $table)
@@ -104,7 +104,7 @@ abstract class Sql
     $option = [
       $whereRow => $whereValue
     ];
-    
+
     $result = $this->executeQuery($sql, 2, $option);
 
     return $result;
@@ -285,6 +285,35 @@ abstract class Sql
     }
 
     return $emailChanged;
+  }
+
+  public function isDatabaseEmpty()
+  {
+    $tables = [
+      'article',
+      'category',
+      'comment',
+      'log',
+      'media',
+      'navigation',
+      'page',
+      'passwordreset',
+      'user',
+    ];
+    $fail = false;
+    foreach ($tables as $table) {
+      $result = $this->executeQuery("SHOW TABLES LIKE '" . DBPREFIXE . $table . "';", 1);
+      if (empty($result)) {
+        $fail = true;
+        break;
+      }
+    }
+    return $fail;
+  }
+
+  public function initializeDatabase()
+  {
+    $this->pdo->exec(file_get_contents(__DIR__ . '/../wikiki.sql'));
   }
 
   public function login(string $email)

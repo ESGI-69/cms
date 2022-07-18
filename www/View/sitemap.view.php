@@ -3,7 +3,7 @@
 <!-- List des articles -->
 <?php foreach ($articles as $article): ?>
   <url>
-    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/article?id=<?= $article->id ?></loc>
+    <loc>https://wikiki.timdev0.com/article?id=<?= $article->id ?></loc>
     <lastmod><?= $article->updatedAt ?? $article->createdAt ?></lastmod>
     <changefreq>daily</changefreq>
   </url>
@@ -11,7 +11,7 @@
 <!-- List des pages -->
 <?php foreach ($pages as $page): ?>
   <url>
-    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/page?id=<?= $page->id ?></loc>
+    <loc>https://wikiki.timdev0.com/page?id=<?= $page->id ?></loc>
     <lastmod><?= $page->updatedAt ?? $page->createdAt ?></lastmod>
     <changefreq>daily</changefreq>
   </url>
@@ -19,7 +19,7 @@
 <!-- List des categories -->
 <?php foreach ($categories as $category): ?>
   <url>
-    <loc>http://<?= $_SERVER['SERVER_NAME'] ?>/category?id=<?= $category->id ?></loc>
+    <loc>https://wikiki.timdev0.com/category?id=<?= $category->id ?></loc>
     <changefreq>daily</changefreq>
   </url>
 <?php endforeach; ?>
@@ -29,10 +29,11 @@
   $url !== "/sitemap.xml"
   && $url !== "/article"
   && $url !== "/page"
+  && $url !== "/install"
   && !isset($config['security'])
 ) : ?>
   <url>
-    <loc>http://<?= $_SERVER['SERVER_NAME'] ?><?= $url ?></loc>
+    <loc>https://wikiki.timdev0.com<?= $url ?></loc>
   </url>
 <?php endif; ?>
 <?php endforeach; ?>

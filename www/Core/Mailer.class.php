@@ -40,7 +40,7 @@ class Mailer
 
     // TODO Un partial de body pour les mails ?
     $this->phpMailer->IsHTML(true); // Préciser qu'il faut utiliser le texte brut
-    $verifyEmailLink = "http://" . $_SERVER['SERVER_NAME'] . "/verify?t=" . $emailVerifyToken;
+    $verifyEmailLink = "https://wikiki.timdev0.com/verify?t=" . $emailVerifyToken;
     $this->phpMailer->Body = "Cliquez <a href='" . $verifyEmailLink . "'>ici</a> ou sur ce lien : " . $verifyEmailLink; // Body HTML
 
     if (!$this->phpMailer->send()) {
@@ -57,7 +57,7 @@ class Mailer
 
     // TODO Un partial de body pour les mails ?
     $this->phpMailer->IsHTML(true); // Préciser qu'il faut utiliser le texte brut
-    $verifyTokenUrl = "http://" . $_SERVER['SERVER_NAME'] . "/reset?id=" . $verifyTokenInfo['id'] . "&changeKey=" . $verifyTokenInfo['changeKey'];
+    $verifyTokenUrl = "https://wikiki.timdev0.com/reset?id=" . $verifyTokenInfo['id'] . "&changeKey=" . $verifyTokenInfo['changeKey'];
     $this->phpMailer->Body = "Cliquez <a href=\"" . $verifyTokenUrl . "\">ici</a> ou sur ce lien : " . $verifyTokenUrl; // Body HTML
 
     if (!$this->phpMailer->send()) {

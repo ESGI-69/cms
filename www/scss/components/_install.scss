@@ -1,0 +1,57 @@
+@use './../variables' as *;
+@use './../functions' as *;
+
+.install {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid $color-border;
+    background: white;
+    width: 500px;
+    padding: 2rem;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+
+      .button {
+        all: unset;
+        display: flex;
+        font-size: em(12);
+        font-weight: 500;
+        padding: em(8) em(12);
+        border-radius: em(4);
+        color: $color-white;
+        height: fit-content;
+        transition: all .2s ease-in-out;
+      
+        &:focus {
+          outline: 2px solid transparent;
+          outline-offset: 2px;
+        }
+      
+        &:hover {
+          cursor: pointer;
+        }
+
+        padding: em(14) em(18);
+        font-size: 1rem;
+        border: 1px solid $color-primary-lighter;
+        background-color: $color-primary;
+        outline-color: $color-primary;
+      }
+    }
+  }
+}

@@ -2,6 +2,10 @@
   controller: main
   action: home
 
+/install:
+  controller: main
+  action: install
+
 /login:
   controller: user
   action: loginUser
@@ -41,7 +45,7 @@
 /category:
   controller: category
   action: categoryView
-/page: 
+/page:
   controller: page
   action: frontView
 
@@ -68,7 +72,7 @@
 /media-manager:
   controller: media
   action: mediaManager
-  security : 1
+  security: 1
 
 /articles-list:
   controller: article
