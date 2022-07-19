@@ -189,6 +189,21 @@ class Article extends Sql
     $media = new Media();
     $medias = $media->getAll();
 
+    if(empty($categories)) {
+      $labelCategories = "Catégorie | Veuillez créer au moins une catégorie";
+    } else {
+      $labelCategories = "Catégorie";
+    }
+    
+    //same if for medias
+    if(empty($medias)) {
+      $labelMedias = "Image | Veuillez créer au moins un media";
+    } else {
+      $labelMedias = "Images";
+    }
+
+
+
     return [
       "config" => [
         "method" => "POST",
@@ -223,11 +238,12 @@ class Article extends Sql
             ],
             "media_id" => [
               "value" => $this->getMedia() ? $this->getMedia() : "",
-              "label" => "Image",
+              "label" => $labelMedias,
               "type" => "media",
               "medias" => $medias,
               "required" => true,
               "id" => "image",
+              "error" => "Image invalide",
             ],
             "content" => [
               "value" => $this->getContent() ? $this->getContent() : "",
@@ -246,7 +262,7 @@ class Article extends Sql
           'inputs' => [
             "category_id" => [
               "selected" => $this->getCategory() ? $this->getCategory() : "",
-              "label" => "Catégorie",
+              "label" => $labelCategories,
               "type" => "select",
               "options" => $categories,
               "valueKey" => "id",
