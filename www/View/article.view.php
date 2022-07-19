@@ -27,6 +27,11 @@
                 Supprimer
               </a>
             <?php endif; ?>
+            <?php if ($comment->getUserId() !== $userInfos['id']) : ?>
+              <a class="link-report" href="/article?id=<?= $article->getId() ?>&signalId=<?= $comment->getId() ?>">
+                Signaler
+              </a>
+            <?php endif; ?>
           </p>
         </div>
       <?php endforeach; ?>
