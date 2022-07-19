@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : database
--- Généré le : dim. 17 juil. 2022 à 19:38
--- Version du serveur : 5.7.38
--- Version de PHP : 8.0.19
+-- Généré le : mar. 19 juil. 2022 à 09:06
+-- Version du serveur : 5.7.35
+-- Version de PHP : 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -94,6 +94,20 @@ CREATE TABLE `wk_media` (
   `size` int(11) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `wk_meta`
+--
+
+CREATE TABLE `wk_meta` (
+  `id` int(11) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -211,6 +225,12 @@ ALTER TABLE `wk_media`
   ADD KEY `mediaAuthor` (`user_id`);
 
 --
+-- Index pour la table `wk_meta`
+--
+ALTER TABLE `wk_meta`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `wk_navigation`
 --
 ALTER TABLE `wk_navigation`
@@ -274,6 +294,12 @@ ALTER TABLE `wk_media`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `wk_meta`
+--
+ALTER TABLE `wk_meta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `wk_navigation`
 --
 ALTER TABLE `wk_navigation`
@@ -295,7 +321,7 @@ ALTER TABLE `wk_passwordreset`
 -- AUTO_INCREMENT pour la table `wk_user`
 --
 ALTER TABLE `wk_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées

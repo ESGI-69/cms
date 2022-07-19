@@ -66,6 +66,7 @@ abstract class Sql
     return $result;
   }
 
+
   public function getHighest(?string $item, ?string $table)
   {
     $sql = $this->mysqlBuilder
@@ -110,6 +111,20 @@ abstract class Sql
     return $result;
   }
 
+  public function getMeta(string $element)
+  {
+    $sql = $this->mysqlBuilder
+      ->select(['value'])
+      ->where('type', '=')
+      ->getQuery();
+
+    $option = [
+      'type' => $element
+    ];
+    $result = $this->executeQuery($sql, 1, $option);
+    return $result->value;
+  }
+
   public function getJoin(int $id, string $table, string $rowA, string $rowB)
   {
     $sql = $this->mysqlBuilder
@@ -137,8 +152,13 @@ abstract class Sql
      *        or
      *        use Authenticator::getUser()->getId() ?s
      */
-
-    if ($this->getId() === null) {
+    if ($this->getId()=== -1){
+      $columns['id'] = 1;
+      $sql = $this->mysqlBuilder
+        ->insert($columns)
+        ->getQuery();
+      $this->executeQuery($sql, 0, $columns);
+    } else if ($this->getId() === null) {
       $columnsFiltred = $columns;
       unset($columnsFiltred['id']);
 

@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Core\AuthManager;
 use App\Controller\Main;
+use App\Model\Meta;
 
 class View
 {
@@ -27,6 +28,7 @@ class View
     if ($pageDescription !== null) {
       $this->pageDescription = $pageDescription;
     }
+    $this->setPageTitle();
     $this->setView($view);
     $this->setTemplate($template);
   }
@@ -39,6 +41,12 @@ class View
   public function setTemplate($template): void
   {
     $this->template = strtolower($template);
+  }
+
+  public function setPageTitle(): void
+  {
+    $meta = new Meta();
+    $this->pageTitle = $meta->getMeta('title');
   }
 
 
