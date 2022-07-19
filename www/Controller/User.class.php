@@ -210,11 +210,16 @@ class User extends Sql
   {
     $user = new UserModel();
     $log = Logger::getInstance();
+    $error = null;
 
 
     if (isset($_GET['deletedId'])) {
-      $user->delete($_GET['deletedId']);
-      $log->add("user", "User with id '" . $_GET['deletedId'] . "' deleted");
+      if ($_GET['deletedId'] === "1") {
+        $error = "You can not delete the original admin user";
+      } else {
+        $user->delete($_GET['deletedId']);
+        $log->add("user", "User with id '" . $_GET['deletedId'] . "' deleted");
+      }
     }
 
     $this->users = $user->getAll();
@@ -222,6 +227,7 @@ class User extends Sql
     $view = new View("usersList", "back", "Users");
     $view->assign("user", $user);
     $view->assign("users", $this->users);
+    $view->assign("error", $error);
   }
 
   public function me()

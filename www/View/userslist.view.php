@@ -3,6 +3,11 @@
 </div>
 
 <p>Deleting a user will delete all his articles & comments !</p>
+<?php if(!is_null($error)) : ?>
+  <form action="">
+    <div class="error"><?= $error ?></div>
+  </form>
+<?php endif; ?>
 
 <?php $data = [
   'config' => [
