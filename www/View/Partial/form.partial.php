@@ -120,7 +120,7 @@
             </div>
           <?php endif ?>
 
-          <?php if (isset($errors)) : ?>
+          <?php if (isset($errors) && $side === 'left') : ?>
             <?php foreach ($errors as $error) : ?>
               <div class="error">
                 <?= $error ?>
