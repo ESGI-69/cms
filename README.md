@@ -7,6 +7,10 @@ Figma : https://www.figma.com/file/XpUJAFpK78t3fzxXDc7W23/CMS?node-id=31%3A4
 
 Github Project :  https://github.com/orgs/ESGI-69/projects/1/
 
+## Prod
+
+https://wikiki.timdev0.com/
+
 ## Installation & lancement
 
 ### Development
@@ -19,6 +23,11 @@ Don't forget to install sass (https://sass-lang.com/install)[https://sass-lang.c
 sass -w www/scss/main.scss www/css/index.css
 ```
 
+And finally go on :
+```ssh 
+localhost:3000
+```
+
 ### Production
 
 Build scss files:
@@ -29,11 +38,6 @@ sass www/scss/main.scss www/css/index.css
 
 ```sh
 docker-compose up
-```
-
-And finally go on :
-```ssh 
-localhost:3000
 ```
 
 ## Cookies
