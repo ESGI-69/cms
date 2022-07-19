@@ -93,12 +93,15 @@ class Media extends Sql
   {
     $this->setId($id);
     $result = $this->get($this->getId());
-    if (isset($result)) {
-      $this->setName($result['name']);
-      $this->setMediaType($result['type']);
-      $this->setPath($result['type']);
-      $this->setSize($result['size']);
-      $this->setUserId($result['user_id']);
+    if ($result !== false) {
+      $this->setName($result->name);
+      if (isset($result->type)){
+        echo 'test';
+        $this->setMediaType($result->type);
+        $this->setPath($result->type);
+      }
+      $this->setSize($result->size);
+      $this->setUserId($result->user_id);
       return [
         'id' => $this->getId(),
         'name' => $this->getName(),
@@ -108,6 +111,7 @@ class Media extends Sql
         'user_id' => $this->getUserId(),
       ];
     }
+    return [];
   }
 
   public function getMediaForm(): array

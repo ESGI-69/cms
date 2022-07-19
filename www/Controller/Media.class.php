@@ -19,10 +19,12 @@ class Media extends Sql
     $media = new MediaModel();
 
     if (isset($_GET['deletedId'])) {
-      $media->getMediaInfo($_GET['deletedId']);
-      unlink($media->get($_GET['deletedId'])->path);
-      $log->add("media", "Media '" . $media->getName() . "' deleted by user n." . $media->getUserId() . "!");
-      $media->delete($_GET['deletedId']);
+      $result = $media->getMediaInfo($_GET['deletedId']);
+      if (!empty($result)){
+        unlink($media->get($_GET['deletedId'])->path);
+        $log->add("media", "Media '" . $media->getName() . "' deleted by user n." . $media->getUserId() . "!");
+        $media->delete($_GET['deletedId']);
+      }
     }
 
     $this->medias = $media->getAll();
