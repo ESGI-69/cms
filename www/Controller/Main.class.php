@@ -14,6 +14,12 @@ class Main
 {
   public function home()
   {
+    $install = new InstallModel();
+    $databaseEmpty = $install->isDatabaseEmpty();
+    if ($databaseEmpty) {
+      header("Location: /install");
+    }
+
     $article = new ArticleModel();
     $articles = $article->getLast(5);
 
