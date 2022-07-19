@@ -5,6 +5,9 @@
 <p>Deleting a media will delete all articles linked with it</p>
 
 <div class="media-list">
+  <?php if(empty($medias)) :?>
+    <p>No media found</p>
+  <?php endif ; ?>
   <?php foreach ($medias as $media) : ?>
     <div class="media-list__item">
       <img src="<?= $media->path ?>" alt="<?= $media->name ?>">
