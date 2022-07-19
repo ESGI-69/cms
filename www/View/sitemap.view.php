@@ -30,6 +30,7 @@
   && $url !== "/article"
   && $url !== "/page"
   && $url !== "/install"
+  && $url !== "/category"
   && !isset($config['security'])
 ) : ?>
   <url>
