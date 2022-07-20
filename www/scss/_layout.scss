@@ -58,9 +58,14 @@ body {
       position: absolute;
       top: 2rem;
       left: 2rem;
-      padding: em(32) em(64);
+      padding: 32px 64px;
       background-color: $color-front-primary;
-      margin-bottom: em(64);
+      margin-bottom: 64px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      justify-content: center;
+      font-size: 32px;
     }
 
     .user-actions {
