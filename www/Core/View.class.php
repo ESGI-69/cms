@@ -87,6 +87,8 @@ class View
     $this->data['pageDescription'] = $this->pageDescription;
     $this->data['footer'] = Main::footer();
     $this->data['sidebarFront'] = Main::sidebarFront();
+    $meta = new Meta();
+    $this->data['websiteTitle'] = $meta->getMeta('title');
     extract($this->data);
     include "View/" . $this->template . ".tpl.php";
   }

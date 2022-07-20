@@ -8,7 +8,7 @@
     <meta name="description" content="<?= $pageDescription ?>">
   <?php endif; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#2C2C2C"/>
+  <meta name="theme-color" content="#2C2C2C" />
   <link rel="stylesheet" href="/css/index.css">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="apple-touch-icon" href="assets/favicon.ico" />
@@ -41,6 +41,7 @@
           </clipPath>
         </defs>
       </svg>
+      <?= $websiteTitle ?>
     </a>
 
     <div class="user-actions">
