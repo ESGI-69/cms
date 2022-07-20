@@ -176,6 +176,7 @@ class User extends Sql
             $formErrors = Verificator::checkForm($user->getPasswordResetForm(), $_POST);
             if (count($formErrors) === 0) {
               $user->setPassword($_POST['password']);
+              $user->generateToken();
               $user->save();
               $success = true;
               $log->add("user", "User '" . $user->getFirstname() . "' with email '" . $user->getEmail() . "' reset his password");
