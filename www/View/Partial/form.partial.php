@@ -74,7 +74,7 @@
                       }
                     }
                     ?>
-                    <img class="media-selector__preview" id="<?= $input["id"] . "-img" ?>" src="<?= $selectedMedia->path ?>">
+                    <img class="media-selector__preview" id="<?= $input["id"] . "-img" ?>" src="<?= array_slice($input['medias'], 0, 1)[0]->path ?>">
                     <select class="media-selector__select" name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>">
                       <?php foreach ($input['medias'] as $media) : ?>
                         <?php $selected = "" ?>
