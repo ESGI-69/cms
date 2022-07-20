@@ -144,7 +144,7 @@ class Page extends Sql
         "success" => "Page ajoutée avec succès",
       ],
       'left' => [
-        'Adding a page' => [
+        'Informations principales' => [
           "inputs" => [
             "title" => [
               "value" => $this->getTitle() ? $this->getTitle() : "",
