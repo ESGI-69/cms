@@ -47,7 +47,7 @@ body {
     min-height: calc(100vh - em(83));
     background-color: $color-background;
     background-image: url('/assets/home-background.jpg');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     display: flex;
     align-items: flex-start;
