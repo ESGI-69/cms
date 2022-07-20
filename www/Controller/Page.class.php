@@ -72,7 +72,7 @@ class Page
     }
 
 
-    $view = new View("pageManager", "back", "New page");
+    $view = new View("pageManager", "back", isset($_GET['id']) ? $page->getTitle() . ' - Edit' : 'New Page');
     $view->assign("page", $page);
     $view->assign("success", $saved);
     $view->assign("errors", $formErrors);
@@ -88,10 +88,10 @@ class Page
       } else {
         if (strlen($page->getsubtitle()) >= 100) {
           $description = substr($page->getsubtitle(), 0, 165) . "...";
-        } else if(strlen($page->getsubtitle()) > 50) {
+        } else if (strlen($page->getsubtitle()) > 50) {
           $description = $page->getsubtitle() . " " . substr(strip_tags($page->getContent()), 0, 65) . "...";
         } else {
-          $description = $page->getsubtitle() . " " . substr(strip_tags($page->getContent()), 0, 115) . "..." ;
+          $description = $page->getsubtitle() . " " . substr(strip_tags($page->getContent()), 0, 115) . "...";
         }
         $view = new View("page", "front", $page->getTitle(), $description);
         $view->assign('page', $page);

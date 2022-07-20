@@ -354,7 +354,7 @@ class User extends Sql
         "success" => "Votre compte a bien été créé !",
       ],
       'left' => [
-        'Adding a user' => [
+        'User info' => [
           'inputs' => [
             "email" => [
               "label" => "Email",

@@ -329,7 +329,7 @@ class User extends Sql
     }
 
 
-    $view = new View("userManager", "back", "New user");
+    $view = new View("userManager", "back", isset($_GET['id']) ? $user->getEmail() . ' - Edit' : "New user");
     $view->assign("user", $user);
     $view->assign("success", $registered);
     $view->assign("errors", $formErrors);
