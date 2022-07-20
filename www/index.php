@@ -46,6 +46,7 @@ $explodedUri = explode('/', $uri);
 // Si url est sur la homepage
 if ($uri === '/') {
   if (empty($routes[$uri]) || empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])) {
+    http_response_code(404);
     die('404 Not found<br><img src="https://http.cat/404" alt="cat 404 http error" />');
   }
   $controller = ucfirst(strtolower($routes[$uri]["controller"]));
@@ -57,11 +58,13 @@ if ($uri === '/') {
     || empty($routes[$uri]["controller"])
     || empty($routes[$uri]["action"])
   ) {
+    http_response_code(404);
     die('404 Not found<br><img src="https://http.cat/404 " alt="cat 404 http error" />');
   } else if (isset($routes[$uri]["security"]) ? AuthManager::checkPermission($routes[$uri]["security"]) : true) {
     $controller = ucfirst(strtolower($routes[$uri]["controller"]));
     $action = strtolower($routes[$uri]["action"]);
   } else {
+    http_response_code(403);
     die('403 Forbidden<br><img src="https://http.cat/403" alt="cat 403 http error" />');
   }
   // Si c'est une route qui tape sur un enfant (c'est pas bien)
@@ -71,15 +74,18 @@ if ($uri === '/') {
     || empty($routes['/' . $explodedUri[1]]['childrens']['/' . $explodedUri[2]]["controller"])
     || empty($routes['/' . $explodedUri[1]]['childrens']['/' . $explodedUri[2]]["action"])
   ) {
+    http_response_code(404);
     die('404 Not found<br><img src="https://http.cat/404 alt="cat 404 http error"" />');
   } else if (isset($routes['/' . $explodedUri[1]]["security"]) ? AuthManager::checkPermission($routes['/' . $explodedUri[1]]["security"]) : true) {
     $controller = ucfirst(strtolower($routes['/' . $explodedUri[1]]['childrens']['/' . $explodedUri[2]]["controller"]));
     $action = strtolower($routes['/' . $explodedUri[1]]['childrens']['/' . $explodedUri[2]]["action"]);
   } else {
+    http_response_code(403);
     die('403 Forbidden<br><img src="https://http.cat/403" alt="cat 403 http error" />');
   }
   // Si c'est une route qui a trop d'enfant (?)
 } else {
+  http_response_code(404);
   die('404 Not found<br><img src="https://http.cat/404" alt="cat 404 http error" />');
 }
 
