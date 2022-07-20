@@ -1,7 +1,7 @@
 <?php if (isset($category)) : ?>
   <h1><?= $category->getName() ?></h1>
   <?php if (!empty($articles)) : ?>
-    <p>Voici une list des articles dans cette categorie. Les articles sont triée par odre alphabetique.</p>
+    <p>Voici une liste des articles dans cette categorie. Les articles sont triés par odre alphabetique.</p>
     <div class="articles">
       <div class="articles__list">
         <?php foreach ($articles as $article) : ?>
