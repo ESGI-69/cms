@@ -51,7 +51,7 @@ body div.front {
   min-height: calc(100vh - 5.1875em);
   background-color: #F8FAFC;
   background-image: url("/assets/home-background.jpg");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   display: flex;
   align-items: flex-start;
