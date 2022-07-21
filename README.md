@@ -47,4 +47,5 @@ docker-compose up
 ## Design pattern
 
 - Builder : Query Builder with JOIN and LIMIT `\www\Core\MysqlBuilder.class.php` done
-- Singleton: Singleton for logger `\www\Core\Logger.class.php` and db connection `\www\Core\Sql.class.php` & `\www\Core\DbConnection.class.php` done
+- 2 Singletons: Singleton for logger `\www\Core\Logger.class.php` and db connection `\www\Core\Sql.class.php` & `\www\Core\DbConnection.class.php` done
+- Observer:  `\www\Core\Observer.class.php` linked to the mailer done

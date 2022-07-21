@@ -65,4 +65,20 @@ class Mailer
     }
     return true;
   }
+
+  public function send(string $mail, string $subject, string $content): bool
+  {
+    $this->phpMailer->AddAddress(trim($mail));
+    $this->phpMailer->Subject = $subject; // Le sujet du mail
+    $this->phpMailer->WordWrap = 50; // Nombre de caracteres pour le retour a la ligne automatique
+
+    // TODO Un partial de body pour les mails ?
+    $this->phpMailer->IsHTML(true); // Préciser qu'il faut utiliser le texte brut
+    $this->phpMailer->Body = $content; // Body HTML
+
+    if (!$this->phpMailer->send()) {
+      return false;
+    }
+    return true;
+  }
 }
